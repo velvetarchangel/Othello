@@ -49,8 +49,8 @@ public class Othello{
                     y = coord.nextInt();
                 }
 
-
                 int[] flipped = board.move(x, y, player);
+                System.out.print("Flipped" + Arrays.toString(flipped));
 
                 if (flipped[0] != 0) {
                     board.updateBoard(x, y, player, flipped);
@@ -59,6 +59,7 @@ public class Othello{
                     System.out.println("Player 1 score is "+ playerOneScore);
                 } 
                 player = 2;
+                
             }
 
             else if (player == 2) {
@@ -81,8 +82,7 @@ public class Othello{
                 }
 
                 int[] flipped = board.move(x, y, player);
-
-                
+                System.out.print("Flipped" + Arrays.toString(flipped));
 
                 if (flipped[0] != 0) {
                     board.updateBoard(x, y, player, flipped);

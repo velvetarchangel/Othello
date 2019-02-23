@@ -186,6 +186,12 @@ public class Board{
   **/
   public int[] move(int x, int y, int player) {
 
+    for (int element : flipped) {
+      flipped[element] = 0;
+    }
+
+    System.out.println("Flipped at 0:" + Arrays.toString(flipped));
+
     if (player == 1) {
       otherPlayer = 2;
     } else if (player == 2) {
