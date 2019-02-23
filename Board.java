@@ -5,7 +5,7 @@ public class Board{
     private int [][] board;
 
     // variables for checking moves //
-    private int n; // 
+    private int n; //
     private int[] flipped = new int[9];
     private int otherPlayer = 0;
 
@@ -18,26 +18,26 @@ public class Board{
             }
         }
         /** fills the top of the array with 3s (to help with edge cases)
-        */ 
+        */
         for (int j = 0; j < 10; j++){
             int i = 0;
             board[i][j] = 3;
         }
         /** fills the bottom of the array with 3s (to check edge cases)
-        */ 
+        */
         for (int j = 0; j < 10; j++){
             int i = 9;
             board[i][j] = 3;
         }
         /**fills the left hand side of the array with 3s
-        */ 
+        */
         for (int i = 0; i < 10; i++){
             int j = 0;
             board[i][j] = 3;
         }
 
         /** fills the right hand side of the array with 3s
-        */ 
+        */
         for (int i = 0; i < 10; i++){
             int j = 9;
             board[i][j] = 3;
@@ -48,12 +48,12 @@ public class Board{
         board[5][4] = 2;
         board[5][5] = 1;
     }
-    
+
     public void printBoard(){
         System.out.println( "_ 0 1 2 3 4 5 6 7 8 0");
 
         /** fills the top of the array with 3s (to help with edge cases)
-        */ 
+        */
         System.out.print("  ");
         for (int j = 0; j < 10; j++){
             int i = 0;
@@ -61,7 +61,7 @@ public class Board{
             }
         System.out.print("\n");
 
-        /**fills the middle of the array and adds 3 to either 
+        /**fills the middle of the array and adds 3 to either
         side of the array */
         for(int i = 1; i <= 8; i++){
             System.out.print(i + " 3|");
@@ -72,14 +72,14 @@ public class Board{
         }
 
         /** fills the bottom of the array with 3s (to check edge cases)
-        */ 
+        */
         System.out.print("  ");
         for (int j = 0; j < 10; j++){
             int i = 9;
             System.out.print(board[i][j] + "|");
         }
     }
-    /** takes in user input @param x, @param y, and then checks for valid moves, 
+    /** takes in user input @param x, @param y, and then checks for valid moves,
     * if the move is valid, the board updates accordingly */
     public void updateBoard(int x, int y, int player, int[] array){
       int north = array[1];
@@ -88,7 +88,7 @@ public class Board{
           board[y - i][x] = player;
         }
       }
-    
+
       int northeast = array[2];
       if (northeast != 0) {
         for (int i = 0; i <= northeast; i++) {
@@ -135,7 +135,7 @@ public class Board{
       if (northwest != 0) {
         for (int i = 0; i <= northwest; i++) {
           board[y - i][x - i] = player;
-        } 
+        }
       }
     }
 
@@ -186,8 +186,8 @@ public class Board{
   **/
   public int[] move(int x, int y, int player) {
 
-    for (int element : flipped) {
-      flipped[element] = 0;
+    for (int e = 0; e < 9; e++) {
+      flipped[e] = 0;
     }
 
     System.out.println("Flipped at 0:" + Arrays.toString(flipped));
@@ -299,7 +299,7 @@ public class Board{
         while (board[y + n][x - n] == otherPlayer) {
           n += 1;
         }
-        if (board[y + n][x - n] == player) {
+        if (board[y + n][x - n] == otherPlayer) {
           n = 1;
         }
         else if (board[y + n][x - n] == 0) {
