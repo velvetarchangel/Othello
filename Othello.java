@@ -35,10 +35,20 @@ public class Othello{
                 board.printBoard();
                 System.out.println("It is " + player + "'s turn");
                 Scanner coord = new Scanner(System.in);
-                System.out.println("Enter a number between 1 to 8 for the x coordinate");
+                System.out.println("Enter a number between 1 to 8 for the x coordinate: ");
                 int x = coord.nextInt();
-                System.out.println("Enter a number between 1 to 8 for the y coordinate");
+                System.out.println("Enter a number between 1 to 8 for the y coordinate: ");
                 int y = coord.nextInt();
+
+                while ((x < 1 || x > 8) ||(y < 1 || y> 8)){
+                    player = 1;
+                    System.out.println("Invalid move, try again");
+                    System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
+                    x = coord.nextInt();
+                    System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
+                    y = coord.nextInt();
+                }
+
 
                 int[] flipped = board.move(x, y, player);
 
@@ -55,11 +65,24 @@ public class Othello{
                 board.printBoard();
                 System.out.println("It is " + player + "'s turn");
                 Scanner coord = new Scanner(System.in);
-                System.out.println("Enter a number between 1 to 8 for the x coordinate");
+                System.out.println("Enter a number between 1 to 8 for the x coordinate: ");
                 int x = coord.nextInt();
-                System.out.println("Enter a number between 1 to 8 for the y coordinate");
+                System.out.println("Enter a number between 1 to 8 for the y coordinate: ");
                 int y = coord.nextInt();
+
+
+                while ((x < 1 || x > 8) ||(y < 1 || y> 8)){
+                    player = 2;
+                    System.out.println("Invalid move, try again");
+                    System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
+                    x = coord.nextInt();
+                    System.out.print("Enter a number between 1 to 8 for the y coordinate: ");
+                    y = coord.nextInt();
+                }
+
                 int[] flipped = board.move(x, y, player);
+
+                
 
                 if (flipped[0] != 0) {
                     board.updateBoard(x, y, player, flipped);
