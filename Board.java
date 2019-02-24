@@ -42,7 +42,9 @@ public class Board{
             int j = 9;
             board[i][j] = 3;
         }
-
+        /**this sets pieces in the middle of the board to set up the initial 
+         * board
+         */
         board[4][4] = 1;
         board[4][5] = 2;
         board[5][4] = 2;
