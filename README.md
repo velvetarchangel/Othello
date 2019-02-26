@@ -38,14 +38,19 @@ This new board is he current game board. It indicates the turn for the other pla
 - **For Windows:** Go to the folder > press *"alt-D"* and type in *"cmd"*.
 
 ## Roadmap
+Future goals,
 - Graphical interface for the game.
 - Develop an AI to play against.
 
 ## Authors
 **Vivian Huynh** - Team Leader
+
 **Himika Dastidar**
+
 **Jayoo Hwang**
+
 **Al Mahmud Dipto**
+
 **Miguel Merin**
 
 ## Project Status
