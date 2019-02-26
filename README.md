@@ -14,5 +14,5 @@ This is a text-based version of the game. To start the game, the following steps
 
 ## Support
 ###### Opening a Terminal
-**For Linux:** *"Right-click"* inside the window and then select *"Open in Terminal"*.
-**For Windows:** Go to the folder > press *"alt-D"* and type in *"cmd"*.
+- **For Linux:** *"Right-click"* inside the window and then select *"Open in Terminal"*.
+- **For Windows:** Go to the folder > press *"alt-D"* and type in *"cmd"*.
