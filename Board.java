@@ -1,12 +1,11 @@
-import java.util.*;
 
 public class Board {
 
   // Instance variables
-  private int[][] board;
+  private String[][] board;
   private int n; // counts how many pieces are flipped in a direction
   private int[] flipped = new int[9];
-  private int otherPlayer = 0;
+  private String otherPlayer = "0";
 
   /**
    * This is the default constructor and it creates a 2D array which represents
@@ -14,27 +13,27 @@ public class Board {
    * moves at the edges of the board
    */
   public Board() {
-    this.board = new int[10][10];
+    this.board = new String[10][10];
     for (int i = 1; i < this.board.length; i++) {
       for (int j = 1; j < this.board.length; j++) {
-        board[i][j] = 0;
+        board[i][j] = "_";
       }
     }
 
     // Fills edges of board with 3's to help with edge cases
     for (int j = 0; j < 10; j++) {
       for (int i = 0; i < 10; i++) {
-        board[0][j] = 3; // top
-        board[9][j] = 3; // bottom
-        board[i][0] = 3; // left
-        board[i][9] = 3; // right
+        board[0][j] = "3"; // top
+        board[9][j] = "3"; // bottom
+        board[i][0] = "3"; // left
+        board[i][9] = "3"; // right
       }
     }
     /** this sets pieces in the middle of the board to set up the initial board */
-    board[4][4] = 1;
-    board[4][5] = 2;
-    board[5][4] = 2;
-    board[5][5] = 1;
+    board[4][4] = "1";
+    board[4][5] = "2";
+    board[5][4] = "2";
+    board[5][5] = "1";
   }
 
   /**
@@ -64,7 +63,7 @@ public class Board {
    * @param player = which player's turn it is
    * @param array  =
    */
-  public void updateBoard(int x, int y, int player, int[] array) {
+  public void updateBoard(int x, int y, String player, int[] array) {
     int north = array[1];
     if (north != 0) {
       for (int i = 0; i <= north; i++) {
@@ -127,19 +126,19 @@ public class Board {
    * 
    * @param player and @return turnScore
    */
-  public int turnScore(int player) {
+  public int turnScore(String player) {
     int turnScore = 0;
-    if (player == 1) {
+    if (player.equals("1")) {
       for (int i = 1; i <= 8; i++) {
         for (int j = 1; j <= 8; j++) {
-          if (board[i][j] == 1)
+          if (board[i][j].equals("1"))
             turnScore++;
         }
       }
-    } else if (player == 2) {
+    } else if (player.equals("2")) {
       for (int i = 1; i <= 8; i++) {
         for (int j = 1; j <= 8; j++) {
-          if (board[i][j] == 2)
+          if (board[i][j].equals("2"))
             turnScore++;
         }
       }
@@ -157,7 +156,7 @@ public class Board {
     int countTotal = 0;
     for (int i = 1; i <= 8; i++) {
       for (int j = 1; j <= 8; j++) {
-        if (board[i][j] == 1 || board[i][j] == 2) {
+        if (board[i][j].equals("1") || board[i][j].equals("2")) {
           countTotal++;
         }
       }
@@ -179,7 +178,7 @@ public class Board {
    *         flipped in the north direction, third is pieces flipped northeast,
    *         continuing clockwise for all 8 directions.
    **/
-  public int[] move(int x, int y, int player) {
+  public int[] move(int x, int y, String player) {
 
     // resets the flipped array everytime the player tries to make a move
     for (int e = 0; e < 9; e++) {
@@ -187,24 +186,24 @@ public class Board {
     }
 
     // determines the number of the other player
-    if (player == 1) {
-      otherPlayer = 2;
-    } else if (player == 2) {
-      otherPlayer = 1;
+    if (player.equals("1")) {
+      otherPlayer = "2";
+    } else if (player.equals("2")) {
+      otherPlayer = "1";
     }
 
     // checks if spot is empty, otherwise does nothing //
-    if (board[y][x] == 0) {
+    if (board[y][x].equals("_")) {
       n = 1;
 
       // check north //
-      if (board[y - n][x] == otherPlayer) {
-        while (board[y - n][x] == otherPlayer) {
+      if (board[y - n][x].equals(otherPlayer)) {
+        while (board[y - n][x].equals(otherPlayer)) {
           n += 1;
         }
-        if (board[y - n][x] == 3) {
+        if (board[y - n][x].equals("3")) {
           n = 1;
-        } else if (board[y - n][x] == 0) {
+        } else if (board[y - n][x].equals("_")) {
           n = 1;
         } else {
           flipped[1] = n - 1;
@@ -214,13 +213,13 @@ public class Board {
       }
 
       // check northeast //
-      if (board[y - n][x + n] == otherPlayer) {
-        while (board[y - n][x + n] == otherPlayer) {
+      if (board[y - n][x + n].equals(otherPlayer)) {
+        while (board[y - n][x + n].equals(otherPlayer)) {
           n += 1;
         }
-        if (board[y - n][x + n] == 3) {
+        if (board[y - n][x + n].equals("3")) {
           n = 1;
-        } else if (board[y - n][x + n] == 0) {
+        } else if (board[y - n][x + n].equals("_")) {
           n = 1;
         } else {
           flipped[2] = n - 1;
@@ -230,13 +229,13 @@ public class Board {
       }
 
       // check east //
-      if (board[y][x + n] == otherPlayer) {
-        while (board[y][x + n] == otherPlayer) {
+      if (board[y][x + n].equals(otherPlayer)) {
+        while (board[y][x + n].equals(otherPlayer)) {
           n += 1;
         }
-        if (board[y][x + n] == 3) {
+        if (board[y][x + n].equals("3")) {
           n = 1;
-        } else if (board[y][x + n] == 0) {
+        } else if (board[y][x + n].equals("_")) {
           n = 1;
         } else {
           flipped[3] = n - 1;
@@ -246,13 +245,13 @@ public class Board {
       }
 
       // check southeast //
-      if (board[y + n][x + n] == otherPlayer) {
-        while (board[y + n][x + n] == otherPlayer) {
+      if (board[y + n][x + n].equals(otherPlayer)) {
+        while (board[y + n][x + n].equals(otherPlayer)) {
           n += 1;
         }
-        if (board[y + n][x + n] == 3) {
+        if (board[y + n][x + n].equals("3")) {
           n = 1;
-        } else if (board[y + n][x + n] == 0) {
+        } else if (board[y + n][x + n].equals("_")) {
           n = 1;
         } else {
           flipped[4] = n - 1;
@@ -262,13 +261,13 @@ public class Board {
       }
 
       // check south //
-      if (board[y + n][x] == otherPlayer) {
-        while (board[y + n][x] == otherPlayer) {
+      if (board[y + n][x].equals(otherPlayer)) {
+        while (board[y + n][x].equals(otherPlayer)) {
           n += 1;
         }
-        if (board[y + n][x] == 3) {
+        if (board[y + n][x].equals("3")) {
           n = 1;
-        } else if (board[y + n][x] == 0) {
+        } else if (board[y + n][x].equals("_")) {
           n = 1;
         } else {
           flipped[5] = n - 1;
@@ -278,13 +277,13 @@ public class Board {
       }
 
       // check southwest //
-      if (board[y + n][x - n] == otherPlayer) {
-        while (board[y + n][x - n] == otherPlayer) {
+      if (board[y + n][x - n].equals(otherPlayer)) {
+        while (board[y + n][x - n].equals(otherPlayer)) {
           n += 1;
         }
-        if (board[y + n][x - n] == 3) {
+        if (board[y + n][x - n].equals("3")) {
           n = 1;
-        } else if (board[y + n][x - n] == 0) {
+        } else if (board[y + n][x - n].equals("_")) {
           n = 1;
         } else {
           flipped[6] = n - 1;
@@ -294,13 +293,13 @@ public class Board {
       }
 
       // check west //
-      if (board[y][x - n] == otherPlayer) {
-        while (board[y][x - n] == otherPlayer) {
+      if (board[y][x - n].equals(otherPlayer)) {
+        while (board[y][x - n].equals(otherPlayer)) {
           n += 1;
         }
-        if (board[y][x - n] == 3) {
+        if (board[y][x - n].equals("3")) {
           n = 1;
-        } else if (board[y][x - n] == 0) {
+        } else if (board[y][x - n].equals("_")) {
           n = 1;
         } else {
           flipped[7] = n - 1;
@@ -310,13 +309,13 @@ public class Board {
       }
 
       // check northwest //
-      if (board[y - n][x - n] == otherPlayer) {
-        while (board[y - n][x - n] == otherPlayer) {
+      if (board[y - n][x - n].equals(otherPlayer)) {
+        while (board[y - n][x - n].equals(otherPlayer)) {
           n += 1;
         }
-        if (board[y - n][x - n] == 3) {
+        if (board[y - n][x - n].equals("3")) {
           n = 1;
-        } else if (board[y - n][x - n] == 0) {
+        } else if (board[y - n][x - n].equals("_")) {
           n = 1;
         } else {
           flipped[8] = n - 1;

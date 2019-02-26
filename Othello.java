@@ -5,7 +5,7 @@ public class Othello {
 
     public static void main(String[] args) {
         Board board = new Board(); // creates a new Board object
-        int player = 0;// sets player to 0, this means there are no players at this time
+        String player = "0";// sets player to 0, this means there are no players at this time
         Player player_1 = new Player();
         Player player_2 = new Player();
 
@@ -15,11 +15,11 @@ public class Othello {
          */
         double initial_turn = Math.random();
         if (initial_turn <= 0.5) {
-            player = 1;
+            player = "1";
             player_1.setColour("Black");
             player_2.setColour("White");
         } else {
-            player = 2;
+            player = "2";
             player_2.setColour("Black");
             player_1.setColour("White");
         }
@@ -32,7 +32,7 @@ public class Othello {
          * ends and the winner's are announced otherwise the game keeps going
          */
         while (board.gameOver() == false) {
-            if (player == 1) {
+            if (player.equals("1")) {
                 board.printBoard();
                 System.out.println("\n" + "It is player " + player + "'s turn");
                 System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
@@ -43,7 +43,7 @@ public class Othello {
                 int[] flipped = board.move(x, y, player);
 
                 while ((x < 1 || x > 8) || (y < 1 || y > 8) || (flipped[0] == 0)) {
-                    player = 1;
+                    player = "1";
                     System.out.println("Invalid move, try again");
                     System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
                     x = coord.nextInt();
@@ -58,10 +58,10 @@ public class Othello {
                     System.out.println("\n" + "Player 1's score is " + playerOneScore);
                     System.out.println("Player 2's score is " + playerTwoScore);
                 }
-                player = 2;
+                player = "2";
             }
 
-            else if (player == 2) {
+            else if (player.equals("2")) {
                 board.printBoard();
                 System.out.println("\n" + "It is player " + player + "'s turn");
                 System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
@@ -72,7 +72,7 @@ public class Othello {
                 int[] flipped = board.move(x, y, player);
 
                 while ((x < 1 || x > 8) || (y < 1 || y > 8) || (flipped[0] == 0)) {
-                    player = 2;
+                    player = "2";
                     System.out.println("Invalid move, try again");
                     System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
                     x = coord.nextInt();
@@ -87,7 +87,7 @@ public class Othello {
                     System.out.println("\n" + "Player 1's score is " + playerOneScore);
                     System.out.println("Player 2's score is " + playerTwoScore);
                 }
-                player = 1;
+                player = "1";
             }
         }
         if (board.gameOver() == true) {
