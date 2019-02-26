@@ -40,9 +40,18 @@ public class Othello {
                 System.out.print("Enter a number between 1 to 8 for the y coordinate: ");
                 int y = coord.nextInt();
 
+                while ((x < 1 || x > 8) || (y < 1 || y > 8)) {
+                    player = "1";
+                    System.out.println("Invalid move, try again");
+                    System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
+                    x = coord.nextInt();
+                    System.out.print("Enter a number between 1 to 8 for the y coordinate: ");
+                    y = coord.nextInt();
+                }
+
                 int[] flipped = board.move(x, y, player);
 
-                while ((x < 1 || x > 8) || (y < 1 || y > 8) || (flipped[0] == 0)) {
+                while ((flipped[0] == 0)) {
                     player = "1";
                     System.out.println("Invalid move, try again");
                     System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
@@ -51,6 +60,7 @@ public class Othello {
                     y = coord.nextInt();
                     flipped = board.move(x, y, player);
                 }
+
                 if (flipped[0] != 0) {
                     board.updateBoard(x, y, player, flipped);
                     playerOneScore = board.turnScore(player);
@@ -69,9 +79,18 @@ public class Othello {
                 System.out.print("Enter a number between 1 to 8 for the y coordinate: ");
                 int y = coord.nextInt();
 
-                int[] flipped = board.move(x, y, player);
+                while ((x < 1 || x > 8) || (y < 1 || y > 8)) {
+                    player = "2";
+                    System.out.println("Invalid move, try again");
+                    System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
+                    x = coord.nextInt();
+                    System.out.print("Enter a number between 1 to 8 for the y coordinate: ");
+                    y = coord.nextInt();
+                }
 
-                while ((x < 1 || x > 8) || (y < 1 || y > 8) || (flipped[0] == 0)) {
+                int[] flipped = board.move(x, y, player);
+                
+                while ((flipped[0] == 0)) {
                     player = "2";
                     System.out.println("Invalid move, try again");
                     System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
