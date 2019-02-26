@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Othello {
-private static Scanner coord = new Scanner(System.in);
+    private static Scanner coord = new Scanner(System.in);
 
     public static void main(String[] args) {
         Board board = new Board(); // creates a new Board object
@@ -27,9 +27,9 @@ private static Scanner coord = new Scanner(System.in);
         int playerOneScore = player_1.getScore();
         int playerTwoScore = player_2.getScore();
 
-        /** gameOver checks whether board is full of pieces
-         * if the board is full the game ends and the winner's are announced
-         * otherwise the game keeps going
+        /**
+         * gameOver checks whether board is full of pieces if the board is full the game
+         * ends and the winner's are announced otherwise the game keeps going
          */
         while (board.gameOver() == false) {
             if (player == 1) {
@@ -47,7 +47,7 @@ private static Scanner coord = new Scanner(System.in);
                     System.out.println("Invalid move, try again");
                     System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
                     x = coord.nextInt();
-                    System.out.print("Enter a number between 1 to 8 for the x coordinate: ");
+                    System.out.print("Enter a number between 1 to 8 for the y coordinate: ");
                     y = coord.nextInt();
                     flipped = board.move(x, y, player);
                 }
@@ -56,6 +56,7 @@ private static Scanner coord = new Scanner(System.in);
                     playerOneScore = board.turnScore(player);
                     player_1.setScore(playerOneScore);
                     System.out.println("\n" + "Player 1's score is " + playerOneScore);
+                    System.out.println("Player 2's score is " + playerTwoScore);
                 }
                 player = 2;
             }
@@ -67,7 +68,7 @@ private static Scanner coord = new Scanner(System.in);
                 int x = coord.nextInt();
                 System.out.print("Enter a number between 1 to 8 for the y coordinate: ");
                 int y = coord.nextInt();
-                
+
                 int[] flipped = board.move(x, y, player);
 
                 while ((x < 1 || x > 8) || (y < 1 || y > 8) || (flipped[0] == 0)) {
@@ -79,29 +80,27 @@ private static Scanner coord = new Scanner(System.in);
                     y = coord.nextInt();
                     flipped = board.move(x, y, player);
                 }
-
-
                 if (flipped[0] != 0) {
                     board.updateBoard(x, y, player, flipped);
                     playerTwoScore = board.turnScore(player);
                     player_2.setScore(playerTwoScore);
-                    System.out.println("\n" + "Player 2's is score is " + playerTwoScore);
+                    System.out.println("\n" + "Player 1's score is " + playerOneScore);
+                    System.out.println("Player 2's score is " + playerTwoScore);
                 }
                 player = 1;
             }
         }
-        if (board.gameOver() == true){
+        if (board.gameOver() == true) {
             board.printBoard();
-            if (player_1.getScore() > player_2.getScore()){
+            if (player_1.getScore() > player_2.getScore()) {
                 System.out.println("Player 1 wins! Final score is: " + player_1.getScore());
-            }
-            else if (player_2.getScore() < player_2.getScore()){
+            } else if (player_2.getScore() < player_2.getScore()) {
                 System.out.println("Player 2 wins! Final score is: " + player_2.getScore());
-            }
-            else if(player_2.getScore() == player_2.getScore()){
-                System.out.println("Its a draw! " + "Player 1's score: " + player_1.getScore() + "Player 2's score: "+ player_2.getScore());
+            } else if (player_2.getScore() == player_2.getScore()) {
+                System.out.println("It's a draw! " + "Player 1's score: " + player_1.getScore() + "Player 2's score: "
+                        + player_2.getScore());
             }
         }
     }
 
-}        
+}
