@@ -63,8 +63,10 @@ public class Othello {
 
                 if (flipped[0] != 0) {
                     board.updateBoard(x, y, player, flipped);
-                    playerOneScore = board.turnScore(player);
+                    playerOneScore = board.turnScore("1");
+                    playerTwoScore = board.turnScore("2");
                     player_1.setScore(playerOneScore);
+                    player_2.setScore(playerTwoScore);
                     System.out.println("\n" + "Player 1's score is " + playerOneScore);
                     System.out.println("Player 2's score is " + playerTwoScore);
                 }
@@ -102,7 +104,9 @@ public class Othello {
                 if (flipped[0] != 0) {
                     board.updateBoard(x, y, player, flipped);
                     playerTwoScore = board.turnScore(player);
+                    playerOneScore = board.turnScore("1");
                     player_2.setScore(playerTwoScore);
+                    player_1.setScore(playerOneScore);
                     System.out.println("\n" + "Player 1's score is " + playerOneScore);
                     System.out.println("Player 2's score is " + playerTwoScore);
                 }
