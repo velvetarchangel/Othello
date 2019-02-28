@@ -35,7 +35,8 @@ This new board is the current game board. It indicates the turn for the other pl
 
 ## Roadmap
 Future goals,
-- Graphical interface for the game.
+- Setting up difficulty levels.
+- Stunning graphical interface for the game.
 - Develop an AI to play against.
 
 ## Authors
