@@ -11,7 +11,7 @@ following steps are advised,
 refer to [Opening a Terminal](#opening-a-terminal) in the [Support](#support) section.
 3. Compile the code in the terminal by using this command ```javac Othello.java```
 4. Run the program using this command ```java Othello```
-5. To exit the game, close the terminal window.
+5. The game ends when the board becomes full.
 
 ## Description
 The game is played on an 8 x 8 board. There are two players, Player 1 and Player 2. Each player's token on the board is represented by their player number. The game decides which player goes first at random, and that player will be prompted to enter coordinates to place their token. Tokens can only be placed adjacent to or diagonally from the opposing person’s token. For example: "1" tokens can only be placed next to or diagonally from a "2" token and vice versa. If there are "1" tokens that are surrounded by "2" tokens on both sides horizontally, vertically or diagonally, the "1" tokens then become "2" and vice versa. The game ends when the board is filled with tokens or there are no more valid moves left. Then score is calculated by counting the number of tokens for
