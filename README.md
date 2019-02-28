@@ -25,8 +25,8 @@ For an elaborate set of game rules, please visit [Othello Wikipedia page](https:
 
 ## Usage
 The game runs entirely in the *terminal* window as it is currently ![version](https://img.shields.io/badge/version-text--based-green.svg?style=flat-square).
-- The board is displayed in terminal showing the x and y co-ordinate numbers and with 2 tokens numbered as *1*
-and other 2 tokens numbered as *2* in the centre of the board.
+- The board is displayed in terminal showing the x and y co-ordinate numbers and with 2 tokens numbered as *"1"*
+and other 2 tokens numbered as *"2"* in the centre of the board.
 - It indicates the player in turn and asks for the *x co-ordinate* first and then the *y co-ordinate* for the spot where the token is to be put. You may input the numbers of the co-ordinates.
 - If a *valid move* is made then, the *score* of the player who made the turn is shown and the board is *refreshed* with the flipped pieces.
 This new board is he current game board. It indicates the turn for the other player and asks input for x and y co-ordinate again.
