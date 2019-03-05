@@ -1,5 +1,5 @@
 import java.util.Scanner;
- 
+
 public class Othello{
 
    public static int [] getUserInput(){
@@ -28,7 +28,7 @@ public class Othello{
    public static void main(String[] args){
 /**
 * Main class for Othello game which is required to run the application
-* 
+*
 * @author T08 Group 5 (CPSC 233)
 * @version 1.0 (February 27, 2019)
 */
@@ -44,7 +44,7 @@ public class Othello{
         * is <= 0.5 then it is black's turn, else it is white's turn
         */
 
-       
+
        double initial_turn = Math.random();
        if (initial_turn <= 0.5) {
            player = "1";
@@ -78,9 +78,9 @@ public class Othello{
         }
 
         else{
-            while (board.gameOver() == false) { 
+            while (board.gameOver() == false) {
             // Continues game if board is not full
-            if (player.equals("1") && !Check.AnyMovesLeft("1", board)) { // Player 1's turn
+            if (player.equals("1") && Check.AnyMovesLeft("1", board)) { // Player 1's turn
                 board.printBoard();
                 System.out.println("\n" + "It is player " + player + "'s turn");
                 x_yCoordinate = Othello.getUserInput();
@@ -161,4 +161,3 @@ public class Othello{
     }
 }
 }
-

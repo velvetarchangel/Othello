@@ -1,5 +1,5 @@
 public class Check {
-    private static int[] flipped;
+    private static int[] flipped = new int[9];
     private static String otherPlayer;
     private static String[][] board;
     private static int n;
@@ -21,7 +21,7 @@ public class Check {
     *         flipped following the north direction (clockwise).
     **/
 
-    public static int[] move(int x, int y, String player, Board gameboard) { 
+    public static int[] move(int x, int y, String player, Board gameboard) {
 
     board = gameboard.getArray();
 
@@ -175,13 +175,13 @@ public class Check {
     return flipped;
   }
 
-    
+
   public static boolean AnyMovesLeft(String player, Board gameBoard){
     board = gameBoard.getArray();
     boolean moves_left = false;
     for (int i = 0; i < 9; i++){
       for (int j = 0; j < 9; j++){
-        while(moves_left = false){
+        if (moves_left == false){
           if (board[j][i].equals("_"))
           {
             int[] flipped = Check.move(i + 1, j + 1, player, gameBoard);
@@ -191,9 +191,6 @@ public class Check {
               moves_left = true;
               break;
             }
-          }
-          else {
-            break;
           }
         }
       }
