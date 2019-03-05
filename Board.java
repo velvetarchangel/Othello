@@ -70,6 +70,12 @@ public class Board {
     }
   }
 
+  public String[][] getArray() {
+    return this.board;
+  }
+
+  /** 
+
   /**
    * Checks each direction to see whether pieces can be flipped to the current
    * player's number according to the user's inputted coordinates. Lists the total
@@ -332,7 +338,6 @@ public class Board {
 
   /**
    * Checks whether the board is full
-   * 
    * @return full True if the board is filled, false if the board is not filled
    */
   public boolean gameOver() {
