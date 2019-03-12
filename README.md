@@ -30,7 +30,7 @@ The game currently running is ![version](https://img.shields.io/badge/version-GU
 
 ## GUI
 The *Graphical User Interface* for this game includes:-
-- **Gameboard:** It is a green coloured board with black lines going horizontally and vertically across the board. The board has 64 slots which can be clicked to place the tokens on. When a slot is clicked, a black or a white token is placed inside the slot.
+- **Gameboard:** It is a green coloured board with black lines going horizontally and vertically across the board. The board has 64 slots which can be clicked to place the tokens on. When a slot is clicked, a *"BLACK"* or a *"WHITE"* token is placed inside the slot.
 - **Scoreboard:** The points scored by Player 1 and Player 2 is displayed and gets updated after valid moves are made.
 - **Quit option:** A label showing *Click here to exit* that can be clicked on to exit out of the game.
 
@@ -43,7 +43,9 @@ The *Graphical User Interface* for this game includes:-
 Your computer will not display the game window if *JavaFX* is missing from it. JavaFX should be available with Java 8 and up. It is possible that you are working with a non-Oracle version of Java, in which case it may be missing. If that is the case then, you might want to take the following steps:-
 - Download the **jfxrt.jar** file from online and place it in the game file folder.
 - Before compiling and running the game file, run the follwing command,
+
 **For Linux/Mac:** ```javac -cp .:jrxrt.jar *.java```
+
 **For Windows:**  ```javac -cp .;jrxrt.jar *.java```
 With that you should be good to compile and run the game file.
 
