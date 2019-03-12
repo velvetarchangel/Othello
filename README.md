@@ -41,12 +41,11 @@ The *Graphical User Interface* for this game includes:-
 
 ##### JavaFX Help
 Your computer will not display the game window if *JavaFX* is missing from it. JavaFX should be available with Java 8 and up. It is possible that you are working with a non-Oracle version of Java, in which case it may be missing. If that is the case then, you might want to take the following steps:-
-- Download the **jfxrt.jar** file from online and place it in the game file folder.
-- Before compiling and running the game file, run the follwing command,
+1. Download the **jfxrt.jar** file from online and place it in the game file folder.
+2. Before compiling and running the game file, run the follwing command,
+-**For Linux/Mac:** ```javac -cp .:jrxrt.jar *.java```
+-**For Windows:**  ```javac -cp .;jrxrt.jar *.java```
 
-**For Linux/Mac:** ```javac -cp .:jrxrt.jar *.java```
-
-**For Windows:**  ```javac -cp .;jrxrt.jar *.java```
 With that you should be good to compile and run the game file.
 
 
