@@ -32,25 +32,117 @@ import javafx.stage.Stage;
 import java.lang.Math;
 
 public class OthelloGraphics extends Application{
-  private Board gameBoard = new Board();
-  private String player = "0";
-  private player1 = new Player();
-  private player2 = new Player();
+  private Board board = new Board();
+  private String player = "1";
+  private Group graphicBoard = new Group();
+  private Scene scene = new Scene(graphicBoard,1200,850,Color.BLACK);
+  private Player player_1 = new Player();
+  private Player player_2 = new Player();
+  private int playerOneScore = player_1.getScore();
+  private int playerTwoScore = player_2.getScore();
+  private String versus = "menu";
 
-  private Group board = new Group();
-  
-  private EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>(){
+  private EventHandler<MouseEvent> vsPlayerHandler = new EventHandler<MouseEvent>(){
     @Override
     public void handle(MouseEvent mouseEvent){
       double mouseX = mouseEvent.getX();
       double mouseY = mouseEvent.getY();
       if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 700) && (mouseY < 800)){
-        System.exit(0);                
+        System.exit(0);
       }
       if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
-        System.out.println("X: " + mouseX + "Y: " + mouseY);
-        int i = (int)(Math.floor((mouseX - 25.0) / 100.0) + 1);
-        int j = (int)(Math.floor((mouseY - 25.0) / 100.0) + 1);        
+        int x = (int)(Math.floor((mouseX - 25.0) / 100.0) + 1);
+        int y = (int)(Math.floor((mouseY - 25.0) / 100.0) + 1);
+
+        /**
+         * Checks whether the board is full of pieces. If the board is full, the game
+         * end, and the winners are announce. Otherwise the game continues.
+         */
+
+        if (board.gameOver() == true) { // Once graphicBoard is filled, end game and print out result
+            drawBoard();
+            drawScore();
+            drawVictoryScreen();
+        }
+
+        else {
+            if (board.gameOver() == false) {
+                clearScreen();
+                // Continues game if board is not full
+                if (player.equals("1") && Check.AnyMovesLeft("1", board)) { // Player 1's turn
+                    System.out.println("X: " + x + "    Y: " + y);
+                    board.printBoard();
+                    System.out.println("\n" + "It is player " + player + "'s turn");
+                    int[] flipped = Check.move(x, y, player, board);
+                    drawBoard();
+                    drawScore();
+
+                    if ((flipped[0] == 0)) { // Reprompts user if no pieces can be flipped
+                        player = "1";
+                        System.out.println("Invalid move, try again");
+                    }
+
+                    if (flipped[0] != 0) { // If pieces can be flipped, update board and scores
+                        board.updateBoard(x, y, player, flipped);
+                        board.printBoard();
+                        playerOneScore = board.turnScore("1");
+                        playerTwoScore = board.turnScore("2");
+                        player_1.setScore(playerOneScore);
+                        player_2.setScore(playerTwoScore);
+                        System.out.println("\n" + "Player 1's score is " + playerOneScore);
+                        System.out.println("Player 2's score is " + playerTwoScore);
+                        drawBoard();
+                        drawScore();
+                    }
+
+                    player = "2"; // Switch to player 2's turn
+                    }
+
+                else if (player.equals("2") && Check.AnyMovesLeft("2", board)) { // Player 2's turn
+                    board.printBoard();
+                    System.out.println("\n" + "It is player " + player + "'s turn");
+                    int[] flipped = Check.move(x, y, player, board);
+                    drawBoard();
+                    drawScore();
+
+                    if ((flipped[0] == 0)) { // Reprompts users if no pieces can be flipped
+                        player = "2";
+                        System.out.println("Invalid move, try again");
+                        flipped = Check.move(x, y, player, board);
+                    }
+
+                    if (flipped[0] != 0) { // If pieces can be flipped, update the board and scores
+                        board.updateBoard(x, y, player, flipped);
+                        board.printBoard();
+                        playerTwoScore = board.turnScore(player);
+                        playerOneScore = board.turnScore("1");
+                        player_2.setScore(playerTwoScore);
+                        player_1.setScore(playerOneScore);
+                        System.out.println("\n" + "Player 1's score is " + playerOneScore);
+                        System.out.println("Player 2's score is " + playerTwoScore);
+                        drawBoard();
+                        drawScore();
+                    }
+                    player = "1"; // Switch to player 1's turn
+                  }
+                  drawBoard();
+                  drawScore();
+            }
+        }
+      }
+    }
+  };
+
+  private EventHandler<MouseEvent> menuHandler = new EventHandler<MouseEvent>(){
+    @Override
+    public void handle(MouseEvent mouseEvent){
+      double mouseX = mouseEvent.getX();
+      double mouseY = mouseEvent.getY();
+      if ((mouseX > 400) && (mouseX < 800) && (mouseY > 600) && (mouseY < 700)){
+        System.exit(0);
+      }
+      if ((mouseX > 400) && (mouseX < 800) && (mouseY > 450) && (mouseY < 850)){
+        versus = "start";
       }
     }
   };
@@ -61,23 +153,146 @@ public class OthelloGraphics extends Application{
     initScoreBoard();
     initPlayerInfo();
     drawBoard();
-    return board;
+    createMessageBoard();
+    return graphicBoard;
   }
 
-  public void drawBoard() throws FileNotFoundException{
-    String[][] temp = gameBoard.getArray();
+  private Parent mainMenu() throws FileNotFoundException{
+    initMenuBack();
+    initMenuButtons();
+    return graphicBoard;
+  }
+
+  public void drawBoard(){
+    String[][] temp = board.getArray();
     for (int i = 0; i <= 8; i++){
       for (int j = 0; j <= 8; j++){
-        if (temp[i][j].equals("1")){
+        if (temp[j][i].equals("1")){
           createWhitePiece((i*100)-25,(j*100)-25);
         }
-        else if (temp[i][j].equals("2")){
+        else if (temp[j][i].equals("2")){
           createBlackPiece((i*100)-25,(j*100)-25);
         }
       }
     }
   }
 
+  public void drawScore(){
+    Rectangle clear = new Rectangle();
+    clear.setX(920);
+    clear.setY(155);
+    clear.setWidth(200);
+    clear.setHeight(50);
+    clear.setFill(Color.SNOW);
+    Rectangle clear2 = new Rectangle();
+    clear2.setX(920);
+    clear2.setY(355);
+    clear2.setWidth(200);
+    clear2.setHeight(50);
+    clear2.setFill(Color.SNOW);
+    Text player1Score = new Text(925,200,String.valueOf(playerOneScore));
+    player1Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
+    Text player2Score = new Text(925,400,String.valueOf(playerTwoScore));
+    player2Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
+    createMessageBoard();
+
+    graphicBoard.getChildren().addAll(clear,clear2,player1Score,player2Score);
+  }
+
+  public void drawVictoryScreen(){
+    if (player_1.getScore() > player_2.getScore()) {
+        System.out.println("Player 1 wins! Final score is: " + player_1.getScore());
+        drawWinnerOne();
+    } else if (player_2.getScore() < player_2.getScore()) {
+        System.out.println("Player 2 wins! Final score is: " + player_2.getScore());
+        drawWinnerTwo();
+    } else if (player_2.getScore() == player_2.getScore()) {
+        System.out.println("It's a draw! " + "Player 1's score: " + player_1.getScore()
+                + "Player 2's score: " + player_2.getScore());
+        drawWinnerBoth();
+    }
+  }
+
+  public void changeScenes() throws FileNotFoundException{
+    if (versus.equals("menu")){
+      scene.setRoot(mainMenu());
+      scene.setOnMouseClicked(menuHandler);
+    }
+    if (versus.equals("start")){
+      scene.setRoot(startup());
+      scene.setOnMouseClicked(vsPlayerHandler);
+    }
+  }
+
+  public void initMenuBack() throws FileNotFoundException{
+    Image feltTexture = new Image(new FileInputStream("feltboard.png"));
+    Image woodEdge = new Image(new FileInputStream("woodwalls.jpg"));
+    ImageView woodBack = new ImageView();
+    ImageView feltBack = new ImageView();
+    woodBack.setImage(woodEdge);
+    woodBack.setFitWidth(1200);
+    woodBack.setFitHeight(850);
+    feltBack.setImage(feltTexture);
+    feltBack.setX(25);
+    feltBack.setY(25);
+    feltBack.setFitWidth(1150);
+    feltBack.setFitHeight(800);
+    Path boardBorder = new Path();
+    MoveTo bbstart = new MoveTo(25,25);
+    LineTo bb1 = new LineTo(25,826);
+    LineTo bb2 = new LineTo(1176,826);
+    LineTo bb3 = new LineTo(1176,25);
+    LineTo bb4 = new LineTo(25,25);
+    boardBorder.setStrokeWidth(5);
+    boardBorder.getElements().add(bbstart);
+    boardBorder.getElements().addAll(bb1,bb2,bb3,bb4);
+    Text title = new Text(270,350,"OTHELLO");
+    title.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,200));
+    Text title2 = new Text(560,400,"T-8  G-5");
+    title2.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
+
+    graphicBoard.getChildren().addAll(woodBack,feltBack,boardBorder,title,title2);
+  }
+
+  public void initMenuButtons() throws FileNotFoundException{
+    Image feltTexture2 = new Image(new FileInputStream("whitefelt.jpg"));
+    ImageView startFelt = new ImageView();
+    startFelt.setImage(feltTexture2);
+    startFelt.setX(400);
+    startFelt.setY(450);
+    startFelt.setFitWidth(400);
+    startFelt.setFitHeight(100);
+    Path startBorder = new Path();
+    MoveTo sbstart = new MoveTo(400,450);
+    LineTo sb1 = new LineTo(800,450);
+    LineTo sb2 = new LineTo(800,550);
+    LineTo sb3 = new LineTo(400,550);
+    LineTo sb4 = new LineTo(400,450);
+    startBorder.setStrokeWidth(5);
+    startBorder.getElements().add(sbstart);
+    startBorder.getElements().addAll(sb1,sb2,sb3,sb4);
+    Text startText = new Text(490,520,"Start Game");
+    startText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,50));
+    ImageView exitarea = new ImageView();
+    exitarea.setImage(feltTexture2);
+    exitarea.setX(400);
+    exitarea.setY(600);
+    exitarea.setFitWidth(400);
+    exitarea.setFitHeight(100);
+    Path exitBorder = new Path();
+    MoveTo ebstart = new MoveTo(400,600);
+    LineTo eb1 = new LineTo(800,600);
+    LineTo eb2 = new LineTo(800,700);
+    LineTo eb3 = new LineTo(400,700);
+    LineTo eb4 = new LineTo(400,600);
+    exitBorder.setStrokeWidth(5);
+    exitBorder.getElements().add(ebstart);
+    exitBorder.getElements().addAll(eb1,eb2,eb3,eb4);
+    Text exitText = new Text(500,665,"Exit Game");
+    exitText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,50));
+
+    graphicBoard.getChildren().addAll(startFelt,startBorder,startText,exitarea,exitBorder,exitText);
+  }
 
   public void initBackGround() throws FileNotFoundException{
     Image feltTexture = new Image(new FileInputStream("feltboard.png"));
@@ -102,7 +317,7 @@ public class OthelloGraphics extends Application{
     boardBorder.getElements().add(bbstart);
     boardBorder.getElements().addAll(bb1,bb2,bb3,bb4);
 
-    board.getChildren().addAll(woodBack,feltBack,boardBorder);
+    graphicBoard.getChildren().addAll(woodBack,feltBack,boardBorder);
   }
 
   public void initBoardGrid() throws FileNotFoundException{
@@ -121,7 +336,7 @@ public class OthelloGraphics extends Application{
     Line h6 = new Line(25,625,825,625);
     Line h7 = new Line(25,725,825,726);
 
-    board.getChildren().addAll(v1,v2,v3,v4,v5,v6,v7,h1,h2,h3,h4,h5,h6,h7);
+    graphicBoard.getChildren().addAll(v1,v2,v3,v4,v5,v6,v7,h1,h2,h3,h4,h5,h6,h7);
   }
 
   public void initScoreBoard() throws FileNotFoundException{
@@ -159,14 +374,18 @@ public class OthelloGraphics extends Application{
     Text exitText = new Text(920,760,"Click here to exit.");
     exitText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
 
-    board.getChildren().addAll(scoreFelt,scoreBorder,exitarea,exitBorder,exitText);
+    graphicBoard.getChildren().addAll(scoreFelt,scoreBorder,exitarea,exitBorder,exitText);
   }
 
   public void initPlayerInfo() throws FileNotFoundException{
     Text player1Text = new Text(925,100,"Player1");
-    Text player2Text = new Text(925,300,"Player2");
     player1Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
+    Text player1Score = new Text(925,200,String.valueOf(playerOneScore));
+    player1Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
+    Text player2Text = new Text(925,300,"Player2");
     player2Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
+    Text player2Score = new Text(925,400,String.valueOf(playerTwoScore));
+    player2Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
     Rectangle playerarea = new Rectangle();
     playerarea.setX(900);
     playerarea.setY(50);
@@ -183,7 +402,43 @@ public class OthelloGraphics extends Application{
     playerBorder.getElements().add(pbstart);
     playerBorder.getElements().addAll(pb1,pb2,pb3,pb4);
 
-    board.getChildren().addAll(playerarea,playerBorder,player1Text,player2Text);
+    graphicBoard.getChildren().addAll(playerarea,playerBorder,player1Text,player1Score,player2Text,player2Score);
+  }
+
+  public void drawWinnerOne(){
+
+  }
+
+  public void drawWinnerTwo(){
+
+  }
+
+  public void drawWinnerBoth(){
+
+  }
+
+  public void createMessageBoard(){
+    Text playerText = new Text(925,600,player);
+    playerText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
+    Text playerText2 = new Text(940,600,"'s Turn!");
+    playerText2.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
+    Rectangle messagearea = new Rectangle();
+    messagearea.setX(900);
+    messagearea.setY(500);
+    messagearea.setWidth(250);
+    messagearea.setHeight(175);
+    messagearea.setFill(Color.SNOW);
+    Path messageBorder = new Path();
+    MoveTo mstart = new MoveTo(900,500);
+    LineTo mb1 = new LineTo(1150,500);
+    LineTo mb2 = new LineTo(1150,675);
+    LineTo mb3 = new LineTo(900,675);
+    LineTo mb4 = new LineTo(900,500);
+    messageBorder.setStrokeWidth(5);
+    messageBorder.getElements().add(mstart);
+    messageBorder.getElements().addAll(mb1,mb2,mb3,mb4);
+
+    graphicBoard.getChildren().addAll(messagearea,messageBorder,playerText,playerText2);
   }
 
   public void createWhitePiece(double midx,double midy){
@@ -198,7 +453,7 @@ public class OthelloGraphics extends Application{
     whitePiece.setCenterY(midy);
     whitePiece.setRadius(43);
 
-    board.getChildren().addAll(whitePieceBorder,whitePiece);
+    graphicBoard.getChildren().addAll(whitePieceBorder,whitePiece);
   }
 
   public void createBlackPiece(double midx,double midy){
@@ -213,26 +468,25 @@ public class OthelloGraphics extends Application{
     blackPiece.setCenterY(midy);
     blackPiece.setRadius(43);
 
-    board.getChildren().addAll(blackPieceBorder,blackPiece);
+    graphicBoard.getChildren().addAll(blackPieceBorder,blackPiece);
+  }
+
+  public static void clearScreen() {
+    for (int i = 0; i < 50; ++i) System.out.println();
   }
 
   @Override
   public void start(Stage stage) throws FileNotFoundException{
-    gameBoard = new Board();
-
-      
-    Scene scene = new Scene(startup(),1200,850);
-    scene.setFill(Color.BLACK);
-    scene.setOnMouseClicked(mouseHandler);
+    scene.setRoot(startup());
+    scene.setOnMouseClicked(vsPlayerHandler);
     stage.setResizable(true);
     stage.setTitle("Othello");
     stage.setScene(scene);
     stage.sizeToScene();
     stage.show();
   }
-  
+
   public static void main(String args[]){
     launch(args);
   }
-
 }
