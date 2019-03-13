@@ -91,11 +91,12 @@ public class OthelloGraphics extends Application{
                         player_2.setScore(playerTwoScore);
                         System.out.println("\n" + "Player 1's score is " + playerOneScore);
                         System.out.println("Player 2's score is " + playerTwoScore);
+                        player = "2";
                         drawBoard();
                         drawScore();
                     }
 
-                    player = "2"; // Switch to player 2's turn
+                    
                     }
 
                 else if (player.equals("2") && Check.AnyMovesLeft("2", board)) { // Player 2's turn
@@ -120,10 +121,10 @@ public class OthelloGraphics extends Application{
                         player_1.setScore(playerOneScore);
                         System.out.println("\n" + "Player 1's score is " + playerOneScore);
                         System.out.println("Player 2's score is " + playerTwoScore);
+                        player = "1";
                         drawBoard();
                         drawScore();
                     }
-                    player = "1"; // Switch to player 1's turn
                   }
                   drawBoard();
                   drawScore();
