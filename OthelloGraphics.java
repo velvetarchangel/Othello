@@ -47,6 +47,11 @@ public class OthelloGraphics extends Application{
     public void handle(MouseEvent mouseEvent){
       double mouseX = mouseEvent.getX();
       double mouseY = mouseEvent.getY();
+      // if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 587) && (mouseY < 675 )){
+      //   System.out.print("HYEYEYEYEYEYEY");
+      //   board = new Board();
+      //   drawBoard();
+      //   drawScore();
       if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 700) && (mouseY < 800)){
         System.exit(0);
       }
@@ -96,7 +101,7 @@ public class OthelloGraphics extends Application{
                         drawScore();
                     }
 
-                    
+
                     }
 
                 else if (player.equals("2") && Check.AnyMovesLeft("2", board)) { // Player 2's turn
@@ -407,22 +412,36 @@ public class OthelloGraphics extends Application{
   }
 
   public void drawWinnerOne(){
+      Text winner = new Text(200,500,"Player 1 Wins!");
+      winner.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,150));
+      winner.setFill(Color.MEDIUMSPRINGGREEN);
 
+      graphicBoard.getChildren().add(winner);
   }
 
   public void drawWinnerTwo(){
+    Text winner = new Text(200,500,"Player 2 Wins!");
+    winner.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,150));
+    winner.setFill(Color.MEDIUMSPRINGGREEN);
+
+    graphicBoard.getChildren().add(winner);
 
   }
 
   public void drawWinnerBoth(){
+    Text winner = new Text(200,500,"No-one Wins!");
+    winner.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,150));
+    winner.setFill(Color.MEDIUMSPRINGGREEN);
+
+    graphicBoard.getChildren().add(winner);
 
   }
 
   public void createMessageBoard(){
-    Text playerText = new Text(925,600,player);
+    Text playerText = new Text(965,560,player + "'s Turn!");
     playerText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
-    Text playerText2 = new Text(940,600,"'s Turn!");
-    playerText2.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
+    Text resetText = new Text(955,630,"Reset Game");
+    resetText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
     Rectangle messagearea = new Rectangle();
     messagearea.setX(900);
     messagearea.setY(500);
@@ -435,11 +454,13 @@ public class OthelloGraphics extends Application{
     LineTo mb2 = new LineTo(1150,675);
     LineTo mb3 = new LineTo(900,675);
     LineTo mb4 = new LineTo(900,500);
+    Line mbmid = new Line(900,587,1150,587);
+    mbmid.setStrokeWidth(5);
     messageBorder.setStrokeWidth(5);
     messageBorder.getElements().add(mstart);
     messageBorder.getElements().addAll(mb1,mb2,mb3,mb4);
 
-    graphicBoard.getChildren().addAll(messagearea,messageBorder,playerText,playerText2);
+    graphicBoard.getChildren().addAll(messagearea,messageBorder,mbmid,playerText);
   }
 
   public void createWhitePiece(double midx,double midy){
@@ -477,7 +498,8 @@ public class OthelloGraphics extends Application{
   }
 
   @Override
-  public void start(Stage stage) throws FileNotFoundException{
+  public void start(Stage mstage) throws FileNotFoundException{
+    Stage stage = mstage;
     scene.setRoot(startup());
     scene.setOnMouseClicked(vsPlayerHandler);
     stage.setResizable(true);
