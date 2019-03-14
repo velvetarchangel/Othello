@@ -3,7 +3,7 @@
  * array, and methods that print out the board, and keeps track of moves and
  * scores.
  * 
- * @author T08 Group 5 (CPSC 233)
+ * @author Himika Dastidar, Jayoo Hwang, Vivian Hyunh
  * @version 1.0 (February 27, 2019)
  */
 public class Board {

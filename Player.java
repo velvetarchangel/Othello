@@ -2,14 +2,16 @@
  * Player class for Othello game. This class contains the attributes of a
  * player.
  * 
- * @author T08 Group 5 (CPSC 233)
+ * @author Vivian Hyunh
  * @version 1.0 (February 27, 2019)
  */
+ 
 public class Player {
 
   // Instance variables
   String colour; // black or white
   int score;
+  //String name;
 
   // Constructors
 
@@ -28,6 +30,7 @@ public class Player {
   public Player(String colour, int score) {
     this.colour = colour;
     this.score = score;
+    //this.name = name;
   }
 
   // Getters
@@ -41,6 +44,14 @@ public class Player {
   public int getScore() {
     return score;
   }
+
+
+
+  /** @return name */
+  /*
+  public String getName() {
+    return this.name;
+  }*/
 
 
   // Setters
@@ -62,5 +73,13 @@ public class Player {
   public void setScore(int score) {
     this.score = score;
   }
+  
+  /** Set's the name */
+  /*
+  public void setName(String name) {
+    this.name = name;
+  }*/
+
+
 
 }

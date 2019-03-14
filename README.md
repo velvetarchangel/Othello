@@ -11,9 +11,9 @@ following steps are advised:-
 3. Compile the game file code in the terminal by using this following command ```javac Othello.java```
 4. Next, you will have to get the graphics for the game compiled by using the command ```javac OthelloGraphics.java```
 5. Now, run the program using this command ```java OthelloGraphics```
-6. A new game window will pop up on the screen and you can go on right ahead and start playing.
-7. You can move the cursor on the game board and click on a valid slot to place a token.
-8. The game ends when the board becomes full. You can also click on the *"Click here to exit"* option anytime to exit out of the game.
+5. A new game window will pop up on the screen and you can go on right ahead and start playing.
+6. You can move the cursor on the game board and click on a valid slot to place a token.
+7. The game ends when the board becomes full. You can also click on the *"Click here to exit"* option anytime to exit out of the game.
 
 ## Description
 The game is played on an 8 x 8 board. There are two players, Player 1 and Player 2. Each player's token on the board is represented by a black and white token. The game decides which player goes first at random, and that player can click on one of the appropiate slots on the board to place their token. The player going first is Player 1 and the player will get to use the *"BLACK"* token. Tokens can only be placed adjacent to or diagonally from the opposing person’s token. For example: *"BLACK"* tokens can only be placed next to or diagonally from a *"WHITE"* token and vice versa. If there are *"BLACK"* tokens that are surrounded by *"WHITE"* tokens on both sides horizontally, vertically or diagonally, the *"BLACK"* tokens then become *"WHITE"* and vice versa. The game ends when the board is filled with tokens or there are no more valid moves left. Then score is calculated by counting the number of tokens for each player.
@@ -46,8 +46,8 @@ To play the ![version](https://img.shields.io/badge/version-text--based-lightgre
 The *Graphical User Interface* for this game includes:-
 - **Gameboard:** It is a green coloured board with black lines going horizontally and vertically across the board. The board has 64 slots which can be clicked to place the tokens on. When a slot is clicked, a *"BLACK"* or a *"WHITE"* token is placed inside the slot.
 - **Scoreboard:** The points scored by Player 1 and Player 2 is displayed and gets updated after valid moves are made.
-- **Turn indicator:** Shows the player currently in turn.
-- **Quit option:** A label showing *"Click here to exit"* that can be clicked on to exit out of the game.
+-**Turn indicator:** Shows the player currently in turn.
+- **Quit option:** A label showing *Click here to exit* that can be clicked on to exit out of the game.
 
 ## Support
 ##### Opening a Terminal
@@ -63,10 +63,6 @@ Your computer will not display the game window if *JavaFX* is missing from it. J
 
 With that you should be good to compile and run the game file.
 
-## Roadmap
-- Seting a timer to make the game more challenging.
-- Constructing a smarter AI.
-- Making the game interface more user-friendly.
 
 ## Authors
 **Vivian Huynh** - Team Leader
@@ -75,7 +71,7 @@ With that you should be good to compile and run the game file.
 
 **Jayoo Hwang**
 
-**Al Mahmud Dipto**
+**Al Mahmud Dipto** 
 
 **Miguel Merin**
 

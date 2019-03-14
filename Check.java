@@ -1,8 +1,17 @@
-public class Check {
+/**
+* This class checks whether move is valid if a player has any
+* moves left on the board
+* @author Jayoo Hwang
+* @version 1.0
+*/
+public class Check {   
+  
+  // Instance variables
     private static int[] flipped = new int[9];
     private static String otherPlayer;
     private static String[][] board;
     private static int n;
+    
 
     /**
     * Checks each direction to see whether pieces can be flipped to the current
@@ -176,6 +185,7 @@ public class Check {
   }
 
 
+  // Checks if the current player has any possible moves left on board
   public static boolean AnyMovesLeft(String player, Board gameBoard){
     board = gameBoard.getArray();
     boolean moves_left = false;

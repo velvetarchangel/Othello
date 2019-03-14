@@ -3,15 +3,19 @@ import java.util.Scanner;
 /**
  * Main class for Othello game which is required to run the application
  *
- * @author T08 Group 5 (CPSC 233)
+ * @author Himika Dastidar, Jayoo Hwang, Vivian Hyunh
  * @version 1.2 (March 11, 2019)
  */
+
 public class Othello {
 
     public static void main(String[] args) {
 
         Scanner kb = new Scanner(System.in);
         do {
+
+            // welcome screen which allows user to choose whether 
+            // they want to play with AI or another human player
             System.out.println("WELCOME TO OTHELLO!");
             System.out.println("Enter p to play against another player");
             System.out.println("Enter c to play against a computer");
@@ -250,8 +254,11 @@ public class Othello {
                             System.out.println("one " + x1 + y1);
                             System.out.println("two " + x2 + y2);
 
-                            int[] flipped1 = Check.move(x1, y1, player, board);
-                            while (flipped1[0] == 0) {
+
+                            // checks if the first move is valid and how many points it will generate
+                            int[] flipped1 = Check.move(x1, y1, player, board); 
+                            while (flipped1[0] == 0) 
+                            {
                                 player = "2";
                                 xy1 = AI.firstMove();
                                 x1 = xy1[0];
@@ -260,8 +267,10 @@ public class Othello {
                                 flipped1 = Check.move(x1, y1, player, board);
                             }
 
+                            // checks if the first move is valid and how many points it will generate
                             int[] flipped2 = Check.move(x2, y2, player, board);
-                            while (flipped2[0] == 0) {
+                            while (flipped2[0] == 0) 
+                            {
                                 player = "2";
                                 xy2 = AI.secondMove();
                                 x2 = xy1[0];
@@ -270,7 +279,8 @@ public class Othello {
                                 flipped1 = Check.move(x1, y1, player, board);
                             }
 
-                            if (flipped1[0] > flipped2[0]) {
+                            // if the first move generates more points or if they are both equal choose move 1
+                            if (flipped1[0] > flipped2[0] || flipped1[0] == flipped2[0]) {
                                 board.updateBoard(x1, y1, player, flipped1);
                                 board.printBoard();
                                 playerTwoScore = board.turnScore(player);
@@ -279,6 +289,8 @@ public class Othello {
                                 player_1.setScore(playerOneScore);
                                 System.out.println("\n" + "Player 1's score is " + playerOneScore);
                                 System.out.println("Computer's score is " + playerTwoScore);
+                            
+                                // if the second move generates more points choose this
                             } else if (flipped2[0] > flipped1[0]) {
                                 board.updateBoard(x2, y2, player, flipped1);
                                 board.printBoard();
@@ -288,17 +300,7 @@ public class Othello {
                                 player_1.setScore(playerOneScore);
                                 System.out.println("\n" + "Player 1's score is " + playerOneScore);
                                 System.out.println("Computer's score is " + playerTwoScore);
-                            } else {
-                                board.updateBoard(x1, y1, player, flipped1);
-                                board.printBoard();
-                                playerTwoScore = board.turnScore(player);
-                                playerOneScore = board.turnScore("1");
-                                player_2.setScore(playerTwoScore);
-                                player_1.setScore(playerOneScore);
-                                System.out.println("\n" + "Player 1's score is " + playerOneScore);
-                                System.out.println("Computer's score is " + playerTwoScore);
-                            }
-
+                            } 
                             player = "1"; // Switch to player 1's turn
                         }
                     }
@@ -308,6 +310,12 @@ public class Othello {
 
     }
 
+
+    /** Prompts the user to put in valid moves,
+     * if the moves are not valid, then repromps the user
+     * @return x_y which is an array containing the x, y
+     * coordinate
+     */
     public static int[] getUserInput() {
         Scanner coord = new Scanner(System.in);
         int[] x_y = new int[2];
