@@ -63,6 +63,10 @@ Your computer will not display the game window if *JavaFX* is missing from it. J
 
 With that you should be good to compile and run the game file.
 
+## Roadmap
+- Seting a timer to make the game more challenging.
+- Constructing a smarter AI.
+- Making the game interface more user-friendly.
 
 ## Authors
 **Vivian Huynh** - Team Leader
