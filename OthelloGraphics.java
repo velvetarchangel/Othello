@@ -32,31 +32,29 @@ import java.lang.Math;
 * the Board, Check, and Player classes to allow the user
 * to play Othello.
 * <p>
-* 
+*
 * @author Miguel Merin, Jayoo Hwang
-* @version 2.1 
+* @version 2.1
 * @since 2019-03-14
 */
 
 
 public class OthelloGraphics extends Application{
+  private Stage stage;
   private Board board = new Board();
-  private String player = "1";
   private Group graphicBoard = new Group();
   private Scene scene = new Scene(graphicBoard,1200,850,Color.BLACK);
+  private String player = "1";
   private Player player_1 = new Player();
   private Player player_2 = new Player();
   private int playerOneScore = player_1.getScore();
   private int playerTwoScore = player_2.getScore();
   private String versus = "menu";
 
-
-  
   private EventHandler<MouseEvent> vsPlayerHandler = new EventHandler<MouseEvent>(){
     @Override
-    
     /**
-    * Handles mouse clicks, checks if space clicked is a valid move or a button and 
+    * Handles mouse clicks, checks if space clicked is a valid move or a button and
     * updates the game based on action
     * @param mouseEvent
     */
@@ -76,8 +74,6 @@ public class OthelloGraphics extends Application{
          */
 
         if (board.gameOver() == true) { // Once graphicBoard is filled, end game and print out result
-            drawBoard();
-            drawScore();
             drawVictoryScreen(); // will generate the end of the screen
         }
 
@@ -85,27 +81,23 @@ public class OthelloGraphics extends Application{
         else {
             if (board.gameOver() == false) {
                 clearScreen();
-                // what to do if it is player 1's turn                
+                // what to do if it is player 1's turn
                 if (player.equals("1") && Check.AnyMovesLeft("1", board)) { // Player 1's turn
                     System.out.println("X: " + x + "    Y: " + y);
                     board.printBoard();
                     System.out.println("\n" + "It is player " + player + "'s turn");
                     int[] flipped = Check.move(x, y, player, board);
-                    drawBoard();
-                    drawScore();
-                    
-                    
+
                     // Reprompts user if no pieces can be flipped
-                    if ((flipped[0] == 0)) 
-                    { 
+                    if ((flipped[0] == 0))
+                    {
                         player = "1";
                         System.out.println("Invalid move, try again");
                     }
-                    
-                    
+
                     // If pieces can be flipped, update board and scores
-                    if (flipped[0] != 0) 
-                    { 
+                    if (flipped[0] != 0)
+                    {
                         board.updateBoard(x, y, player, flipped);
                         board.printBoard();
                         playerOneScore = board.turnScore("1");
@@ -115,34 +107,26 @@ public class OthelloGraphics extends Application{
                         System.out.println("\n" + "Player 1's score is " + playerOneScore);
                         System.out.println("Player 2's score is " + playerTwoScore);
                         player = "2";
-                        drawBoard();
-                        drawScore();
                     }
-
-
                   }
-                
 
                 // checks it if it is player 2's turn and runs through the game sequence
-                else if (player.equals("2") && Check.AnyMovesLeft("2", board)) { 
+                else if (player.equals("2") && Check.AnyMovesLeft("2", board)) {
                     board.printBoard();
                     System.out.println("\n" + "It is player " + player + "'s turn");
                     int[] flipped = Check.move(x, y, player, board);
-                    drawBoard();
-                    drawScore();
 
-                    
                     // Reprompts users if no pieces can be flipped
                     if ((flipped[0] == 0))
-                    { 
+                    {
                         player = "2";
                         System.out.println("Invalid move, try again");
                         flipped = Check.move(x, y, player, board);
                     }
-                    
+
                     // If pieces can be flipped, update the board and scores
-                    else if (flipped[0] != 0) 
-                    { 
+                    else if (flipped[0] != 0)
+                    {
                         board.updateBoard(x, y, player, flipped);
                         board.printBoard();
                         playerTwoScore = board.turnScore(player);
@@ -152,25 +136,20 @@ public class OthelloGraphics extends Application{
                         System.out.println("\n" + "Player 1's score is " + playerOneScore);
                         System.out.println("Player 2's score is " + playerTwoScore);
                         player = "1";
-                        drawBoard();
-                        drawScore();
                     }
                   }
-                  drawBoard();
-                  drawScore();
             }
         }
+        redrawBoard();
       }
     }
   };
 
-
-  
   private EventHandler<MouseEvent> menuHandler = new EventHandler<MouseEvent>(){
-    
-    /** 
+
+    /**
     * Handles the mouse clicks in the menu screen of the game
-    * @param MouseEvent               
+    * @param MouseEvent
     */
     @Override
     public void handle(MouseEvent mouseEvent){
@@ -184,34 +163,42 @@ public class OthelloGraphics extends Application{
       if ((mouseX > 400) && (mouseX < 800) && (mouseY > 450) && (mouseY < 850)){
         versus = "start";
       }
+      changeScenes();
     }
   };
 
-  /** 
+  /**
   * Groups together all the methods that draws the board game and its graphics
   * @return: graphicBoard the method returns a group that is then added to a stage which will show on the screen
-  */ 
-  private Parent startup() throws FileNotFoundException{
+  */
+  private Parent startup(){
     initBackGround();
     initBoardGrid();
     initScoreBoard();
     initPlayerInfo();
     drawBoard();
+    drawScore();
     createMessageBoard();
     return graphicBoard;
   }
 
-  /** 
+  /**
   * Groups together all the methods that draws the menu screen
   * @return: graphicBoard the method returns a group that is then added to a stage which will show on the screen
-  */ 
-  private Parent mainMenu() throws FileNotFoundException{
+  */
+  private Parent mainMenu(){
     initMenuBack();
     initMenuButtons();
     return graphicBoard;
   }
 
-  //draws all the pieces on the board      
+  //redraws and updates the board and its pieces
+  public void redrawBoard(){
+    graphicBoard.getChildren().removeAll();
+    startup();
+  }
+
+  //draws all the pieces on the board
   public void drawBoard(){
     String[][] temp = board.getArray();
     for (int i = 0; i <= 8; i++){
@@ -226,7 +213,7 @@ public class OthelloGraphics extends Application{
     }
   }
 
-  //draws the scores of both players in a box on the right hand side of the window    
+  //draws the scores of both players in a box on the right hand side of the window
   public void drawScore(){
     Rectangle clear = new Rectangle();
     clear.setX(920);
@@ -248,11 +235,9 @@ public class OthelloGraphics extends Application{
 
     graphicBoard.getChildren().addAll(clear,clear2,player1Score,player2Score);
   }
-  
 
-  //Displays text that declares the winner and the scores of the players  
-  public void drawVictoryScreen()
-  {
+  //Displays text that declares the winner and the scores of the players
+  public void drawVictoryScreen(){
     if (player_1.getScore() > player_2.getScore()) {
         System.out.println("Player 1 wins! Final score is: " + player_1.getScore());
         drawWinnerOne();
@@ -267,7 +252,7 @@ public class OthelloGraphics extends Application{
   }
 
   //switches scenes and handlers from one screen to another
-  public void changeScenes() throws FileNotFoundException{
+  public void changeScenes(){
     if (versus.equals("menu")){
       scene.setRoot(mainMenu());
       scene.setOnMouseClicked(menuHandler);
@@ -281,10 +266,9 @@ public class OthelloGraphics extends Application{
   /** Creates a part of the main menu scene which draws the images in the background and other graphic properties
     and adds the images to the graphicBoard group
   */
-  public void initMenuBack() throws FileNotFoundException
-  {
-    Image feltTexture = new Image(new FileInputStream("feltboard.png"));
-    Image woodEdge = new Image(new FileInputStream("woodwalls.jpg"));
+  public void initMenuBack(){
+    Image feltTexture = new Image("feltboard.png");
+    Image woodEdge = new Image("woodwalls.jpg");
     ImageView woodBack = new ImageView();
     ImageView feltBack = new ImageView();
     woodBack.setImage(woodEdge);
@@ -313,9 +297,8 @@ public class OthelloGraphics extends Application{
   }
 
   //Draws the areas where the start and exit button will be handled if clicked and adds the images to the graphicBoard group
-  public void initMenuButtons() throws FileNotFoundException
-  {
-    Image feltTexture2 = new Image(new FileInputStream("whitefelt.jpg"));
+  public void initMenuButtons(){
+    Image feltTexture2 = new Image("whitefelt.jpg");
     ImageView startFelt = new ImageView();
     startFelt.setImage(feltTexture2);
     startFelt.setX(400);
@@ -356,10 +339,9 @@ public class OthelloGraphics extends Application{
 
   /** Draws the background images for the main game and adds the images to the graphicBoard group
    */
-  public void initBackGround() throws FileNotFoundException
-  {
-    Image feltTexture = new Image(new FileInputStream("feltboard.png"));
-    Image woodEdge = new Image(new FileInputStream("woodwalls.jpg"));
+  public void initBackGround(){
+    Image feltTexture = new Image("feltboard.png");
+    Image woodEdge = new Image("woodwalls.jpg");
     ImageView woodBack = new ImageView();
     ImageView feltBack = new ImageView();
     woodBack.setImage(woodEdge);
@@ -386,8 +368,7 @@ public class OthelloGraphics extends Application{
   /** Draws grid lines for the board to have a visual coordinate system
     and adds the lines to the graphicBoard group
   */
-  public void initBoardGrid() throws FileNotFoundException
-  {
+  public void initBoardGrid(){
     Line v1 = new Line(125,25,125,825);
     Line v2 = new Line(225,25,225,825);
     Line v3 = new Line(325,25,325,825);
@@ -409,8 +390,8 @@ public class OthelloGraphics extends Application{
   /** Draws the score board which will contain the player information
     and adds the images to the graphicBoard group
   */
-  public void initScoreBoard() throws FileNotFoundException{
-    Image feltTexture2 = new Image(new FileInputStream("greyfelt.jpg"));
+  public void initScoreBoard(){
+    Image feltTexture2 = new Image("greyfelt.jpg");
     ImageView scoreFelt = new ImageView();
     scoreFelt.setImage(feltTexture2);
     scoreFelt.setX(875);
@@ -450,7 +431,7 @@ public class OthelloGraphics extends Application{
   /** Draws areas for player info and texts about the player names
     and adds the images to the graphicBoard group
   */
-  public void initPlayerInfo() throws FileNotFoundException{
+  public void initPlayerInfo(){
     Text player1Text = new Text(925,100,"Player1");
     player1Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
     Text player1Score = new Text(925,200,String.valueOf(playerOneScore));
@@ -477,7 +458,7 @@ public class OthelloGraphics extends Application{
 
     graphicBoard.getChildren().addAll(playerarea,playerBorder,player1Text,player1Score,player2Text,player2Score);
   }
-  
+
   // display when player 1 wins
   public void drawWinnerOne(){
       Text winner = new Text(200,500,"Player 1 Wins!");
@@ -487,7 +468,6 @@ public class OthelloGraphics extends Application{
       graphicBoard.getChildren().add(winner);
   }
 
-
   // display when player 2 wins
   public void drawWinnerTwo(){
     Text winner = new Text(200,500,"Player 2 Wins!");
@@ -495,9 +475,8 @@ public class OthelloGraphics extends Application{
     winner.setFill(Color.MEDIUMSPRINGGREEN);
 
     graphicBoard.getChildren().add(winner);
-
   }
-  
+
   // display when it is a draw
   public void drawWinnerBoth(){
     Text winner = new Text(200,500,"It's a draw");
@@ -505,7 +484,6 @@ public class OthelloGraphics extends Application{
     winner.setFill(Color.MEDIUMSPRINGGREEN);
 
     graphicBoard.getChildren().add(winner);
-
   }
 
   // Draws and updates the message board to switch player turns and add the reset button area
@@ -535,7 +513,7 @@ public class OthelloGraphics extends Application{
     graphicBoard.getChildren().addAll(messagearea,messageBorder,mbmid,playerText);
   }
 
-  /** 
+  /**
   * Draws a white piece on the board and adds the shape to the graphicBoard group
   * @param midx the x coordinate of the middle of the piece that is drawn
   * @param midy the y coordinate of the middle of the piece that is drawn
@@ -555,7 +533,7 @@ public class OthelloGraphics extends Application{
     graphicBoard.getChildren().addAll(whitePieceBorder,whitePiece);
   }
 
-  /** 
+  /**
   * Draws a black piece on the board and adds the shape to the graphicBoard group
   * @param midx gives the x coordinate about where the middle of the piece is drawn
   * @param midy gives the y coordinate about where the middle of the piece is drawn
@@ -574,25 +552,24 @@ public class OthelloGraphics extends Application{
 
     graphicBoard.getChildren().addAll(blackPieceBorder,blackPiece);
   }
-  
 
   public static void clearScreen() {
     for (int i = 0; i < 50; ++i) System.out.println();
   }
 
-
 // Creates a stage and adds the group to the scene which is added to the stage and shown on the screen
   @Override
   public void start(Stage mstage) throws FileNotFoundException{
-    Stage stage = mstage;
-    scene.setRoot(startup());
-    scene.setOnMouseClicked(vsPlayerHandler);
+    stage = mstage;
+    scene.setRoot(mainMenu());
+    scene.setOnMouseClicked(menuHandler);
     stage.setResizable(true);
     stage.setTitle("Othello");
     stage.setScene(scene);
     stage.sizeToScene();
     stage.show();
   }
+
 // Initiates the program
   public static void main(String args[]){
     launch(args);
