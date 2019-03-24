@@ -215,17 +215,9 @@ public class OthelloGraphics extends Application{
 
   //draws the scores of both players in a box on the right hand side of the window
   public void drawScore(){
-    Rectangle clear = new Rectangle();
-    clear.setX(920);
-    clear.setY(155);
-    clear.setWidth(200);
-    clear.setHeight(50);
+    Rectangle clear = new Rectangle(920,155,200,50);
     clear.setFill(Color.SNOW);
-    Rectangle clear2 = new Rectangle();
-    clear2.setX(920);
-    clear2.setY(355);
-    clear2.setWidth(200);
-    clear2.setHeight(50);
+    Rectangle clear2 = new Rectangle(920,355,200,50);
     clear2.setFill(Color.SNOW);
     Text player1Score = new Text(925,200,String.valueOf(playerOneScore));
     player1Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
@@ -407,11 +399,7 @@ public class OthelloGraphics extends Application{
     scoreBorder.setStrokeWidth(5);
     scoreBorder.getElements().add(sbstart);
     scoreBorder.getElements().addAll(sb1,sb2,sb3,sb4);
-    Rectangle exitarea = new Rectangle();
-    exitarea.setX(900);
-    exitarea.setY(700);
-    exitarea.setWidth(250);
-    exitarea.setHeight(100);
+    Rectangle exitarea = new Rectangle(900,700,250,100);
     exitarea.setFill(Color.SNOW);
     Path exitBorder = new Path();
     MoveTo ebstart = new MoveTo(900,700);
@@ -440,11 +428,7 @@ public class OthelloGraphics extends Application{
     player2Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
     Text player2Score = new Text(925,400,String.valueOf(playerTwoScore));
     player2Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
-    Rectangle playerarea = new Rectangle();
-    playerarea.setX(900);
-    playerarea.setY(50);
-    playerarea.setWidth(250);
-    playerarea.setHeight(425);
+    Rectangle playerarea = new Rectangle(900,50,250,425);
     playerarea.setFill(Color.SNOW);
     Path playerBorder = new Path();
     MoveTo pbstart = new MoveTo(900,50);
@@ -492,11 +476,7 @@ public class OthelloGraphics extends Application{
     playerText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
     Text resetText = new Text(955,630,"Reset Game");
     resetText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
-    Rectangle messagearea = new Rectangle();
-    messagearea.setX(900);
-    messagearea.setY(500);
-    messagearea.setWidth(250);
-    messagearea.setHeight(175);
+    Rectangle messagearea = new Rectangle(900,500,250,175);
     messagearea.setFill(Color.SNOW);
     Path messageBorder = new Path();
     MoveTo mstart = new MoveTo(900,500);
@@ -519,16 +499,10 @@ public class OthelloGraphics extends Application{
   * @param midy the y coordinate of the middle of the piece that is drawn
   */
   public void createWhitePiece(double midx,double midy){
-    Circle whitePieceBorder = new Circle();
+    Circle whitePieceBorder = new Circle(midx, midy, 45);
     whitePieceBorder.setFill(Color.BLACK);
-    whitePieceBorder.setCenterX(midx);
-    whitePieceBorder.setCenterY(midy);
-    whitePieceBorder.setRadius(45);
-    Circle whitePiece = new Circle();
+    Circle whitePiece = new Circle(midx,midy,43);
     whitePiece.setFill(Color.IVORY);
-    whitePiece.setCenterX(midx);
-    whitePiece.setCenterY(midy);
-    whitePiece.setRadius(43);
 
     graphicBoard.getChildren().addAll(whitePieceBorder,whitePiece);
   }
@@ -539,16 +513,10 @@ public class OthelloGraphics extends Application{
   * @param midy gives the y coordinate about where the middle of the piece is drawn
   */
   public void createBlackPiece(double midx,double midy){
-    Circle blackPieceBorder = new Circle();
+    Circle blackPieceBorder = new Circle(midx, midy, 45);
     blackPieceBorder.setFill(Color.IVORY);
-    blackPieceBorder.setCenterX(midx);
-    blackPieceBorder.setCenterY(midy);
-    blackPieceBorder.setRadius(45);
-    Circle blackPiece = new Circle();
+    Circle blackPiece = new Circle(midx, midy, 43);
     blackPiece.setFill(Color.BLACK);
-    blackPiece.setCenterX(midx);
-    blackPiece.setCenterY(midy);
-    blackPiece.setRadius(43);
 
     graphicBoard.getChildren().addAll(blackPieceBorder,blackPiece);
   }
