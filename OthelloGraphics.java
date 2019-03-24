@@ -4,6 +4,7 @@ import java.awt.MouseInfo;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
@@ -361,22 +362,15 @@ public class OthelloGraphics extends Application{
     and adds the lines to the graphicBoard group
   */
   public void initBoardGrid(){
-    Line v1 = new Line(125,25,125,825);
-    Line v2 = new Line(225,25,225,825);
-    Line v3 = new Line(325,25,325,825);
-    Line v4 = new Line(425,25,425,825);
-    Line v5 = new Line(525,25,525,825);
-    Line v6 = new Line(625,25,625,825);
-    Line v7 = new Line(725,25,725,825);
-    Line h1 = new Line(25,125,825,125);
-    Line h2 = new Line(25,225,825,225);
-    Line h3 = new Line(25,325,825,325);
-    Line h4 = new Line(25,425,825,425);
-    Line h5 = new Line(25,525,825,525);
-    Line h6 = new Line(25,625,825,625);
-    Line h7 = new Line(25,725,825,726);
+    for (int i = 0; i<= 7; i++){
+      Line vert = new Line(100*i + 25, 25, 100*i + 25, 825);
+      graphicBoard.getChildren().add(vert);
+    }
 
-    graphicBoard.getChildren().addAll(v1,v2,v3,v4,v5,v6,v7,h1,h2,h3,h4,h5,h6,h7);
+    for (int j = 0; j <= 7; j++){
+      Line horizontal = new Line(25, 100*j+25, 825, 100*j + 25);
+      graphicBoard.getChildren().add(horizontal);
+    }
   }
 
   /** Draws the score board which will contain the player information
