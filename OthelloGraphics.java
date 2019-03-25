@@ -1,6 +1,3 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.awt.MouseInfo;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -38,7 +35,6 @@ import java.lang.Math;
 * @version 2.1
 * @since 2019-03-14
 */
-
 
 public class OthelloGraphics extends Application{
   private Stage stage;
@@ -83,11 +79,11 @@ public class OthelloGraphics extends Application{
             if (board.gameOver() == false) {
                 clearScreen();
                 // what to do if it is player 1's turn
-                if (player.equals("1") && Check.AnyMovesLeft("1", board)) { // Player 1's turn
+                if (player.equals("1") && board.AnyMovesLeft("1")) { // Player 1's turn
                     System.out.println("X: " + x + "    Y: " + y);
                     board.printBoard();
                     System.out.println("\n" + "It is player " + player + "'s turn");
-                    int[] flipped = Check.move(x, y, player, board);
+                    int[] flipped = board.move(x, y, player);
 
                     // Reprompts user if no pieces can be flipped
                     if ((flipped[0] == 0))
@@ -109,20 +105,21 @@ public class OthelloGraphics extends Application{
                         System.out.println("Player 2's score is " + playerTwoScore);
                         player = "2";
                     }
+                    flipped = null;
                   }
 
                 // checks it if it is player 2's turn and runs through the game sequence
-                else if (player.equals("2") && Check.AnyMovesLeft("2", board)) {
+                else if (player.equals("2") && board.AnyMovesLeft("2")) {
                     board.printBoard();
                     System.out.println("\n" + "It is player " + player + "'s turn");
-                    int[] flipped = Check.move(x, y, player, board);
+                    int[] flipped = board.move(x, y, player);
 
                     // Reprompts users if no pieces can be flipped
                     if ((flipped[0] == 0))
                     {
                         player = "2";
                         System.out.println("Invalid move, try again");
-                        flipped = Check.move(x, y, player, board);
+                        flipped = board.move(x, y, player);
                     }
 
                     // If pieces can be flipped, update the board and scores
@@ -138,6 +135,7 @@ public class OthelloGraphics extends Application{
                         System.out.println("Player 2's score is " + playerTwoScore);
                         player = "1";
                     }
+                    flipped = null;
                   }
             }
         }
@@ -223,7 +221,7 @@ public class OthelloGraphics extends Application{
 
   //redraws and updates the board and its pieces
   public void redrawBoard(){
-    graphicBoard.getChildren().removeAll();
+    //graphicBoard.getChildren().removeAll();
     startup();
   }
 
@@ -240,6 +238,7 @@ public class OthelloGraphics extends Application{
         }
       }
     }
+    temp = null;
   }
 
   //draws the scores of both players in a box on the right hand side of the window
@@ -627,7 +626,7 @@ public class OthelloGraphics extends Application{
 
 // Creates a stage and adds the group to the scene which is added to the stage and shown on the screen
   @Override
-  public void start(Stage mstage) throws FileNotFoundException{
+  public void start(Stage mstage){
     stage = mstage;
     scene.setRoot(mainMenu());
     scene.setOnMouseClicked(menuHandler);
