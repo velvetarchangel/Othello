@@ -161,8 +161,30 @@ public class OthelloGraphics extends Application{
         System.exit(0);
       }
       // Initializes the game if this area of the screeen is clicked
-      if ((mouseX > 400) && (mouseX < 800) && (mouseY > 450) && (mouseY < 850)){
-        versus = "start";
+      if ((mouseX > 400) && (mouseX < 800) && (mouseY > 450) && (mouseY < 550)){
+        versus = "vsScreen";
+      }
+      changeScenes();
+    }
+  };
+
+  private EventHandler<MouseEvent> vsScreenHandler = new EventHandler<MouseEvent>(){
+
+    /**
+    * Handles the mouse clicks in the VS screen of the game
+    * @param MouseEvent
+    */
+    @Override
+    public void handle(MouseEvent mouseEvent){
+      double mouseX = mouseEvent.getX();
+      double mouseY = mouseEvent.getY();
+      // Exits the game if this area is clicked
+      if ((mouseX > 400) && (mouseX < 800) && (mouseY > 600) && (mouseY < 700)){
+        versus = "vsAI";
+      }
+      // Initializes the game if this area of the screeen is clicked
+      if ((mouseX > 400) && (mouseX < 800) && (mouseY > 450) && (mouseY < 550)){
+        versus = "vsPlayer";
       }
       changeScenes();
     }
@@ -190,6 +212,12 @@ public class OthelloGraphics extends Application{
   private Parent mainMenu(){
     initMenuBack();
     initMenuButtons();
+    return graphicBoard;
+  }
+
+  private Parent vsScreen(){
+    initVsScreen();
+    initVsScreenButtons();
     return graphicBoard;
   }
 
@@ -250,7 +278,11 @@ public class OthelloGraphics extends Application{
       scene.setRoot(mainMenu());
       scene.setOnMouseClicked(menuHandler);
     }
-    if (versus.equals("start")){
+    if (versus.equals("vsScreen")){
+      scene.setRoot(vsScreen());
+      scene.setOnMouseClicked(vsScreenHandler);
+    }
+    if (versus.equals("vsPlayer")){
       scene.setRoot(startup());
       scene.setOnMouseClicked(vsPlayerHandler);
     }
@@ -281,8 +313,8 @@ public class OthelloGraphics extends Application{
     boardBorder.setStrokeWidth(5);
     boardBorder.getElements().add(bbstart);
     boardBorder.getElements().addAll(bb1,bb2,bb3,bb4);
-    Text title = new Text(270,350,"OTHELLO");
-    title.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,200));
+    Text title = new Text(240,350,"OTHELLO");
+    title.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,175));
     Text title2 = new Text(560,400,"T-8  G-5");
     title2.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
 
@@ -307,7 +339,7 @@ public class OthelloGraphics extends Application{
     startBorder.setStrokeWidth(5);
     startBorder.getElements().add(sbstart);
     startBorder.getElements().addAll(sb1,sb2,sb3,sb4);
-    Text startText = new Text(490,520,"Start Game");
+    Text startText = new Text(470,520,"Start Game");
     startText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,50));
     ImageView exitarea = new ImageView();
     exitarea.setImage(feltTexture2);
@@ -324,8 +356,82 @@ public class OthelloGraphics extends Application{
     exitBorder.setStrokeWidth(5);
     exitBorder.getElements().add(ebstart);
     exitBorder.getElements().addAll(eb1,eb2,eb3,eb4);
-    Text exitText = new Text(500,665,"Exit Game");
+    Text exitText = new Text(480,665,"Exit Game");
     exitText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,50));
+
+    graphicBoard.getChildren().addAll(startFelt,startBorder,startText,exitarea,exitBorder,exitText);
+  }
+
+  /** Creates a part of the Game Mode scene which draws the images in the background and other graphic properties
+    and adds the images to the graphicBoard group
+  */
+  public void initVsScreen(){
+    Image feltTexture = new Image("feltboard.png");
+    Image woodEdge = new Image("woodwalls.jpg");
+    ImageView woodBack = new ImageView();
+    ImageView feltBack = new ImageView();
+    woodBack.setImage(woodEdge);
+    woodBack.setFitWidth(1200);
+    woodBack.setFitHeight(850);
+    feltBack.setImage(feltTexture);
+    feltBack.setX(25);
+    feltBack.setY(25);
+    feltBack.setFitWidth(1150);
+    feltBack.setFitHeight(800);
+    Path boardBorder = new Path();
+    MoveTo bbstart = new MoveTo(25,25);
+    LineTo bb1 = new LineTo(25,826);
+    LineTo bb2 = new LineTo(1176,826);
+    LineTo bb3 = new LineTo(1176,25);
+    LineTo bb4 = new LineTo(25,25);
+    boardBorder.setStrokeWidth(5);
+    boardBorder.getElements().add(bbstart);
+    boardBorder.getElements().addAll(bb1,bb2,bb3,bb4);
+    Text title = new Text(250,250,"Select Your");
+    title.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,125));
+    Text title2 = new Text(230,375,"Game Mode");
+    title2.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,125));
+
+    graphicBoard.getChildren().addAll(woodBack,feltBack,boardBorder,title,title2);
+  }
+
+  //Draws the areas where the 'vs Player' and 'vs AI' button will be handled if clicked and adds the images to the graphicBoard group
+  public void initVsScreenButtons(){
+    Image feltTexture2 = new Image("whitefelt.jpg");
+    ImageView startFelt = new ImageView();
+    startFelt.setImage(feltTexture2);
+    startFelt.setX(400);
+    startFelt.setY(450);
+    startFelt.setFitWidth(400);
+    startFelt.setFitHeight(100);
+    Path startBorder = new Path();
+    MoveTo sbstart = new MoveTo(400,450);
+    LineTo sb1 = new LineTo(800,450);
+    LineTo sb2 = new LineTo(800,550);
+    LineTo sb3 = new LineTo(400,550);
+    LineTo sb4 = new LineTo(400,450);
+    startBorder.setStrokeWidth(5);
+    startBorder.getElements().add(sbstart);
+    startBorder.getElements().addAll(sb1,sb2,sb3,sb4);
+    Text startText = new Text(440,510,"Player Vs Player");
+    startText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,40));
+    ImageView exitarea = new ImageView();
+    exitarea.setImage(feltTexture2);
+    exitarea.setX(400);
+    exitarea.setY(600);
+    exitarea.setFitWidth(400);
+    exitarea.setFitHeight(100);
+    Path exitBorder = new Path();
+    MoveTo ebstart = new MoveTo(400,600);
+    LineTo eb1 = new LineTo(800,600);
+    LineTo eb2 = new LineTo(800,700);
+    LineTo eb3 = new LineTo(400,700);
+    LineTo eb4 = new LineTo(400,600);
+    exitBorder.setStrokeWidth(5);
+    exitBorder.getElements().add(ebstart);
+    exitBorder.getElements().addAll(eb1,eb2,eb3,eb4);
+    Text exitText = new Text(470,665,"Player Vs AI");
+    exitText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,40));
 
     graphicBoard.getChildren().addAll(startFelt,startBorder,startText,exitarea,exitBorder,exitText);
   }
@@ -516,7 +622,7 @@ public class OthelloGraphics extends Application{
   }
 
   public static void clearScreen() {
-    for (int i = 0; i < 50; ++i) System.out.println();
+    for (int i = 0; i < 10; ++i) System.out.println();
   }
 
 // Creates a stage and adds the group to the scene which is added to the stage and shown on the screen
