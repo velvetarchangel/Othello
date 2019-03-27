@@ -73,10 +73,10 @@ public class Player {
     return (number >= 1 && number <= 8);
   }
 
-  public boolean flipsPieces(int[] move, Board board, Player currentPlayer) {
+  public boolean flipsPieces(int[] move, Board board) {
     int x = move[0];
     int y = move[1];
-    int[] flipped = Check.move(x, y, currentPlayer, board);
+    int[] flipped = Check.move(x, y,this.getPlayer(), board);
     return (flipped[0] != 0);
   }
 
@@ -167,11 +167,16 @@ public class Player {
       this.colour = colour;
   }
 
+  public void setName(String name){
+    this.name = name;
+  }
+
   /**
    * Sets the player's score
    * 
    * @param score
    */
+
   public void setScore(int score) {
     if (score >= 0)
       this.score = score;
