@@ -1,9 +1,12 @@
+import java.util.*;
+import java.io.*;
+
 /**
  * Board class for Othello game. This class contains attributes of the 2D board
  * array, and methods that print out the board, and keeps track of moves and
  * scores.
  * 
- * @author Himika Dastidar, Jayoo Hwang, Vivian Hyunh
+ * @author Himika Dastidar, Jayoo Hwang, Vivian Huynh
  * @version 1.0 (February 27, 2019)
  */
 public class Board {
@@ -40,6 +43,21 @@ public class Board {
       }
     }
 
+    // FOR TEST
+    // for (int j = 1; j < 10; j++) {
+    //   for (int i = 1; i < 10; i++) {
+    //     board[1][j] = "1"; // top
+    //     board[8][j] = "1"; // bottom
+    //     board[i][1] = "1"; // left
+    //     board[i][8] = "1"; // right
+    //     board[2][2] = "2";
+    //     // board[4][4] = "2";
+    //     // board[4][5] = "2";
+    //     // board[5][4] = "2";
+    //     // board[5][5] = "2";
+    //   }
+    // }
+
     // Sets the four initial game pieces in the centre of the board to start the
     // game
     board[4][4] = "1";
@@ -47,6 +65,14 @@ public class Board {
     board[5][4] = "2";
     board[5][5] = "1";
 
+  }
+  
+  
+  /**
+  *Constructor that creates a new Board using @param aBoard
+  */
+  public Board(String[][] aBoard){
+    this.board = aBoard;
   }
 
   // Methods
@@ -74,6 +100,39 @@ public class Board {
     return this.board;
   }
 
+  /**sets the board so that player can start a saved game from a file*/
+  public void setBoard() throws IOException{
+    Scanner sc = new Scanner(new BufferedReader(new FileReader("./savedGame.txt")));
+    String [][] temp_board = new String[10][10];
+    while(sc.hasNextLine()){
+      for(int i = 0; i <= 9; i++){
+        String[] line = sc.nextLine().trim().split(",");
+        temp_board[i] = line;
+        }
+      }
+    this.board = temp_board;
+  }
+  
+  
+  /**Saves the state of the game*/
+  public void saveBoard() throws IOException{
+      File aFile = new File("./savedGame.txt");
+      FileWriter f = new FileWriter(aFile);
+      //Board b = new Board();
+      String[] line = new String[10];
+      String[][] b = getArray();
+      for (int i = 0; i < 10; i++){
+          line = board[i];
+          String line_wb = Arrays.toString(line).replace("[","");
+          String line_without_brackets = line_wb.replace("]","");
+          String filecontent = line_without_brackets + "\n";
+          f.write(filecontent);
+          filecontent = "";
+      }
+      f.close();
+  }
+  
+  
   /**
    * Updates the board and score by using the user's input
    * 
@@ -84,7 +143,6 @@ public class Board {
    *               number of pieces flipped in total and in each direction
    */
   public void updateBoard(int x, int y, String player, int[] array) {
-
     int north = array[1];
     if (north != 0) {
       for (int i = 0; i <= north; i++) {
@@ -171,10 +229,10 @@ public class Board {
 
   /**
    * Checks whether the board is full
+   * 
    * @return full True if the board is filled, false if the board is not filled
    */
-  public boolean gameOver() {
-    boolean full = false;
+  public boolean isFull() {
     int countTotal = 0;
     for (int i = 1; i <= 8; i++) {
       for (int j = 1; j <= 8; j++) {
@@ -184,9 +242,9 @@ public class Board {
       }
     }
     if (countTotal == 64) {
-      full = true;
+      return true;
     }
-    return full;
+    return false;
   }
 
 }
