@@ -14,6 +14,7 @@ public class Check {
   private static String otherPlayer;
   private static String[][] board;
   private static int n;
+  
 
   /**
    * Checks each direction to see whether pieces can be flipped to the current
@@ -187,17 +188,29 @@ public class Check {
 
   // Checks if the current player has any possible moves left on board
   public static boolean AnyMovesLeft(Player player, Board gameBoard) {
-    board = gameBoard.getArray();
-    boolean moves_left = false;
+    /** 
     for (int i = 0; i < 8; i++) {
       for (int j = 0; j < 8; j++) {
-        //System.out.println("check " + i+ j);
+        System.out.println("check " + i + j);
+      }
+    }
+    */
+
+
+    board = gameBoard.getArray();
+    boolean moves_left = false;
+    for (int i = 1; i < 9; i++) {
+      for (int j = 1; j < 9; j++) {
+        //System.out.println("check " + Integer.toString(i) + " " + Integer.toString(j));
+        if (moves_left == false) {
           if (board[j][i].equals("_")) {
-              if (!moves_left){
-              flipped = Check.move(i + 1, j + 1, player, gameBoard);
-              if (flipped[0] != 0) {
-                moves_left = true;
-                //break;
+            flipped = Check.move(i, j, player, gameBoard);
+             // delete
+            // place piece of the player
+            if (flipped[0] != 0) {
+
+              moves_left = true;
+              //break;
             }
           }
         }
