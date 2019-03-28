@@ -24,8 +24,8 @@ The game is played on an 8 x 8 board. There are two players, Player 1 and Player
 For an elaborate set of game rules, please visit [Othello Wikipedia page ](https://en.wikipedia.org/wiki/Reversi).
 
 ## Usage
-### ![version](https://img.shields.io/badge/version-GUI-2.0-green.svg?style=flat-square)
-The game currently running is ![version](https://img.shields.io/badge/version-GUI-2.0-green.svg?style=flat-square).
+### ![version](https://img.shields.io/badge/version-GUI--2.0-green.svg?style=flat-square)
+The game currently running is ![version](https://img.shields.io/badge/version-GUI--2.0-green.svg?style=flat-square).
 - The board is displayed in a *Graphical User Interface* with two *"BLACK"* tokens and other two *"WHITE"* tokens in the center of the board. A *score* and other game options are also displayed on the game interface.
 - It indicates the player in turn and prompts the player to make a move on the board.
 - When a player makes a valid move, a token used by the player is placed in the board slot selected.
@@ -77,8 +77,12 @@ Logic class Junit tests are provided to test the logical functioning of the game
 1. Make sure that the game class files are present together with the test class files.
 2. You also need to make sure that the files **hamcrest-core-1.3.jar** and **junit-4.12.jar** are present in the same directory as the game class files and the test class files.
 3. To run the tests, you will need to use the following commands,
-- **For Linux/Mac:** ```javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java``` followed by ```java -cp .:junit-4.12.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore <name of test class>```
-- **For Windows:** ```javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java``` followed by ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <name of test class>```
+- **For Linux/Mac:** ```javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java```
+
+followed by ```java -cp .:junit-4.12.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore <name of test class>```
+- **For Windows:** ```javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java```
+
+followed by ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <name of test class>```
 
 ## Authors
 **Vivian Huynh** - Team Leader
