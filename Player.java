@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * Player class for Othello game. This class contains the attributes of a
  * player.
- * 
+ *
  * @author Vivian Huynh, Himika Dastidar
  * @version 1.0 (February 27, 2019)
  */
@@ -13,7 +13,7 @@ public class Player {
   String number = "1";
   String colour = "Black"; // black or white
   int score = 0;
-  String name;
+  String name = "Player";
 
   // Constructors
 
@@ -76,7 +76,7 @@ public class Player {
   public boolean flipsPieces(int[] move, Board board) {
     int x = move[0];
     int y = move[1];
-    int[] flipped = Check.move(x, y,this.getPlayer(), board);
+    int[] flipped = Check.move(x, y, this, board);
     return (flipped[0] != 0);
   }
 
@@ -84,7 +84,7 @@ public class Player {
    * Gets the x and y coordinate from the user. If the input is a q, quit the
    * game. If the input is invalid (not an integer, out of range, doens't flip any
    * pieces), reprompt.
-   * 
+   *
    * @param currentPlayer The player who's turn it is
    * @return x_y A 2D integer array of the x and y coordinates
    */
@@ -159,7 +159,7 @@ public class Player {
 
   /**
    * Sets the player's colour
-   * 
+   *
    * @param colour
    */
   public void setColour(String colour) {
@@ -173,7 +173,7 @@ public class Player {
 
   /**
    * Sets the player's score
-   * 
+   *
    * @param score
    */
 
