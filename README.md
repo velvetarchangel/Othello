@@ -11,9 +11,12 @@ following steps are advised:-
 3. Compile the game file code in the terminal by using this following command ```javac Othello.java```
 4. Next, you will have to get the graphics for the game compiled by using the command ```javac OthelloGraphics.java```
 5. Now, run the program using this command ```java OthelloGraphics```
-5. A new game window will pop up on the screen and you can go on right ahead and start playing.
-6. You can move the cursor on the game board and click on a valid slot to place a token.
-7. The game ends when the board becomes full. You can also click on the *"Click here to exit"* option anytime to exit out of the game.
+6. The game menu will pop up on the window which will give you the options to either start or exit the game. Click on the *"Start Game"* option and you can go on right ahead and start playing the game.
+7. Next, the game will prompt you to select a game mode where you can choose between *"Player Vs Player"* mode to challenge another human and *"Player Vs AI"* mode to challenge the game AI.
+8. You can type in your player names in the *"Player 1"* and *"Player 2"* fields and set the names by clicking on *"Set Names"*
+9. With the game started, you can move the cursor on the game board and click on a valid slot to place a token.
+10. The game provides you with options to save a game, load from a previous savestate or reset the entire game to start a new one.
+11. The game ends when the board becomes full. You can also click on the *"Exit Game"* option anytime to exit out of the game.
 
 ## Description
 The game is played on an 8 x 8 board. There are two players, Player 1 and Player 2. Each player's token on the board is represented by a black and white token. The game decides which player goes first at random, and that player can click on one of the appropiate slots on the board to place their token. The player going first is Player 1 and the player will get to use the *"BLACK"* token. Tokens can only be placed adjacent to or diagonally from the opposing person’s token. For example: *"BLACK"* tokens can only be placed next to or diagonally from a *"WHITE"* token and vice versa. If there are *"BLACK"* tokens that are surrounded by *"WHITE"* tokens on both sides horizontally, vertically or diagonally, the *"BLACK"* tokens then become *"WHITE"* and vice versa. The game ends when the board is filled with tokens or there are no more valid moves left. Then score is calculated by counting the number of tokens for each player.
@@ -21,8 +24,8 @@ The game is played on an 8 x 8 board. There are two players, Player 1 and Player
 For an elaborate set of game rules, please visit [Othello Wikipedia page ](https://en.wikipedia.org/wiki/Reversi).
 
 ## Usage
-### ![version](https://img.shields.io/badge/version-GUI-green.svg?style=flat-square)
-The game currently running is ![version](https://img.shields.io/badge/version-GUI-green.svg?style=flat-square).
+### ![version](https://img.shields.io/badge/version-GUI 2.0-green.svg?style=flat-square)
+The game currently running is ![version](https://img.shields.io/badge/version-GUI 2.0-green.svg?style=flat-square).
 - The board is displayed in a *Graphical User Interface* with two *"BLACK"* tokens and other two *"WHITE"* tokens in the center of the board. A *score* and other game options are also displayed on the game interface.
 - It indicates the player in turn and prompts the player to make a move on the board.
 - When a player makes a valid move, a token used by the player is placed in the board slot selected.
@@ -38,15 +41,21 @@ To play the ![version](https://img.shields.io/badge/version-text--based-lightgre
   To challenge the **AI**, enter **'c'**.
   
   Enter **'q'** if you want to quit from the game.
+- You can set your name as the game will prompt you to do so and then player turn will be randomly decided and you will be assigned with a token designated for you.
 - The game will ask you to provide the x and y co-ordinates respectively for placing a token on the board.
 - The tokens are *"1"* and *"2"*.
 - If it's a valid move then, the board will be updated with flipped tokens otherwise, the game will let you know that, the move was invalid and prompt you to make a new move.
+- The game keeps track of any valid moves left for a player and if there are no valid moves for a player then, it passes the turn on to the other player.
+- When playing against the AI, it will make moves automatically after the human player has finished their turn.
 - The game indicates the player's turn and the score for the players.
 ## GUI
 The *Graphical User Interface* for this game includes:-
+- **Game Menu:** The game menu cordially welcomes you in to the game and waits for your response to start the game.
 - **Gameboard:** It is a green coloured board with black lines going horizontally and vertically across the board. The board has 64 slots which can be clicked to place the tokens on. When a slot is clicked, a *"BLACK"* or a *"WHITE"* token is placed inside the slot.
 - **Scoreboard:** The points scored by Player 1 and Player 2 is displayed and gets updated after valid moves are made.
 -**Turn indicator:** Shows the player currently in turn.
+- **Save Game and Load Game options:** Labels showing *Save Game* that can be clicked to save game state, and *Load Game* to load a game savestate are present.
+- **Reset option:** *Reset Game* button can be clicked to reset the game and clear the board to start a new one.
 - **Quit option:** A label showing *Click here to exit* that can be clicked on to exit out of the game.
 
 ## Support
