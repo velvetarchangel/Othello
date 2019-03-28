@@ -24,8 +24,8 @@ The game is played on an 8 x 8 board. There are two players, Player 1 and Player
 For an elaborate set of game rules, please visit [Othello Wikipedia page ](https://en.wikipedia.org/wiki/Reversi).
 
 ## Usage
-### ![version](https://img.shields.io/badge/version-GUI 2.0-green.svg?style=flat-square)
-The game currently running is ![version](https://img.shields.io/badge/version-GUI 2.0-green.svg?style=flat-square).
+### ![version](https://img.shields.io/badge/version-GUI-2.0-green.svg?style=flat-square)
+The game currently running is ![version](https://img.shields.io/badge/version-GUI-2.0-green.svg?style=flat-square).
 - The board is displayed in a *Graphical User Interface* with two *"BLACK"* tokens and other two *"WHITE"* tokens in the center of the board. A *score* and other game options are also displayed on the game interface.
 - It indicates the player in turn and prompts the player to make a move on the board.
 - When a player makes a valid move, a token used by the player is placed in the board slot selected.
@@ -53,7 +53,7 @@ The *Graphical User Interface* for this game includes:-
 - **Game Menu:** The game menu cordially welcomes you in to the game and waits for your response to start the game.
 - **Gameboard:** It is a green coloured board with black lines going horizontally and vertically across the board. The board has 64 slots which can be clicked to place the tokens on. When a slot is clicked, a *"BLACK"* or a *"WHITE"* token is placed inside the slot.
 - **Scoreboard:** The points scored by Player 1 and Player 2 is displayed and gets updated after valid moves are made.
--**Turn indicator:** Shows the player currently in turn.
+- **Turn indicator:** Shows the player currently in turn.
 - **Save Game and Load Game options:** Labels showing *Save Game* that can be clicked to save game state, and *Load Game* to load a game savestate are present.
 - **Reset option:** *Reset Game* button can be clicked to reset the game and clear the board to start a new one.
 - **Quit option:** A label showing *Click here to exit* that can be clicked on to exit out of the game.
@@ -72,6 +72,13 @@ Your computer will not display the game window if *JavaFX* is missing from it. J
 
 With that you should be good to compile and run the game file.
 
+##### Logic Class Tests
+Logic class Junit tests are provided to test the logical functioning of the game file classes. You can run the test class files to check the working condition of the game class files. Instrunctions on how to run Junit tests are given below:-
+1. Make sure that the game class files are present together with the test class files.
+2. You also need to make sure that the files **hamcrest-core-1.3.jar** and **junit-4.12.jar** are present in the same directory as the game class files and the test class files.
+3. To run the tests, you will need to use the following commands,
+- **For Linux/Mac:** ```javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java``` followed by ```java -cp .:junit-4.12.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore <name of test class>```
+- **For Windows:** ```javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java``` followed by ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <name of test class>```
 
 ## Authors
 **Vivian Huynh** - Team Leader
