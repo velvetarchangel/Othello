@@ -26,7 +26,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.lang.Math;
+import java.util.*;
 
 /**
 * <h>Othello</h>
@@ -75,7 +78,7 @@ public class OthelloGraphics extends Application{
        * end, and the winners are announce. Otherwise the game continues.
        */
 
-      if (board.isFull() == true) { // Once graphicBoard is filled, end game and print out result
+      if (board.isFull() == true || !(Check.AnyMovesLeft(player_1, board) || Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
           drawVictoryScreen(); // will generate the end of the screen
       }
 
@@ -174,7 +177,6 @@ public class OthelloGraphics extends Application{
     public void handle(MouseEvent mouseEvent){
       mouseX = mouseEvent.getX();
       mouseY = mouseEvent.getY();
-      //System.out.println(mouseX + " " + mouseY);
       if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 800)){
         System.exit(0);
       }
@@ -183,10 +185,28 @@ public class OthelloGraphics extends Application{
       }
       if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 525) && (mouseY < 600)){
         //board.saveBoard();
-        System.out.println("save game here..");
+        try{
+        board.saveBoard();
+        System.exit(0);
+        }catch(IOException e){
+          System.out.println(e.getMessage());
+        }
+
+        //System.out.println("save game here..");
       }
       if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 525) && (mouseY < 600)){
-        System.out.println("load game here..");
+        try{
+          String[][] temp_board = Board.loadBoard();
+          board.setBoard(temp_board);
+          System.out.println(Arrays.deepToString(board.getArray()));
+        }
+        catch(IOException e){
+          System.out.println("load game here..");
+        }
+        finally{
+        clearScreen();
+        drawBoard();
+      }
       }
       if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
         x = (int)(Math.floor((mouseX - 25.0) / 100.0) + 1);
@@ -197,13 +217,13 @@ public class OthelloGraphics extends Application{
          * end, and the winners are announce. Otherwise the game continues.
          */
 
-        if (board.isFull() == true) { // Once graphicBoard is filled, end game and print out result
+        if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
             drawVictoryScreen(); // will generate the end of the screen
         }
 
         // if board is not filled continue the game
         else {
-            if (board.isFull() == false) {
+            if (board.isFull() == false && (Check.AnyMovesLeft(player_1, board) || Check.AnyMovesLeft(player_2, board))) {
                 clearScreen();
                 // what to do if it is player 1's turn
                 if (player.equals("1") && Check.AnyMovesLeft(player_1, board)) { // Player 1's turn
@@ -395,14 +415,14 @@ public class OthelloGraphics extends Application{
   //Displays text that declares the winner and the scores of the players
   public void drawVictoryScreen(){
     if (player_1.getScore() > player_2.getScore()) {
-        System.out.println("Player 1 wins! Final score is: " + player_1.getScore());
+        //System.out.println("Player 1 wins! Final score is: " + player_1.getScore());
         drawWinnerOne();
-    } else if (player_2.getScore() < player_2.getScore()) {
-        System.out.println("Player 2 wins! Final score is: " + player_2.getScore());
+    } else if (player_1.getScore() < player_2.getScore()) {
+        //System.out.println("Player 2 wins! Final score is: " + player_2.getScore());
         drawWinnerTwo();
-    } else if (player_2.getScore() == player_2.getScore()) {
-        System.out.println("It's a draw! " + "Player 1's score: " + player_1.getScore()
-                + "Player 2's score: " + player_2.getScore());
+    } else if (player_1.getScore() == player_2.getScore()) {
+        //System.out.println("It's a draw! " + "Player 1's score: " + player_1.getScore()
+                //+ "Player 2's score: " + player_2.getScore());
         drawWinnerBoth();
     }
   }
@@ -579,6 +599,7 @@ public class OthelloGraphics extends Application{
     NumberBinding nameCoord1 =
     p1name.layoutXProperty().add(p1name.widthProperty().add(10));
     name1.layoutXProperty().bind(nameCoord1);
+    name1.selectAll();
     name1.layoutYProperty().bind(p1name.layoutYProperty());
 
     Label p2name = new Label("Player 2:");
@@ -587,6 +608,7 @@ public class OthelloGraphics extends Application{
     NumberBinding nameCoord2 =
     p2name.layoutXProperty().add(p2name.widthProperty().add(10));
     name2.layoutXProperty().bind(nameCoord2);
+    name2.selectAll();
     name2.layoutYProperty().bind(p2name.layoutYProperty());
 
     Button setName = new Button("Set Names");
@@ -822,7 +844,9 @@ public class OthelloGraphics extends Application{
     NumberBinding xLabelCoord =
     xLabel.layoutXProperty().add(xLabel.widthProperty().add(10));
     xCoord.layoutXProperty().bind(xLabelCoord);
+    xCoord.selectAll();
     xCoord.layoutYProperty().bind(xLabel.layoutYProperty());
+    
 
     Label yLabel = new Label("Y:");
     yLabel.setLayoutX(940);
@@ -830,8 +854,9 @@ public class OthelloGraphics extends Application{
     NumberBinding yLabelCoord =
     yLabel.layoutXProperty().add(yLabel.widthProperty().add(10));
     yCoord.layoutXProperty().bind(yLabelCoord);
+    yCoord.selectAll();
     yCoord.layoutYProperty().bind(yLabel.layoutYProperty());
-
+    
     Button place = new Button("Place Piece");
     place.relocate(985,380);
     place.setOnAction(inputButtonHandler);
