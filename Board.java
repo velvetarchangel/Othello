@@ -101,8 +101,8 @@ public class Board {
   }
 
   /**sets the board so that player can start a saved game from a file*/
-  public void setBoard() throws IOException{
-    Scanner sc = new Scanner(new BufferedReader(new FileReader("./savedGame.txt")));
+  public static String[][] loadBoard() throws IOException{
+    Scanner sc = new Scanner(new BufferedReader(new FileReader("./SavedGame.txt")));
     String [][] temp_board = new String[10][10];
     while(sc.hasNextLine()){
       for(int i = 0; i <= 9; i++){
@@ -110,13 +110,18 @@ public class Board {
         temp_board[i] = line;
         }
       }
-    this.board = temp_board;
+    sc.close();
+    return temp_board;
   }
   
+
+  public void setBoard(String[][] aBoard){
+    this.board = aBoard;
+  }
   
   /**Saves the state of the game*/
   public void saveBoard() throws IOException{
-      File aFile = new File("./savedGame.txt");
+      File aFile = new File("./SavedGame.txt");
       FileWriter f = new FileWriter(aFile);
       //Board b = new Board();
       String[] line = new String[10];
