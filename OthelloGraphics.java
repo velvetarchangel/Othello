@@ -56,10 +56,10 @@ public class OthelloGraphics extends Application{
   private String versus = "menu";
   private double mouseX, mouseY;
   private int x, y;
-  private TextField xCoord = new TextField("enter x value");
-  private TextField yCoord = new TextField("enter y value");
-  private TextField name1 = new TextField("enter name");
-  private TextField name2 = new TextField("enter name");
+  private TextField xCoord = new TextField("");
+  private TextField yCoord = new TextField("");
+  private TextField name1 = new TextField("");
+  private TextField name2 = new TextField("");
 
   private EventHandler<ActionEvent> inputButtonHandler = new EventHandler<ActionEvent>(){
 
@@ -165,6 +165,101 @@ public class OthelloGraphics extends Application{
       player_1.setName(name1.getText());
       player_2.setName(name2.getText());
     }
+  };
+
+  private EventHandler<MouseEvent> vsAIHandler = new EventHandler<MouseEvent>(){
+    @Override
+    public void handle(MouseEvent mouseEvent){
+      mouseX = mouseEvent.getX();
+      mouseY = mouseEvent.getY();
+      if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 800)){
+        System.exit(0);
+      }
+      if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 625) && (mouseY < 700)){
+        resetBoard();
+      }
+      if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 525) && (mouseY < 600)){
+        //board.saveBoard();
+        try{
+        board.saveBoard();
+        System.exit(0);
+        }catch(IOException e){
+          System.out.println(e.getMessage());
+        }
+
+        //System.out.println("save game here..");
+      }
+
+      if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 525) && (mouseY < 600)){
+        try{
+          String[][] temp_board = Board.loadBoard();
+          board.setBoard(temp_board);
+          System.out.println(Arrays.deepToString(board.getArray()));
+        }
+        catch(IOException e){
+          System.out.println("load game here..");
+        }
+        finally{
+        clearScreen();
+        drawBoard();
+        }
+      }
+
+      if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
+        x = (int)(Math.floor((mouseX - 25.0) / 100.0) + 1);
+        y = (int)(Math.floor((mouseY - 25.0) / 100.0) + 1);
+        int turn = 1;
+        int[] x_y = new int[2];
+
+        while (!board.isFull() && (Check.AnyMovesLeft(player_1, board) || Check.AnyMovesLeft(player_2, board))) { // while board isn't full
+            if (turn == 1) {
+                if (Check.AnyMovesLeft(player_1, board)) {
+                    System.out.println(" ");
+                    System.out.println("It's " + player_1.getName() + "'s turn.");
+                    board.printBoard();
+                    //System.out.println("Name is:" + player_1.getName()); // delete
+                    if (!player_1.getName().equals("Computer")) {
+                        x_y = player_2.getInput(board);
+                    } else {
+                        x_y = AI.chooseMove(player_1, board);
+                        System.out.println("Computer makes move: " + x_y[0]+ x_y[1]);
+
+                        }
+                    if (x_y != null) {
+                        OthelloHelper.playerTurn(player_1, player_2, board, x_y);
+                    } else {
+                        OthelloHelper.finishGame(player_1, player_2, board);
+                        }
+                        turn = 2;
+                    } else if (!Check.AnyMovesLeft(player_1, board)) {
+                    System.out.println(player_1.getName() + " has no more valid moves.");
+                    turn = 2;
+                    }
+            } else if (turn == 2) {
+                if (Check.AnyMovesLeft(player_2, board)) {
+                    System.out.println(" ");
+                    System.out.println("It's " + player_2.getName() + "'s turn.");
+                    board.printBoard();
+                        if (!player_2.getName().equals("Computer")) {
+                            x_y = player_2.getInput(board);
+                        } else {
+                        x_y = AI.chooseMove(player_2, board);
+                            System.out.println("Computer makes move:" + x_y);
+                        }
+                        if (x_y != null) {
+                            OthelloHelper.playerTurn(player_2, player_1, board, x_y);
+                        } else {
+                            OthelloHelper.finishGame(player_1, player_2, board);
+                        }
+                        turn = 1;
+                    } else if (!Check.AnyMovesLeft(player_2, board)) {
+                            System.out.println(player_2.getName() + " has no more valid moves.");
+                            turn = 1;
+                        }
+                    }
+                }
+              }
+            }
   };
 
   private EventHandler<MouseEvent> vsPlayerHandler = new EventHandler<MouseEvent>(){
@@ -440,6 +535,10 @@ public class OthelloGraphics extends Application{
     if (versus.equals("vsPlayer")){
       scene.setRoot(startup());
       scene.setOnMouseClicked(vsPlayerHandler);
+    }
+    if (versus.equals("vsAI")){
+      scene.setRoot(startup());
+      scene.setOnMouseClicked(vsAIHandler);
     }
   }
 
@@ -846,7 +945,7 @@ public class OthelloGraphics extends Application{
     xCoord.layoutXProperty().bind(xLabelCoord);
     xCoord.selectAll();
     xCoord.layoutYProperty().bind(xLabel.layoutYProperty());
-    
+
 
     Label yLabel = new Label("Y:");
     yLabel.setLayoutX(940);
@@ -856,7 +955,7 @@ public class OthelloGraphics extends Application{
     yCoord.layoutXProperty().bind(yLabelCoord);
     yCoord.selectAll();
     yCoord.layoutYProperty().bind(yLabel.layoutYProperty());
-    
+
     Button place = new Button("Place Piece");
     place.relocate(985,380);
     place.setOnAction(inputButtonHandler);

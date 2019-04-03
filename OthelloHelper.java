@@ -60,7 +60,7 @@ public class OthelloHelper {
         System.out.println("Enter q to end game");
     }
 
-    public void finishGame(Player one, Player two, Board board) {
+    public static void finishGame(Player one, Player two, Board board) {
         board.printBoard();
         if (one.getScore() > two.getScore()) {
             System.out.println(one.getName() + " wins! Final scores are-- " + one.getName() + " : " + one.getScore()
