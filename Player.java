@@ -163,7 +163,7 @@ public class Player {
    * @param colour
    */
   public void setColour(String colour) {
-    if (colour.equals("Black") || colour.equals("White"))
+    if (colour.equals("BLACK") || colour.equals("WHITE"))
       this.colour = colour;
   }
 

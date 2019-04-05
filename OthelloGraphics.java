@@ -172,13 +172,13 @@ public class OthelloGraphics extends Application{
     public void handle(MouseEvent mouseEvent){
       mouseX = mouseEvent.getX();
       mouseY = mouseEvent.getY();
-      if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 800)){
+      if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 725) && (mouseY < 800)){
         System.exit(0);
       }
-      if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 625) && (mouseY < 700)){
+      if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 800)){
         resetBoard();
       }
-      if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 525) && (mouseY < 600)){
+      if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 625) && (mouseY < 700)){
         //board.saveBoard();
         try{
         board.saveBoard();
@@ -190,7 +190,7 @@ public class OthelloGraphics extends Application{
         //System.out.println("save game here..");
       }
 
-      if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 525) && (mouseY < 600)){
+      if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 625) && (mouseY < 700)){
         try{
           String[][] temp_board = Board.loadBoard();
           board.setBoard(temp_board);
@@ -211,7 +211,7 @@ public class OthelloGraphics extends Application{
         int turn = 1;
         int[] x_y = new int[2];
 
-        while (!board.isFull() && (Check.AnyMovesLeft(player_1, board) || Check.AnyMovesLeft(player_2, board))) { // while board isn't full
+        if (!board.isFull() && (Check.AnyMovesLeft(player_1, board) || Check.AnyMovesLeft(player_2, board))) { // while board isn't full
             if (turn == 1) {
                 if (Check.AnyMovesLeft(player_1, board)) {
                     System.out.println(" ");
@@ -258,6 +258,8 @@ public class OthelloGraphics extends Application{
                         }
                     }
                 }
+                drawScore();
+                drawBoard();
               }
             }
   };
@@ -272,13 +274,13 @@ public class OthelloGraphics extends Application{
     public void handle(MouseEvent mouseEvent){
       mouseX = mouseEvent.getX();
       mouseY = mouseEvent.getY();
-      if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 800)){
+      if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 725) && (mouseY < 800)){
         System.exit(0);
       }
-      if ((mouseX > 900) && (mouseX < 1150) && (mouseY > 625) && (mouseY < 700)){
+      if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 800)){
         resetBoard();
       }
-      if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 525) && (mouseY < 600)){
+      if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 625) && (mouseY < 700)){
         //board.saveBoard();
         try{
         board.saveBoard();
@@ -289,7 +291,7 @@ public class OthelloGraphics extends Application{
 
         //System.out.println("save game here..");
       }
-      if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 525) && (mouseY < 600)){
+      if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 700)){
         try{
           String[][] temp_board = Board.loadBoard();
           board.setBoard(temp_board);
@@ -326,6 +328,7 @@ public class OthelloGraphics extends Application{
                     board.printBoard();
                     System.out.println("\n" + "It is player " + player + "'s turn");
                     int[] flipped = Check.move(x, y, player_1, board);
+                    turnBoard(player_2);
 
                     // Reprompts user if no pieces can be flipped
                     if ((flipped[0] == 0))
@@ -356,6 +359,7 @@ public class OthelloGraphics extends Application{
                     board.printBoard();
                     System.out.println("\n" + "It is player " + player + "'s turn");
                     int[] flipped = Check.move(x, y, player_2, board);
+                    turnBoard(player_1);
 
                     // Reprompts users if no pieces can be flipped
                     if ((flipped[0] == 0))
@@ -540,6 +544,7 @@ public class OthelloGraphics extends Application{
       scene.setRoot(startup());
       scene.setOnMouseClicked(vsAIHandler);
     }
+
   }
 
   /** Creates a part of the main menu scene which draws the images in the background and other graphic properties
@@ -834,60 +839,60 @@ public class OthelloGraphics extends Application{
 
   // Draws areas on the board where things will be handled based on the coordinates on the game
   public void initScoreButtons(){
-    Rectangle exitArea = new Rectangle(900,725,250,75);
+    Rectangle exitArea = new Rectangle(900,725,110,75);
     exitArea.setFill(Color.SNOW);
     Path exitBorder = new Path();
     MoveTo ebstart = new MoveTo(900,725);
-    LineTo eb1 = new LineTo(1150,725);
-    LineTo eb2 = new LineTo(1150,800);
+    LineTo eb1 = new LineTo(1010,725);
+    LineTo eb2 = new LineTo(1010,800);
     LineTo eb3 = new LineTo(900,800);
     LineTo eb4 = new LineTo(900,725);
     exitBorder.setStrokeWidth(5);
     exitBorder.getElements().add(ebstart);
     exitBorder.getElements().addAll(eb1,eb2,eb3,eb4);
-    Text exitText = new Text(950,775,"Exit Game");
+    Text exitText = new Text(950,775,"Exit");
     exitText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
 
-    Rectangle resetArea = new Rectangle(900,625,250,75);
+    Rectangle resetArea = new Rectangle(1040,725,110,75);
     resetArea.setFill(Color.SNOW);
     Path resetBorder = new Path();
-    MoveTo rbstart = new MoveTo(900,625);
-    LineTo rb1 = new LineTo(1150,625);
-    LineTo rb2 = new LineTo(1150,700);
-    LineTo rb3 = new LineTo(900,700);
-    LineTo rb4 = new LineTo(900,625);
+    MoveTo rbstart = new MoveTo(1040,725);
+    LineTo rb1 = new LineTo(1150,725);
+    LineTo rb2 = new LineTo(1150,800);
+    LineTo rb3 = new LineTo(1040,800);
+    LineTo rb4 = new LineTo(1040,725);
     resetBorder.setStrokeWidth(5);
     resetBorder.getElements().add(rbstart);
     resetBorder.getElements().addAll(rb1,rb2,rb3,rb4);
-    Text resetText = new Text(950,675,"Reset Game");
+    Text resetText = new Text(1050,775,"Reset");
     resetText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
 
-    Rectangle saveArea = new Rectangle(900,525,110,75);
+    Rectangle saveArea = new Rectangle(900,625,110,75);
     saveArea.setFill(Color.SNOW);
     Path saveBorder = new Path();
-    MoveTo sbstart = new MoveTo(900,525);
-    LineTo sb1 = new LineTo(1010,525);
-    LineTo sb2 = new LineTo(1010,600);
-    LineTo sb3 = new LineTo(900,600);
-    LineTo sb4 = new LineTo(900,525);
+    MoveTo sbstart = new MoveTo(900,625);
+    LineTo sb1 = new LineTo(1010,625);
+    LineTo sb2 = new LineTo(1010,700);
+    LineTo sb3 = new LineTo(900,700);
+    LineTo sb4 = new LineTo(900,625);
     saveBorder.setStrokeWidth(5);
     saveBorder.getElements().add(sbstart);
     saveBorder.getElements().addAll(sb1,sb2,sb3,sb4);
-    Text saveText = new Text(930,550,"Save\nGame");
+    Text saveText = new Text(930,650,"Save\nGame");
     saveText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,15));
 
-    Rectangle loadArea = new Rectangle(1040,525,110,75);
+    Rectangle loadArea = new Rectangle(1040,625,110,75);
     loadArea.setFill(Color.SNOW);
     Path loadBorder = new Path();
-    MoveTo lbstart = new MoveTo(1040,525);
-    LineTo lb1 = new LineTo(1150,525);
-    LineTo lb2 = new LineTo(1150,600);
-    LineTo lb3 = new LineTo(1040,600);
-    LineTo lb4 = new LineTo(1040,525);
+    MoveTo lbstart = new MoveTo(1040,625);
+    LineTo lb1 = new LineTo(1150,625);
+    LineTo lb2 = new LineTo(1150,700);
+    LineTo lb3 = new LineTo(1040,700);
+    LineTo lb4 = new LineTo(1040,625);
     loadBorder.setStrokeWidth(5);
     loadBorder.getElements().add(lbstart);
     loadBorder.getElements().addAll(lb1,lb2,lb3,lb4);
-    Text loadText = new Text(1070,550,"Load\nGame");
+    Text loadText = new Text(1070,650,"Load\nGame");
     loadText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,15));
 
     graphicBoard.getChildren().addAll(exitArea, exitBorder, exitText, resetArea, resetBorder, resetText, saveArea, saveBorder, saveText, loadArea, loadBorder, loadText);
@@ -897,11 +902,11 @@ public class OthelloGraphics extends Application{
     and adds the images to the graphicBoard group
   */
   public void initPlayerInfo(){
-    Text player1Text = new Text(925,100,player_1.getName());
+    Text player1Text = new Text(925,100,player_1.getName() + " (" + player_1.getColour() + ")");
     player1Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
     Text player1Score = new Text(925,125,String.valueOf(playerOneScore));
     player1Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
-    Text player2Text = new Text(925,200,player_2.getName());
+    Text player2Text = new Text(925,200,player_2.getName() + " (" + player_2.getColour() + ")");
     player2Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
     Text player2Score = new Text(925,225,String.valueOf(playerTwoScore));
     player2Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
