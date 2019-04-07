@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
 /**
- * This class checks whether move is valid if a player has any moves left on the
- * board
- * 
+ * This class processes the validity of moves made by the player
+ * 1. Checks whether a move is legal and valid
+ * 2. Checks if the player has any moves left
  * @author Jayoo Hwang
  * @version 1.0
  */
@@ -186,17 +186,17 @@ public class Check {
     return flipped;
   }
 
-  // Checks if the current player has any possible moves left on board
+    /**
+    * Checks if the player who's turn it is has any moves left
+    * goes through the board and places the player's piece in the board to see if
+    * any of the opponent's pieces can be flipped at that position, stops the loop 
+    * if there is atleast 1 move for the player
+    * @param player to check which piece to place and which pievce to flip
+    * @param gameBoard to place the piece in an empty slot "_" and see if there
+    * are any adjacent pieces of the opponent that can be flipped
+    * @return moves_left which is a boolean
+   **/
   public static boolean AnyMovesLeft(Player player, Board gameBoard) {
-    /** 
-    for (int i = 0; i < 8; i++) {
-      for (int j = 0; j < 8; j++) {
-        System.out.println("check " + i + j);
-      }
-    }
-    */
-
-
     board = gameBoard.getArray();
     boolean moves_left = false;
     for (int i = 1; i < 9; i++) {
