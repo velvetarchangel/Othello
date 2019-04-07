@@ -3,12 +3,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 /**@Author Himika Dastidar, Al Mahmud Dipto
-*Designed to test the player class thoroughly and all the methods in it*/
+*Designed to test the player class thoroughly and all the methods in it
+* tests the input sanitization in the Player class in the text based version 
+* to make sure (1) the input is within the range of the board, (2) the input 
+* actually indicates a legal move. Also test that the constructors in the class
+* are working, the setters and getters are working */
 
 public class PlayerTest {
-
     
-    /**Tests the default constructor in the player class*/
+    /**Tests the default constructor in the player class to make 
+    * sure it returns player with parameters colour: "BLACK", player: "1", Score: 0, name: "" */
     @Test
     public void testDefaultConstructor()
     {
@@ -90,7 +94,10 @@ public class PlayerTest {
     }
 
          
-    /**tests the input sanitization method in the player class*/
+    /**Tests the input sanitization method in the player class
+    * (1) Tests whether the method isInt can properly decipher when the input is an integer
+    * (2) Tests whether the method withinRange can decipher whether the input is within the board
+    * (3) Tests whether the method isFlipped is */
    
     /** Tests whether the user input is within range, is valid and whether it is a permissible move*/
     @Test 
@@ -107,17 +114,18 @@ public class PlayerTest {
         boolean ir_top = p.withinRange(in_range_top);
         boolean ir_bottom = p.withinRange(in_range_bottom);
         
-        assertEquals("Player input should return false", "false", answer);
-        assertEquals("Player input out of range", "false", too_high_Test);
-        assertEquals("Player input out of range", "true", too_low_Test);
-        assertEquals("Player input in range", "true", ir_top);
+        assertEquals("Player input should return false", "false", answer); // tests whether it can decipher between int and string
+        assertEquals("Player input out of range", "false", too_high_Test); // test if it returns false when input is int, but not in the board
+        assertEquals("Player input out of range", "false", too_low_Test); 
+        assertEquals("Player input in range", "true", ir_top); // tests if it returns true when input is int and in the baord
         assertEquals("Player input in range", "true", ir_bottom);
 }
        
        /**Tests whether the input consists of a move that is logically 
-       * valid in the game*/
+       * valid in the game
+       */
                     
-       // Tests the flipsPiece method with a valid move
+       // Tests the flipsPiece method with an invalid move
        @Test
        public void test_flipsPiece_invalid_move(){
            Player p = new Player();
@@ -129,7 +137,7 @@ public class PlayerTest {
            assertEquals("Pieces cannot be flipped", "false", invalid_move);
        }
         
-       // Test the flipsPiece method with an invalid move
+       // Test the flipsPiece method with an valid move
        @Test
        public void test_flipsPiece_valid_move(){
            Player p = new Player();
@@ -140,34 +148,3 @@ public class PlayerTest {
                         
        }
                     
-      
-     /**Tests the human user input with the possible valid moves in the 
-     initial board*/
-     @Test
-     public void test_getInput_check_4_valid_moves(){
-         Player p = new Player();
-         Board b = new Board();
-         int[] move_1 = {5,3};
-         int[] move_2 = {3,5};
-         int[] move_3 = {4,6};
-         int[] move_4 = {6,4};
-         int x1 = x_y_1[0];
-         int y1 = x_y_1[1];
-         int x2 = x_y_2[0];
-         int y1 = x_y_2[1];
-         int x3 = x_y_3[0];
-         int y1 = x_y_3[1];
-         int x4 = x_y_4[0];
-         int y4 = x_y_4[1];
-         
-         
-         assertEquals("Checking for valid x coordinate", 5, x1);
-         assertEquals("Checking for valid y coordinate", 3, y1);
-         assertEquals("Checking for valid x coordinate", 3, x2);
-         assertEquals("Checking for valid y coordinate", 5, y2);
-         assertEquals("Checking for valid x coordinate", 4, x3);
-         assertEquals("Checking for valid y coordinate", 6, y3);
-         assertEquals("Checking for valid x coordinate", 6, x4);
-         assertEquals("Checking for valid y coordinate", 4, y4);
-         
-     }
