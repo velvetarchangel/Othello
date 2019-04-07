@@ -31,6 +31,9 @@ import java.io.IOException;
 import java.lang.Math;
 import java.util.*;
 
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+
 /**
 * <h>Othello</h>
 * Creates a graphical user interface and implements
@@ -48,11 +51,11 @@ public class OthelloGraphics extends Application{
   private Board board = new Board();
   private Group graphicBoard = new Group();
   private Scene scene = new Scene(graphicBoard,1200,850,Color.BLACK);
-  private String player = "1";
+  private static String player = "1";
   private Player player_1 = new Player("1","BLACK","Player 1");
   private Player player_2 = new Player("2","WHITE","Player 2");
-  private int playerOneScore = player_1.getScore();
-  private int playerTwoScore = player_2.getScore();
+  private int playerOneScore = board.turnScore("1");
+  private int playerTwoScore = board.turnScore("2");
   private String versus = "menu";
   private double mouseX, mouseY;
   private int x, y;
@@ -60,6 +63,7 @@ public class OthelloGraphics extends Application{
   private TextField yCoord = new TextField("");
   private TextField name1 = new TextField("");
   private TextField name2 = new TextField("");
+  private GraphicsHelper helper = new GraphicsHelper();
 
   private EventHandler<ActionEvent> inputButtonHandler = new EventHandler<ActionEvent>(){
 
@@ -91,7 +95,7 @@ public class OthelloGraphics extends Application{
                   System.out.println("X: " + x + "    Y: " + y);
                   board.printBoard();
                   System.out.println("\n" + "It is player " + player + "'s turn");
-                  turnBoard(player_1);
+                  turnBoard(player);
                   int[] flipped = Check.move(x, y, player_1, board);
 
                   // Reprompts user if no pieces can be flipped
@@ -122,7 +126,7 @@ public class OthelloGraphics extends Application{
               else if (player.equals("2") && Check.AnyMovesLeft(player_2, board)) {
                   board.printBoard();
                   System.out.println("\n" + "It is player " + player + "'s turn");
-                  turnBoard(player_2);
+                  turnBoard(player);
                   int[] flipped = Check.move(x, y, player_2, board);
 
                   // Reprompts users if no pieces can be flipped
@@ -172,6 +176,7 @@ public class OthelloGraphics extends Application{
     public void handle(MouseEvent mouseEvent){
       mouseX = mouseEvent.getX();
       mouseY = mouseEvent.getY();
+      player_2 = new AI("2", "WHITE");
       if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 725) && (mouseY < 800)){
         System.exit(0);
       }
@@ -200,68 +205,28 @@ public class OthelloGraphics extends Application{
           System.out.println("load game here..");
         }
         finally{
-        clearScreen();
-        drawBoard();
+        graphicBoard.getChildren().clear();
+        startup();
         }
       }
 
       if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
         x = (int)(Math.floor((mouseX - 25.0) / 100.0) + 1);
         y = (int)(Math.floor((mouseY - 25.0) / 100.0) + 1);
-        int turn = 1;
         int[] x_y = new int[2];
 
-        if (!board.isFull() && (Check.AnyMovesLeft(player_1, board) || Check.AnyMovesLeft(player_2, board))) { // while board isn't full
-            if (turn == 1) {
-                if (Check.AnyMovesLeft(player_1, board)) {
-                    System.out.println(" ");
-                    System.out.println("It's " + player_1.getName() + "'s turn.");
-                    board.printBoard();
-                    //System.out.println("Name is:" + player_1.getName()); // delete
-                    if (!player_1.getName().equals("Computer")) {
-                        x_y = player_2.getInput(board);
-                    } else {
-                        x_y = AI.chooseMove(player_1, board);
-                        System.out.println("Computer makes move: " + x_y[0]+ x_y[1]);
+        if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
+          drawVictoryScreen(); // will generate the end of the screen
+        }
 
-                        }
-                    if (x_y != null) {
-                        OthelloHelper.playerTurn(player_1, player_2, board, x_y);
-                    } else {
-                        OthelloHelper.finishGame(player_1, player_2, board);
-                        }
-                        turn = 2;
-                    } else if (!Check.AnyMovesLeft(player_1, board)) {
-                    System.out.println(player_1.getName() + " has no more valid moves.");
-                    turn = 2;
-                    }
-            } else if (turn == 2) {
-                if (Check.AnyMovesLeft(player_2, board)) {
-                    System.out.println(" ");
-                    System.out.println("It's " + player_2.getName() + "'s turn.");
-                    board.printBoard();
-                        if (!player_2.getName().equals("Computer")) {
-                            x_y = player_2.getInput(board);
-                        } else {
-                        x_y = AI.chooseMove(player_2, board);
-                            System.out.println("Computer makes move:" + x_y);
-                        }
-                        if (x_y != null) {
-                            OthelloHelper.playerTurn(player_2, player_1, board, x_y);
-                        } else {
-                            OthelloHelper.finishGame(player_1, player_2, board);
-                        }
-                        turn = 1;
-                    } else if (!Check.AnyMovesLeft(player_2, board)) {
-                            System.out.println(player_2.getName() + " has no more valid moves.");
-                            turn = 1;
-                        }
-                    }
-                }
-                drawScore();
-                drawBoard();
-              }
-            }
+        else {
+          helper.takeInput(x, y, board, "1", true);
+        }
+
+        drawScore();
+        drawBoard();
+      }
+    }
   };
 
   private EventHandler<MouseEvent> vsPlayerHandler = new EventHandler<MouseEvent>(){
@@ -274,6 +239,7 @@ public class OthelloGraphics extends Application{
     public void handle(MouseEvent mouseEvent){
       mouseX = mouseEvent.getX();
       mouseY = mouseEvent.getY();
+
       if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 725) && (mouseY < 800)){
         System.exit(0);
       }
@@ -291,7 +257,7 @@ public class OthelloGraphics extends Application{
 
         //System.out.println("save game here..");
       }
-      if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 700)){
+      if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 625) && (mouseY < 700)){
         try{
           String[][] temp_board = Board.loadBoard();
           board.setBoard(temp_board);
@@ -301,8 +267,9 @@ public class OthelloGraphics extends Application{
           System.out.println("load game here..");
         }
         finally{
-        clearScreen();
-        drawBoard();
+        graphicBoard.getChildren().clear();
+        startup();
+        
       }
       }
       if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
@@ -314,80 +281,19 @@ public class OthelloGraphics extends Application{
          * end, and the winners are announce. Otherwise the game continues.
          */
 
+         System.out.println(Arrays.deepToString(board.getArray()));
         if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
             drawVictoryScreen(); // will generate the end of the screen
         }
 
         // if board is not filled continue the game
         else {
-            if (board.isFull() == false && (Check.AnyMovesLeft(player_1, board) || Check.AnyMovesLeft(player_2, board))) {
-                clearScreen();
-                // what to do if it is player 1's turn
-                if (player.equals("1") && Check.AnyMovesLeft(player_1, board)) { // Player 1's turn
-                    System.out.println("X: " + x + "    Y: " + y);
-                    board.printBoard();
-                    System.out.println("\n" + "It is player " + player + "'s turn");
-                    int[] flipped = Check.move(x, y, player_1, board);
-                    turnBoard(player_2);
-
-                    // Reprompts user if no pieces can be flipped
-                    if ((flipped[0] == 0))
-                    {
-                        player = "1";
-                        System.out.println("Invalid move, try again");
-                    }
-
-                    // If pieces can be flipped, update board and scores
-                    if (flipped[0] != 0)
-                    {
-                        board.updateBoard(x, y, player, flipped);
-                        board.printBoard();
-                        playerOneScore = board.turnScore("1");
-                        playerTwoScore = board.turnScore("2");
-                        player_1.setScore(playerOneScore);
-                        player_2.setScore(playerTwoScore);
-                        System.out.println("\n" + "Player 1's score is " + playerOneScore);
-                        System.out.println("Player 2's score is " + playerTwoScore);
-                        drawScore();
-                        player = "2";
-                    }
-                    flipped = null;
-                  }
-
-                // checks it if it is player 2's turn and runs through the game sequence
-                else if (player.equals("2") && Check.AnyMovesLeft(player_2, board)) {
-                    board.printBoard();
-                    System.out.println("\n" + "It is player " + player + "'s turn");
-                    int[] flipped = Check.move(x, y, player_2, board);
-                    turnBoard(player_1);
-
-                    // Reprompts users if no pieces can be flipped
-                    if ((flipped[0] == 0))
-                    {
-                        player = "2";
-                        System.out.println("Invalid move, try again");
-                        flipped = Check.move(x, y, player_2, board);
-                    }
-
-                    // If pieces can be flipped, update the board and scores
-                    else if (flipped[0] != 0)
-                    {
-                        board.updateBoard(x, y, player, flipped);
-                        board.printBoard();
-                        playerTwoScore = board.turnScore(player);
-                        playerOneScore = board.turnScore("1");
-                        player_2.setScore(playerTwoScore);
-                        player_1.setScore(playerOneScore);
-                        System.out.println("\n" + "Player 1's score is " + playerOneScore);
-                        System.out.println("Player 2's score is " + playerTwoScore);
-                        drawScore();
-                        player = "1";
-                    }
-                    flipped = null;
-                  }
-            }
+            
+            helper.takeInput(x, y, board, player, false);
         }
         drawBoard();
+        turnBoard(player);
+        drawScore();
       }
     }
   };
@@ -448,7 +354,7 @@ public class OthelloGraphics extends Application{
     initPlayerInfo();
     initInputBoard();
     drawBoard();
-    turnBoard(player_1);
+    turnBoard(player);
     drawScore();
     return graphicBoard;
   }
@@ -474,10 +380,16 @@ public class OthelloGraphics extends Application{
     return graphicBoard;
   }
 
+  //sets the turn
+  public static void setTurn(String p) {
+    player = p;
+  }
+
   //redraws and updates the board and its pieces
   public void resetBoard(){
     board = new Board();
-    graphicBoard.getChildren().removeAll();
+    player = "1";
+    graphicBoard.getChildren().clear();
     startup();
   }
 
@@ -503,17 +415,39 @@ public class OthelloGraphics extends Application{
     clear.setFill(Color.SNOW);
     Rectangle clear2 = new Rectangle(910,203,225,35);
     clear2.setFill(Color.SNOW);
-    Text player1Score = new Text(925,125,String.valueOf(playerOneScore));
+    Text player1Score = new Text(925,125,String.valueOf(board.turnScore("1")));
     player1Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
-    Text player2Score = new Text(925,225,String.valueOf(playerTwoScore));
+    Text player2Score = new Text(925,225,String.valueOf(board.turnScore("2")));
     player2Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
 
     graphicBoard.getChildren().addAll(clear,clear2,player1Score,player2Score);
   }
 
   //Displays text that declares the winner and the scores of the players
-  public void drawVictoryScreen(){
-    if (player_1.getScore() > player_2.getScore()) {
+  public void drawVictoryScreen() {
+    Pane victoryPane = new Pane();
+    Scene victoryScene = new Scene(victoryPane, 500, 200);
+    Label winnerMessage = new Label();
+    if (board.turnScore("1") > board.turnScore("2")) {
+      winnerMessage = new Label("Player 1 wins!");
+    } else if (board.turnScore("1") < board.turnScore("2")) {
+      winnerMessage = new Label("Player 2 wins!");
+    }
+    else {
+      winnerMessage = new Label("bruh");
+    }
+    winnerMessage.setFont(Font.font("Arial", 20));
+    winnerMessage.setLayoutX(100);
+    winnerMessage.setLayoutY(100);
+    victoryPane.getChildren().add(winnerMessage);
+
+
+    Stage victoryStage = new Stage();
+    victoryStage.setScene(victoryScene);
+    victoryStage.show();
+    
+    /** 
+     * if (player_1.getScore() > player_2.getScore()) {
         //System.out.println("Player 1 wins! Final score is: " + player_1.getScore());
         drawWinnerOne();
     } else if (player_1.getScore() < player_2.getScore()) {
@@ -524,6 +458,8 @@ public class OthelloGraphics extends Application{
                 //+ "Player 2's score: " + player_2.getScore());
         drawWinnerBoth();
     }
+    */
+    
   }
 
   //switches scenes and handlers from one screen to another
@@ -904,11 +840,11 @@ public class OthelloGraphics extends Application{
   public void initPlayerInfo(){
     Text player1Text = new Text(925,100,player_1.getName() + " (" + player_1.getColour() + ")");
     player1Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
-    Text player1Score = new Text(925,125,String.valueOf(playerOneScore));
+    Text player1Score = new Text(925,125,String.valueOf(board.turnScore("1")));
     player1Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
     Text player2Text = new Text(925,200,player_2.getName() + " (" + player_2.getColour() + ")");
     player2Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
-    Text player2Score = new Text(925,225,String.valueOf(playerTwoScore));
+    Text player2Score = new Text(925,225,String.valueOf(board.turnScore("2")));
     player2Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
     Rectangle playerarea = new Rectangle(900,50,250,200);
     playerarea.setFill(Color.SNOW);
@@ -996,10 +932,15 @@ public class OthelloGraphics extends Application{
   }
 
   // Draws and updates the message board to switch player turns and add the reset button area
-  public void turnBoard(Player player){
+  public void turnBoard(String player){
     Rectangle cov = new Rectangle(925,400,200,50);
     cov.setFill(Color.SNOW);
-    Text playerText = new Text(960,450,player.getName() + "'s Turn!");
+    Text playerText = new Text(960,450, player_1.getName() + "'s Turn!");
+    if (player == "1") {
+      playerText = new Text(960,450, player_1.getName() + "'s Turn!");
+    } else {
+      playerText = new Text(960,450, player_2.getName() + "'s Turn!");
+    }
     playerText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
 
     graphicBoard.getChildren().addAll(cov,playerText);
@@ -1049,7 +990,31 @@ public class OthelloGraphics extends Application{
     stage.setScene(scene);
     stage.sizeToScene();
     stage.show();
-  }
+
+    Task<Void> sleeper = new Task<Void>() {
+      @Override
+      protected Void call() throws Exception {
+          try {
+              Thread.sleep(50);
+          } catch (InterruptedException e) {
+          }
+          return null;
+      }
+    };
+    sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+        @Override
+        public void handle(WorkerStateEvent event) {
+          if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
+            drawVictoryScreen(); // will generate the end of the screen
+          }
+  
+        }
+    });
+    new Thread(sleeper).start();
+    System.out.println(Arrays.deepToString(board.getArray()));
+    }
+
+    
 
 // Initiates the program
   public static void main(String args[]){

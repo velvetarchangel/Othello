@@ -9,7 +9,7 @@ import java.io.*;
  * @author Himika Dastidar, Jayoo Hwang, Vivian Huynh
  * @version 1.0 (February 27, 2019)
  */
-public class Board {
+public class Board implements Serializable {
 
   // Instance variables
   private String[][] board;
@@ -101,8 +101,21 @@ public class Board {
   }
 
   /**sets the board so that player can start a saved game from a file*/
-  public static String[][] loadBoard() throws IOException{
-    Scanner sc = new Scanner(new BufferedReader(new FileReader("./SavedGame.txt")));
+  public static String[][] loadBoard() throws IOException {
+    String[][] temp_board = new String[10][10];
+    try {
+      ObjectInputStream input = new ObjectInputStream(new FileInputStream("SavedGames.data"));
+      temp_board = (String[][])input.readObject();
+      input.close();
+    }
+    catch (ClassNotFoundException e) {
+
+    }
+    catch (IOException ioe) {
+
+    }
+    
+    /** Scanner sc = new Scanner(new BufferedReader(new FileReader("./SavedGame.txt")));
     String [][] temp_board = new String[10][10];
     while(sc.hasNextLine()){
       for(int i = 0; i <= 9; i++){
@@ -111,6 +124,7 @@ public class Board {
         }
       }
     sc.close();
+    return temp_board;*/
     return temp_board;
   }
   
@@ -121,8 +135,11 @@ public class Board {
   
   /**Saves the state of the game*/
   public void saveBoard() throws IOException{
-      File aFile = new File("./SavedGame.txt");
-      FileWriter f = new FileWriter(aFile);
+      ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("SavedGames.data"));
+      output.writeObject(board);
+      output.close();
+
+      /**FileWriter f = new FileWriter(aFile);
       //Board b = new Board();
       String[] line = new String[10];
       String[][] b = getArray();
@@ -134,7 +151,8 @@ public class Board {
           f.write(filecontent);
           filecontent = "";
       }
-      f.close();
+      f.close(); */
+      
   }
   
   
