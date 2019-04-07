@@ -5,7 +5,9 @@ import java.util.Arrays;
 
 /**Version 1.0 
 * @author Himika Dastidar
-* this class runs the text based version of the game using other classes*/
+* this class runs the text based version of the game using other classes in the background
+* the text based version is able to quit the game at any point, run a mode for player vs player and
+* run a mode for player vs AI*/
 
 public class Othello{
 
@@ -13,7 +15,7 @@ public class Othello{
         Board board = new Board(); // creates a new board
         Scanner kb = new Scanner(System.in);
         Player[] players = new Player[2]; // creates a player array and initializes it
-        OthelloHelper game = new OthelloHelper();
+        OthelloHelper game = new OthelloHelper(); // initializes an OthelloHelper Object which 
             game.greeting(); // Prints welcome message and instructions using method
             String choice = kb.nextLine(); // allows the user to select the game mode
             switch(choice){
