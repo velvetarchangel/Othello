@@ -42,22 +42,6 @@ public class Board implements Serializable {
         board[i][9] = "3"; // right
       }
     }
-
-    // FOR TEST
-    // for (int j = 1; j < 10; j++) {
-    //   for (int i = 1; i < 10; i++) {
-    //     board[1][j] = "1"; // top
-    //     board[8][j] = "1"; // bottom
-    //     board[i][1] = "1"; // left
-    //     board[i][8] = "1"; // right
-    //     board[2][2] = "2";
-    //     // board[4][4] = "2";
-    //     // board[4][5] = "2";
-    //     // board[5][4] = "2";
-    //     // board[5][5] = "2";
-    //   }
-    // }
-
     // Sets the four initial game pieces in the centre of the board to start the
     // game
     board[4][4] = "1";
@@ -70,7 +54,8 @@ public class Board implements Serializable {
   
   /**
   *Constructor that creates a new Board using @param aBoard
-  */
+  *of String array type. This helps with forcing creation 
+  * of boards for testing*/
   public Board(String[][] aBoard){
     this.board = aBoard;
   }
@@ -96,11 +81,14 @@ public class Board implements Serializable {
     }
   }
 
+  /** Retreives the contents of the board array
+  @return board*/
   public String[][] getArray() {
     return this.board;
   }
 
-  /**sets the board so that player can start a saved game from a file*/
+  /**sets the board so that player can start a saved game from a file
+  @return board from the binary file SavedGames.data*/
   public static String[][] loadBoard() throws IOException {
     String[][] temp_board = new String[10][10];
     try {
@@ -114,17 +102,6 @@ public class Board implements Serializable {
     catch (IOException ioe) {
 
     }
-    
-    /** Scanner sc = new Scanner(new BufferedReader(new FileReader("./SavedGame.txt")));
-    String [][] temp_board = new String[10][10];
-    while(sc.hasNextLine()){
-      for(int i = 0; i <= 9; i++){
-        String[] line = sc.nextLine().trim().split(",");
-        temp_board[i] = line;
-        }
-      }
-    sc.close();
-    return temp_board;*/
     return temp_board;
   }
   
@@ -133,26 +110,11 @@ public class Board implements Serializable {
     this.board = aBoard;
   }
   
-  /**Saves the state of the game*/
+  /**Saves the state of the game @param none, @return none*/
   public void saveBoard() throws IOException{
       ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("SavedGames.data"));
       output.writeObject(board);
-      output.close();
-
-      /**FileWriter f = new FileWriter(aFile);
-      //Board b = new Board();
-      String[] line = new String[10];
-      String[][] b = getArray();
-      for (int i = 0; i < 10; i++){
-          line = board[i];
-          String line_wb = Arrays.toString(line).replace("[","");
-          String line_without_brackets = line_wb.replace("]","");
-          String filecontent = line_without_brackets + "\n";
-          f.write(filecontent);
-          filecontent = "";
-      }
-      f.close(); */
-      
+      output.close();      
   }
   
   
@@ -166,56 +128,64 @@ public class Board implements Serializable {
    *               number of pieces flipped in total and in each direction
    */
   public void updateBoard(int x, int y, String player, int[] array) {
-    int north = array[1];
+    int north = array[1]; //checks if there are any pieces that can be flipped in the north direction
+    // if thats true, then flips those pieces
     if (north != 0) {
       for (int i = 0; i <= north; i++) {
         board[y - i][x] = player;
       }
     }
-
-    int northeast = array[2];
+  
+    int northeast = array[2]; //checks if there are any pieces that can be flipped in the north east direction
+    // if thats true, flips those pieces
     if (northeast != 0) {
       for (int i = 0; i <= northeast; i++) {
         board[y - i][x + i] = player;
       }
     }
 
-    int east = array[3];
+    int east = array[3]; //checks if there are any pieces that can be flipped in the east direction
+    // if thats true, flips those pieces
     if (east != 0) {
       for (int i = 0; i <= east; i++) {
         board[y][x + i] = player;
       }
     }
 
-    int southeast = array[4];
+    int southeast = array[4];//checks if there are any pieces that can be flipped in the south east direction
+    // if thats true, flips those pieces
     if (southeast != 0) {
       for (int i = 0; i <= southeast; i++) {
         board[y + i][x + i] = player;
       }
     }
 
-    int south = array[5];
+    int south = array[5];//checks if there are any pieces that can be flipped in the south direction
+    // if thats true, flips those pieces
     if (south != 0) {
       for (int i = 0; i <= south; i++) {
         board[y + i][x] = player;
       }
     }
 
-    int southwest = array[6];
+    int southwest = array[6]; //checks if there are any pieces that can be flipped in the south west direction
+    // if thats true, flips those pieces
     if (southwest != 0) {
       for (int i = 0; i <= southwest; i++) {
         board[y + i][x - i] = player;
       }
     }
 
-    int west = array[7];
+    int west = array[7]; //checks if there are any pieces that can be flipped in the west direction
+    // if thats true, flips those pieces
     if (west != 0) {
       for (int i = 0; i <= west; i++) {
         board[y][x - i] = player;
       }
     }
 
-    int northwest = array[8];
+    int northwest = array[8]; //checks if there are any pieces that can be flipped in the north west direction
+    // if thats true, flips those pieces
     if (northwest != 0) {
       for (int i = 0; i <= northwest; i++) {
         board[y - i][x - i] = player;
