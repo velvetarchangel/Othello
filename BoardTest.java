@@ -35,6 +35,22 @@ public class BoardTest {
     }
 
   /**
+   * Test the default constructor to see if the center pieces are set accordingly.
+   */
+  @Test
+    public void test_constructorBoardCenterPieces() {
+      String[][] board = new String[10][10];
+      board[4][4] = "1";
+      board[4][5] = "2";
+      board[5][4] = "2";
+      board[5][5] = "1";
+      Board b1 = new Board(board);
+
+      Board b2 = new Board();
+      assertEquals("Expected center pieces in the board are set accordingly.", b1, b2);
+    }
+
+  /**
    * Test the turnScore method to check the player score.
    */
   @Test
