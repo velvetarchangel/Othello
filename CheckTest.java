@@ -25,7 +25,7 @@ public class CheckTest {
       int y = 4;
       int[] flipper = Check.move(x, y, player, board);
       int[] flippedArray = {1, 0, 0, 0, 0, 0, 0, 1, 0};
-      assertArrayEquals("Expected 1 of the pieces to be flipped", flippedArray, flipper);
+      assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
   @Test
@@ -36,7 +36,7 @@ public class CheckTest {
       int y = 5;
       int[] flipper = Check.move(x, y, player, board);
       int[] flippedArray = {1, 0, 0, 0, 0, 0, 0, 1, 0};
-      assertArrayEquals("Expected 1 of the pieces to be flipped", flippedArray, flipper);
+      assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
   @Test
@@ -47,7 +47,7 @@ public class CheckTest {
       int y = 5;
       int[] flipper = Check.move(x, y, player, board);
       int[] flippedArray = {1, 0, 0, 1, 0, 0, 0, 0, 0};
-      assertArrayEquals("Expected 1 of the pieces to be flipped", flippedArray, flipper);
+      assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
   @Test
@@ -58,7 +58,7 @@ public class CheckTest {
       int y = 4;
       int[] flipper = Check.move(x, y, player, board);
       int[] flippedArray = {1, 0, 0, 1, 0, 0, 0, 0, 0};
-      assertArrayEquals("Expected 1 of the pieces to be flipped", flippedArray, flipper);
+      assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
 
@@ -75,7 +75,7 @@ public class CheckTest {
       int y = 3;
       int[] flipper = Check.move(x, y, player, board);
       int[] flippedArray = {1, 0, 0, 0, 0, 1, 0, 0, 0};
-      assertArrayEquals("Expected 1 of the pieces to be flipped", flippedArray, flipper);
+      assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
   @Test
@@ -86,7 +86,7 @@ public class CheckTest {
       int y = 3;
       int[] flipper = Check.move(x, y, player, board);
       int[] flippedArray = {1, 0, 0, 0, 0, 1, 0, 0, 0};
-      assertArrayEquals("Expected 1 of the pieces to be flipped", flippedArray, flipper);
+      assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
   @Test
@@ -97,7 +97,7 @@ public class CheckTest {
       int y = 6;
       int[] flipper = Check.move(x, y, player, board);
       int[] flippedArray = {1, 1, 0, 0, 0, 0, 0, 0, 0};
-      assertArrayEquals("Expected 1 of the pieces to be flipped", flippedArray, flipper);
+      assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
   @Test
@@ -108,7 +108,7 @@ public class CheckTest {
       int y = 6;
       int[] flipper = Check.move(x, y, player, board);
       int[] flippedArray = {1, 1, 0, 0, 0, 0, 0, 0, 0};
-      assertArrayEquals("Expected 1 of the pieces to be flipped", flippedArray, flipper);
+      assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
 
@@ -125,7 +125,7 @@ public class CheckTest {
       Board board = new Board();
       Player player = new Player("1", "Black");
       boolean detective = Check.AnyMovesLeft(player, board);
-      assertEquals("Expected 1 of the pieces to be flipped", true, detective);
+      assertEquals("Expected there are moves left for player 1.", true, detective);
     }
 
   @Test
@@ -133,13 +133,13 @@ public class CheckTest {
       Board board = new Board();
       Player player = new Player("2", "White");
       boolean detective = Check.AnyMovesLeft(player, board);
-      assertEquals("Expected 1 of the pieces to be flipped", true, detective);
+      assertEquals("Expected there are moves left for player 2.", true, detective);
     }
 
   /**
    * Checking when there are no more possible valid moves are left.
    */
-   
+
   @Test
     public void test_anyMovesLeft_forWhite() { // Checking if any valid moves are left for White.
       String[][] board1;
@@ -155,7 +155,7 @@ public class CheckTest {
 
       Player player = new Player("2", "White");
       boolean detective = Check.AnyMovesLeft(player, board);
-      assertEquals("Expected 1 of the pieces to be flipped", false, detective);
+      assertEquals("Expected there are no moves left for player 2.", false, detective);
     }
 
   @Test
@@ -173,7 +173,7 @@ public class CheckTest {
 
       Player player = new Player("1", "Black");
       boolean detective = Check.AnyMovesLeft(player, board);
-      assertEquals("Expected 1 of the pieces to be flipped", false, detective);
+      assertEquals("Expected there are no more moves left for player 1.", false, detective);
     }
 
 
