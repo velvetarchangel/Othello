@@ -13,7 +13,7 @@ public class CheckTest {
   // test the move method
 
   /**
-   * Test the move method to check for the right number of pieces fliped
+   * Test the move method to check for the right number of pieces flipped
    * horizontally.
    */
 
@@ -116,6 +116,10 @@ public class CheckTest {
    * Test the AnyMovesLeft method to check if there are any valid moves left.
    */
 
+  /**
+   * Checking when there are valid moves left.
+   */
+
   @Test
     public void test_anyMovesLeft_1() {
       Board board = new Board();
@@ -132,24 +136,47 @@ public class CheckTest {
       assertEquals("Expected 1 of the pieces to be flipped", true, detective);
     }
 
-
+  /**
+   * Checking when there are no more possible valid moves are left.
+   */
+   
   @Test
-    public void test_anyMovesLeft_3() {
-      this.board1 = new String[10][10]; // Sets size of 2D array as 10 x 10 elements
+    public void test_anyMovesLeft_forWhite() { // Checking if any valid moves are left for White.
+      String[][] board1;
+      board1 = new String[10][10]; // Sets size of 2D array as 10 x 10 elements
 
-      // Fills array with "_", representing empty areas of board
-      for (int i = 1; i < this.board1.length; i++) {
-        for (int j = 1; j < this.board1.length; j++) {
-          board1[i][j] = "_";
+      // Fills the array with "1", covering the board
+      for (int i = 1; i < board1.length; i++) {
+        for (int j = 1; j < board1.length; j++) {
+          board1[i][j] = "1";
         }
       }
       Board board = new Board(board1);
-
 
       Player player = new Player("2", "White");
       boolean detective = Check.AnyMovesLeft(player, board);
       assertEquals("Expected 1 of the pieces to be flipped", false, detective);
     }
+
+  @Test
+    public void test_anyMovesLeft_forBlack() { // Checking if any valid moves are left for Black.
+      String[][] board1;
+      board1 = new String[10][10]; // Sets size of 2D array as 10 x 10 elements
+
+      // Fills the array with "2", covering the board
+      for (int i = 1; i < board1.length; i++) {
+        for (int j = 1; j < board1.length; j++) {
+          board1[i][j] = "2";
+        }
+      }
+      Board board = new Board(board1);
+
+      Player player = new Player("1", "Black");
+      boolean detective = Check.AnyMovesLeft(player, board);
+      assertEquals("Expected 1 of the pieces to be flipped", false, detective);
+    }
+
+
 /**
   @Test
     public void test_move_3() {
