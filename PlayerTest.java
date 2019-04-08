@@ -16,71 +16,100 @@ public class PlayerTest {
    * Test the default constructor to see if the player's colour and score
    * has been set initially.
    */
-  /**Tests the default constructor in the player class*/
   @Test
-  public void testDefaultConstructor()
-  {
-      Player p = new Player();
-      assertEquals("Default player colour should be Black", "Black", p.getColour());
-      assertEquals("Default player score should be 0", 0, p.getScore());
-      assertEquals("Default player name should be an empty string", "", p.getName());
-      assertEquals("Default player should be 1", "1", p.getPlayer());
-  }
+    public void test_constructorDefault() {
+      Player con = new Player();
+      assertEquals("Expected initial player number to be 1", "1", con.getNumber());
+      assertEquals("Expected initial player token colour to be Black", "Black", con.getColour());
+      assertEquals("Expected initial player score to be 0", 0, con.getScore());
+    }
 
-  /**Tests the constructor with @param String player, @param String colour*/
+  /**
+   * Test the constructor to see if the player's number and colour
+   * has been set.
+   */
   @Test
-  public void testConstructor_player_colour()
-  {
-      Player p = new Player("1", "White");
-      assertEquals("Player colour should be White", "White", p.getColour());
-      assertEquals("Default player score should be 0", 0, p.getScore());
-      assertEquals("Default player name should be an empty string", "", p.getName());
-      assertEquals("Player should be 1", "1", p.getPlayer());
-  }
+    public void test_constructorWithNumberAndColour() {
+      Player con = new Player("1", "Black");
+      String num = con.getNumber();
+      String col = con.getColour();
 
-  /**Tests the constructor with @param String player, @param String colour*/
-  @Test
-  public void testConstructor_player_colour_name(){
-      Player p = new Player("2", "White", "Bob");
-      assertEquals("Player colour should be White", "White", p.getColour());
-      assertEquals("Default player score should be 0", 0, p.getScore());
-      assertEquals("Default player name should be an empty string", "Bob", p.getName());
-      assertEquals("Player should be 2", "2", p.getPlayer());
-  }
+      assertEquals("Expected player number to be 1", "1", con.getNumber());
+      assertTrue("Player number should either be 1 or 2", num.equals("1") || num.equals("2"));
+      assertEquals("Expected player token colour to be Black", "Black", con.getColour());
+      assertTrue("Player colour should either be Black or White", col.equals("Black") || col.equals("White"));
+    }
+    
 
-  /**Tests the constructor with @param String player, @param String colour and @param score */
-  @Test
-  public void testConstructor_player_colour_score()
-  {
-      Player p = new Player("2", "White", 20);
-      assertEquals("Player colour should be White", "White", p.getColour());
-      assertEquals("Player score should be 20", 20, p.getScore());
-      assertEquals("Default player name should be an empty string", "", p.getName());
-      assertEquals("Expected player to be 2", "2", p.getPlayer());
-  }
+    /**
+     * Test the constructor to see if the player's number, colour and name
+     * has been set.
+     */
+    @Test
+      public void test_constructorWithNumberColourAndName() {
+        Player con = new Player("1", "Black", "Joestar");
+        String num = con.getNumber();
+        String col = con.getColour();
 
-  /**Tests the constructor with @param String player, @param String colour, @param Name and @param score */
-  @Test
-  public void testConstructor_player_colour_name_score(){
-      Player p = new Player("2", "Black", "Mario", 30);
-      assertEquals("Player colour should be Black", "Black", p.getColour());
-      assertEquals("Player score should be 30", 30, p.getScore());
-      assertEquals("Player name should be Mario", "Mario", p.getName());
-      assertEquals("Player should be 2", "2", p.getPlayer());
-  }
+        assertEquals("Expected player number to be 1", "1", con.getNumber());
+        assertTrue("Player number should either be 1 or 2", num.equals("1") || num.equals("2"));
+        assertEquals("Expected player token colour to be Black", "Black", con.getColour());
+        assertTrue("Player colour should either be Black or White", col.equals("Black") || col.equals("White"));
+        assertEquals("Expected player name to be Joestar", "Joestar", con.getName());
+      }
 
-  
-  /** Tests the copy constructor**/
-  @Test
-  public void testCopyConstructor()
-  {
-      Player p = new Player("1", "White","Othello",0);
-      Player copy = new Player(p);
-      assertEquals("Player colour should be White", "White", copy.getColour());
-      assertEquals("Player score should be 0", 0, copy.getScore());
-      assertEquals("Player name should be Othello", "Othello", copy.getName());
-      assertEquals("Player should be 1", "1", copy.getPlayer());
-  }
+      /**
+       * Test the constructor to see if the player's number, colour and score
+       * has been set.
+       */
+      @Test
+        public void test_constructorWithNumberColourAndScore() {
+          Player con = new Player("1", "Black", 69);
+          String num = con.getNumber();
+          String col = con.getColour();
+          int score = con.getScore();
+
+          assertEquals("Expected player number to be 1", "1", con.getNumber());
+          assertTrue("Player number should either be 1 or 2", num.equals("1") || num.equals("2"));
+          assertEquals("Expected player token colour to be Black", "Black", con.getColour());
+          assertTrue("Player colour should either be Black or White", col.equals("Black") || col.equals("White"));
+          assertEquals("Expected player score to be 69", 69, con.getScore());
+          assertTrue("Player score should be 0 or higher", score >= 0);
+        }
+
+        /**
+         * Test the constructor to see if the player's number, colour, name
+         * and score has been set.
+         */
+        @Test
+          public void test_constructorWithNumberColourNameAndScore() {
+            Player con = new Player("1", "Black", "Joestar", 69);
+            String num = con.getNumber();
+            String col = con.getColour();
+            int score = con.getScore();
+
+            assertEquals("Expected player number to be 1", "1", con.getNumber());
+            assertTrue("Player number should either be 1 or 2", num.equals("1") || num.equals("2"));
+            assertEquals("Expected player token colour to be Black", "Black", con.getColour());
+            assertTrue("Player colour should either be Black or White", col.equals("Black") || col.equals("White"));
+            assertEquals("Expected player name to be Joestar", "Joestar", con.getName());
+            assertEquals("Expected player score to be 69", 69, con.getScore());
+            assertTrue("Player score should be 0 or higher", score >= 0);
+          }
+
+          /**
+           * Test the copy constructor.
+           */
+          @Test
+            public void test_constructorCopy() {
+              Player con = new Player("1", "Black", "Joestar", 69);
+              Player copy = new Player(con);
+
+              assertEquals("Expected player number to be 1", "1", copy.getNumber());
+              assertEquals("Expected player token colour to be Black", "Black", copy.getColour());
+              assertEquals("Expected player name to be Joestar", "Joestar", copy.getName());
+              assertEquals("Expected player score to be 69", 69, copy.getScore());
+            }
 
            /**tests Getter and setter for the class */
     @Test
