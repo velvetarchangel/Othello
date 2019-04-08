@@ -1,83 +1,117 @@
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
-/**@Author Himika Dastidar, Al Mahmud Dipto
-*Designed to test the player class thoroughly and all the methods in it
-* tests the input sanitization in the Player class in the text based version 
-* to make sure (1) the input is within the range of the board, (2) the input 
-* actually indicates a legal move. Also test that the constructors in the class
-* are working, the setters and getters are working */
+/**
+ * Junit test for Player class of Othello game. This class is used to
+ * test the logical functioning of the Player class.
+ *
+ * @author Al Mahmud Dipto
+ */
 
 public class PlayerTest {
+  // test the constructors
+
+  /**
+   * Test the default constructor to see if the player's colour and score
+   * has been set initially.
+   */
+  @Test
+    public void test_constructorDefault() {
+      Player con = new Player();
+      assertEquals("Expected initial player number to be 1", "1", con.getNumber());
+      assertEquals("Expected initial player token colour to be Black", "Black", con.getColour());
+      assertEquals("Expected initial player score to be 0", 0, con.getScore());
+    }
+
+  /**
+   * Test the constructor to see if the player's number and colour
+   * has been set.
+   */
+  @Test
+    public void test_constructorWithNumberAndColour() {
+      Player con = new Player("1", "Black");
+      String num = con.getNumber();
+      String col = con.getColour();
+
+      assertEquals("Expected player number to be 1", "1", con.getNumber());
+      assertTrue("Player number should either be 1 or 2", num.equals("1") || num.equals("2"));
+      assertEquals("Expected player token colour to be Black", "Black", con.getColour());
+      assertTrue("Player colour should either be Black or White", col.equals("Black") || col.equals("White"));
+    }
     
-    /**Tests the default constructor in the player class to make 
-    * sure it returns player with parameters colour: "BLACK", player: "1", Score: 0, name: "" */
-    @Test
-    public void testDefaultConstructor()
-    {
-        Player p = new Player();
-        assertEquals("Default player colour should be Black", "Black", p.getColour());
-        assertEquals("Default player score should be 0", 0, p.getScore());
-        assertEquals("Default player name should be an empty string", "", p.getName());
-        assertEquals("Default player should be 1", "1", p.getNumber());
-    }
 
-    /**Tests the constructor with @param String player, @param String colour*/
+    /**
+     * Test the constructor to see if the player's number, colour and name
+     * has been set.
+     */
     @Test
-    public void testConstructor_player_colour()
-    {
-        Player p = new Player("1", "White");
-        assertEquals("Player colour should be White", "White", p.getColour());
-        assertEquals("Default player score should be 0", 0, p.getScore());
-        assertEquals("Default player name should be an empty string", "", p.getName());
-        assertEquals("Player should be 1", "1", p.getNumber());
-    }
+      public void test_constructorWithNumberColourAndName() {
+        Player con = new Player("1", "Black", "Joestar");
+        String num = con.getNumber();
+        String col = con.getColour();
 
-    /**Tests the constructor with @param String player, @param String colour*/
-    @Test
-    public void testConstructor_player_colour_name(){
-        Player p = new Player("2", "White", "Bob");
-        assertEquals("Player colour should be White", "White", p.getColour());
-        assertEquals("Default player score should be 0", 0, p.getScore());
-        assertEquals("Default player name should be an empty string", "Bob", p.getName());
-        assertEquals("Player should be 2", "2", p.getNumber());
-    }
+        assertEquals("Expected player number to be 1", "1", con.getNumber());
+        assertTrue("Player number should either be 1 or 2", num.equals("1") || num.equals("2"));
+        assertEquals("Expected player token colour to be Black", "Black", con.getColour());
+        assertTrue("Player colour should either be Black or White", col.equals("Black") || col.equals("White"));
+        assertEquals("Expected player name to be Joestar", "Joestar", con.getName());
+      }
 
-    /**Tests the constructor with @param String player, @param String colour and @param score */
-    @Test
-    public void testConstructor_player_colour_score()
-    {
-        Player p = new Player("2", "White", 20);
-        assertEquals("Player colour should be White", "White", p.getColour());
-        assertEquals("Player score should be 20", 20, p.getScore());
-        assertEquals("Default player name should be an empty string", "", p.getName());
-        assertEquals("Expected player to be 2", "2", p.getNumber());
-    }
+      /**
+       * Test the constructor to see if the player's number, colour and score
+       * has been set.
+       */
+      @Test
+        public void test_constructorWithNumberColourAndScore() {
+          Player con = new Player("1", "Black", 69);
+          String num = con.getNumber();
+          String col = con.getColour();
+          int score = con.getScore();
 
-    /**Tests the constructor with @param String player, @param String colour, @param Name and @param score */
-    @Test
-    public void testConstructor_player_colour_name_score(){
-        Player p = new Player("2", "Black", "Mario", 30);
-        assertEquals("Player colour should be Black", "Black", p.getColour());
-        assertEquals("Player score should be 30", 30, p.getScore());
-        assertEquals("Player name should be Mario", "Mario", p.getName());
-        assertEquals("Player should be 2", "2", p.getNumber());
-    }
+          assertEquals("Expected player number to be 1", "1", con.getNumber());
+          assertTrue("Player number should either be 1 or 2", num.equals("1") || num.equals("2"));
+          assertEquals("Expected player token colour to be Black", "Black", con.getColour());
+          assertTrue("Player colour should either be Black or White", col.equals("Black") || col.equals("White"));
+          assertEquals("Expected player score to be 69", 69, con.getScore());
+          assertTrue("Player score should be 0 or higher", score >= 0);
+        }
 
-    
-    /** Tests the copy constructor**/
-    @Test
-    public void testCopyConstructor()
-    {
-        Player p = new Player("1", "White","Othello",0);
-        Player copy = new Player(p);
-        assertEquals("Player colour should be White", "White", copy.getColour());
-        assertEquals("Player score should be 0", 0, copy.getScore());
-        assertEquals("Player name should be Othello", "Othello", copy.getName());
-        assertEquals("Player should be 1", "1", copy.getNumber());
-    }
+        /**
+         * Test the constructor to see if the player's number, colour, name
+         * and score has been set.
+         */
+        @Test
+          public void test_constructorWithNumberColourNameAndScore() {
+            Player con = new Player("1", "Black", "Joestar", 69);
+            String num = con.getNumber();
+            String col = con.getColour();
+            int score = con.getScore();
 
-    /**tests Getter and setter for the class */
+            assertEquals("Expected player number to be 1", "1", con.getNumber());
+            assertTrue("Player number should either be 1 or 2", num.equals("1") || num.equals("2"));
+            assertEquals("Expected player token colour to be Black", "Black", con.getColour());
+            assertTrue("Player colour should either be Black or White", col.equals("Black") || col.equals("White"));
+            assertEquals("Expected player name to be Joestar", "Joestar", con.getName());
+            assertEquals("Expected player score to be 69", 69, con.getScore());
+            assertTrue("Player score should be 0 or higher", score >= 0);
+          }
+
+          /**
+           * Test the copy constructor.
+           */
+          @Test
+            public void test_constructorCopy() {
+              Player con = new Player("1", "Black", "Joestar", 69);
+              Player copy = new Player(con);
+
+              assertEquals("Expected player number to be 1", "1", copy.getNumber());
+              assertEquals("Expected player token colour to be Black", "Black", copy.getColour());
+              assertEquals("Expected player name to be Joestar", "Joestar", copy.getName());
+              assertEquals("Expected player score to be 69", 69, copy.getScore());
+            }
+
+           /**tests Getter and setter for the class */
     @Test
     public void testGetter_and_Setter()
     {
@@ -93,10 +127,7 @@ public class PlayerTest {
     }
 
          
-    /**Tests the input sanitization method in the player class
-    * (1) Tests whether the method isInt can properly decipher when the input is an integer
-    * (2) Tests whether the method withinRange can decipher whether the input is within the board
-    * (3) Tests whether the method isFlipped is */
+    /**tests the input sanitization method in the player class*/
    
     /** Tests whether the user input is within range, is valid and whether it is a permissible move*/
     @Test 
@@ -113,18 +144,17 @@ public class PlayerTest {
         boolean ir_top = p.withinRange(in_range_top);
         boolean ir_bottom = p.withinRange(in_range_bottom);
         
-        assertEquals("Player input should return false", "false", answer); // tests whether it can decipher between int and string
-        assertEquals("Player input out of range", "false", too_high_Test); // test if it returns false when input is int, but not in the board
-        assertEquals("Player input out of range", "false", too_low_Test); 
-        assertEquals("Player input in range", "true", ir_top); // tests if it returns true when input is int and in the baord
-        assertEquals("Player input in range", "true", ir_bottom);
+        assertEquals("Player input should return false", false, answer);
+        assertEquals("Player input out of range", false, too_high_Test);
+        assertEquals("Player input out of range", false, too_low_Test);
+        assertEquals("Player input in range", true, ir_top);
+        assertEquals("Player input in range", true, ir_bottom);
 }
        
        /**Tests whether the input consists of a move that is logically 
-       * valid in the game
-       */
+       * valid in the game*/
                     
-       // Tests the flipsPiece method with an invalid move
+       // Tests the flipsPiece method with a valid move
        @Test
        public void test_flipsPiece_invalid_move(){
            Player p = new Player();
@@ -132,18 +162,17 @@ public class PlayerTest {
            
            int[] invalid_move = {3,4};
            boolean i_move = p.flipsPieces(invalid_move, b);
-           assertEquals("Pieces cannot be flipped", "false", invalid_move);
+           assertEquals("Pieces cannot be flipped", false, i_move);
        }
         
-       // Test the flipsPiece method with an valid move
+       // Test the flipsPiece method with an invalid move
        @Test
        public void test_flipsPiece_valid_move(){
            Player p = new Player();
            Board b = new Board();
            int[] valid_move = {3,5};
            boolean v_move = p.flipsPieces(valid_move, b);
-           assertEquals("Pieces can be flipped", "true", v_move);
+           assertEquals("Pieces can be flipped", true , v_move);
                         
        }
 }
-                    
