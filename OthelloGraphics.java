@@ -63,6 +63,7 @@ public class OthelloGraphics extends Application{
   private TextField yCoord = new TextField("");
   private TextField name1 = new TextField("");
   private TextField name2 = new TextField("");
+  private TextField name3 = new TextField("");
   private GraphicsHelper helper = new GraphicsHelper();
 
   private EventHandler<ActionEvent> inputButtonHandler = new EventHandler<ActionEvent>(){
@@ -126,7 +127,7 @@ public class OthelloGraphics extends Application{
               else if (player.equals("2") && Check.AnyMovesLeft(player_2, board)) {
                   board.printBoard();
                   System.out.println("\n" + "It is player " + player + "'s turn");
-                  turnBoard(player);
+                  //turnBoard(player);
                   int[] flipped = Check.move(x, y, player_2, board);
 
                   // Reprompts users if no pieces can be flipped
@@ -146,8 +147,6 @@ public class OthelloGraphics extends Application{
                       playerOneScore = board.turnScore("1");
                       player_2.setScore(playerTwoScore);
                       player_1.setScore(playerOneScore);
-                      System.out.println("\n" + "Player 1's score is " + playerOneScore);
-                      System.out.println("Player 2's score is " + playerTwoScore);
                       drawScore();
                       player = "1";
                   }
@@ -168,6 +167,42 @@ public class OthelloGraphics extends Application{
     public void handle(ActionEvent buttonEvent){
       player_1.setName(name1.getText());
       player_2.setName(name2.getText());
+    }
+  };
+
+  private EventHandler<ActionEvent> aiNameHandler = new EventHandler<ActionEvent>(){
+    /**
+    * Handles button to set the names for player against AI
+    * @param buttonEvent
+    */
+    @Override
+    public void handle(ActionEvent buttonEvent){
+      player_1.setName(name3.getText());
+      player_2.setName("Computer");
+    }
+  };
+
+  private EventHandler<ActionEvent> exitGameHandler = new EventHandler<ActionEvent>(){
+    /**
+    * Handles button to exit game at the victory screen
+    * @param buttonEvent
+    */
+    @Override
+    public void handle(ActionEvent buttonEvent){
+      System.exit(0);
+    }
+  };
+
+  private EventHandler<ActionEvent> backToMenuHandler = new EventHandler<ActionEvent>(){
+    /**
+    * Handles button to reset game to menu in the victory screen
+    * @param buttonEvent
+    */
+    @Override
+    public void handle(ActionEvent buttonEvent){
+      versus = "menu";
+      //changeScenes();
+      resetBoard();
     }
   };
 
@@ -199,7 +234,7 @@ public class OthelloGraphics extends Application{
         try{
           String[][] temp_board = Board.loadBoard();
           board.setBoard(temp_board);
-          System.out.println(Arrays.deepToString(board.getArray()));
+          //System.out.println(Arrays.deepToString(board.getArray()));
         }
         catch(IOException e){
           System.out.println("load game here..");
@@ -215,14 +250,12 @@ public class OthelloGraphics extends Application{
         y = (int)(Math.floor((mouseY - 25.0) / 100.0) + 1);
         int[] x_y = new int[2];
 
-        if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
-          drawVictoryScreen(); // will generate the end of the screen
-        }
-
-        else {
+        if (board.isFull() == false || (Check.AnyMovesLeft(player_1, board) && Check.AnyMovesLeft(player_2, board))){
           helper.takeInput(x, y, board, "1", true);
         }
-
+        else if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
+          drawVictoryScreen(); // will generate the end of the screen
+        }
         drawScore();
         drawBoard();
       }
@@ -261,7 +294,6 @@ public class OthelloGraphics extends Application{
         try{
           String[][] temp_board = Board.loadBoard();
           board.setBoard(temp_board);
-          System.out.println(Arrays.deepToString(board.getArray()));
         }
         catch(IOException e){
           System.out.println("load game here..");
@@ -269,7 +301,7 @@ public class OthelloGraphics extends Application{
         finally{
         graphicBoard.getChildren().clear();
         startup();
-        
+
       }
       }
       if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
@@ -280,15 +312,12 @@ public class OthelloGraphics extends Application{
          * Checks whether the board is full of pieces. If the board is full, the game
          * end, and the winners are announce. Otherwise the game continues.
          */
-
-         System.out.println(Arrays.deepToString(board.getArray()));
         if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
             drawVictoryScreen(); // will generate the end of the screen
         }
 
         // if board is not filled continue the game
         else {
-            
             helper.takeInput(x, y, board, player, false);
         }
         drawBoard();
@@ -332,6 +361,7 @@ public class OthelloGraphics extends Application{
       double mouseY = mouseEvent.getY();
       // Exits the game if this area is clicked
       if ((mouseX > 400) && (mouseX < 800) && (mouseY > 600) && (mouseY < 700)){
+        player_2.setName("Computer");
         versus = "vsAI";
       }
       // Initializes the game if this area of the screeen is clicked
@@ -390,7 +420,7 @@ public class OthelloGraphics extends Application{
     board = new Board();
     player = "1";
     graphicBoard.getChildren().clear();
-    startup();
+    changeScenes();
   }
 
   //draws all the pieces on the board
@@ -434,32 +464,25 @@ public class OthelloGraphics extends Application{
       winnerMessage = new Label("Player 2 wins!");
     }
     else {
-      winnerMessage = new Label("bruh");
+      winnerMessage = new Label("");
     }
     winnerMessage.setFont(Font.font("Arial", 20));
     winnerMessage.setLayoutX(100);
     winnerMessage.setLayoutY(100);
-    victoryPane.getChildren().add(winnerMessage);
 
+    Button exitGame = new Button("Exit Game");
+    exitGame.relocate(325,75);
+    exitGame.setOnAction(exitGameHandler);
+
+    Button backToMenu = new Button("Back to Main Menu");
+    backToMenu.relocate(325,115);
+    backToMenu.setOnAction(backToMenuHandler);
+
+    victoryPane.getChildren().addAll(winnerMessage,exitGame,backToMenu);
 
     Stage victoryStage = new Stage();
     victoryStage.setScene(victoryScene);
     victoryStage.show();
-    
-    /** 
-     * if (player_1.getScore() > player_2.getScore()) {
-        //System.out.println("Player 1 wins! Final score is: " + player_1.getScore());
-        drawWinnerOne();
-    } else if (player_1.getScore() < player_2.getScore()) {
-        //System.out.println("Player 2 wins! Final score is: " + player_2.getScore());
-        drawWinnerTwo();
-    } else if (player_1.getScore() == player_2.getScore()) {
-        //System.out.println("It's a draw! " + "Player 1's score: " + player_1.getScore()
-                //+ "Player 2's score: " + player_2.getScore());
-        drawWinnerBoth();
-    }
-    */
-    
   }
 
   //switches scenes and handlers from one screen to another
@@ -480,15 +503,14 @@ public class OthelloGraphics extends Application{
       scene.setRoot(startup());
       scene.setOnMouseClicked(vsAIHandler);
     }
-
   }
 
   /** Creates a part of the main menu scene which draws the images in the background and other graphic properties
     and adds the images to the graphicBoard group
   */
   public void initMenuBack(){
-    Image feltTexture = new Image("feltboard.png");
-    Image woodEdge = new Image("woodwalls.jpg");
+    Image feltTexture = new Image("images/feltboard.png");
+    Image woodEdge = new Image("images/woodwalls.jpg");
     ImageView woodBack = new ImageView();
     ImageView feltBack = new ImageView();
     woodBack.setImage(woodEdge);
@@ -518,7 +540,7 @@ public class OthelloGraphics extends Application{
 
   //Draws the areas where the start and exit button will be handled if clicked and adds the images to the graphicBoard group
   public void initMenuButtons(){
-    Image feltTexture2 = new Image("whitefelt.jpg");
+    Image feltTexture2 = new Image("images/whitefelt.jpg");
     ImageView startFelt = new ImageView();
     startFelt.setImage(feltTexture2);
     startFelt.setX(400);
@@ -561,8 +583,8 @@ public class OthelloGraphics extends Application{
     and adds the images to the graphicBoard group
   */
   public void initVsScreen(){
-    Image feltTexture = new Image("feltboard.png");
-    Image woodEdge = new Image("woodwalls.jpg");
+    Image feltTexture = new Image("images/feltboard.png");
+    Image woodEdge = new Image("images/woodwalls.jpg");
     ImageView woodBack = new ImageView();
     ImageView feltBack = new ImageView();
     woodBack.setImage(woodEdge);
@@ -592,7 +614,7 @@ public class OthelloGraphics extends Application{
 
   //Draws the areas where the 'vs Player' and 'vs AI' button will be handled if clicked and adds the images to the graphicBoard group
   public void initVsScreenButtons(){
-    Image feltTexture2 = new Image("whitefelt.jpg");
+    Image feltTexture2 = new Image("images/whitefelt.jpg");
     ImageView startFelt = new ImageView();
     startFelt.setImage(feltTexture2);
     startFelt.setX(400);
@@ -608,7 +630,7 @@ public class OthelloGraphics extends Application{
     startBorder.setStrokeWidth(5);
     startBorder.getElements().add(sbstart);
     startBorder.getElements().addAll(sb1,sb2,sb3,sb4);
-    Text startText = new Text(475,520,"Player Vs Player");
+    Text startText = new Text(455,520,"Player Vs Player");
     startText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,40));
     ImageView exitarea = new ImageView();
     exitarea.setImage(feltTexture2);
@@ -625,7 +647,7 @@ public class OthelloGraphics extends Application{
     exitBorder.setStrokeWidth(5);
     exitBorder.getElements().add(ebstart);
     exitBorder.getElements().addAll(eb1,eb2,eb3,eb4);
-    Text exitText = new Text(500,665,"Player Vs AI");
+    Text exitText = new Text(470,665,"Player Vs AI");
     exitText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,40));
 
     graphicBoard.getChildren().addAll(startFelt,startBorder,startText,exitarea,exitBorder,exitText);
@@ -655,14 +677,28 @@ public class OthelloGraphics extends Application{
     setName.relocate(910,530);
     setName.setOnAction(playerNameHandler);
 
-    graphicBoard.getChildren().addAll(p1name,name1,p2name,name2,setName);
+    Label pname = new Label("Player:");
+    pname.setLayoutX(850);
+    pname.setLayoutY(650);
+    NumberBinding nameCoord3 =
+    pname.layoutXProperty().add(pname.widthProperty().add(10));
+    name3.layoutXProperty().bind(nameCoord3);
+    name3.selectAll();
+    name3.layoutYProperty().bind(pname.layoutYProperty());
+
+    Button setpname = new Button("Set Name");
+    setpname.relocate(910,700);
+    setpname.setOnAction(aiNameHandler);
+
+
+    graphicBoard.getChildren().addAll(p1name,name1,p2name,name2,setName,name3,pname,setpname);
   }
 
   /** Draws the background images for the main game and adds the images to the graphicBoard group
    */
   public void initBackGround(){
-    Image feltTexture = new Image("feltboard.png");
-    Image woodEdge = new Image("woodwalls.jpg");
+    Image feltTexture = new Image("images/feltboard.png");
+    Image woodEdge = new Image("images/woodwalls.jpg");
     ImageView woodBack = new ImageView();
     ImageView feltBack = new ImageView();
     woodBack.setImage(woodEdge);
@@ -740,7 +776,7 @@ public class OthelloGraphics extends Application{
     and adds the images to the graphicBoard group
   */
   public void initScoreBackground(){
-    Image feltTexture2 = new Image("greyfelt.jpg");
+    Image feltTexture2 = new Image("images/greyfelt.jpg");
     ImageView scoreFelt = new ImageView();
     scoreFelt.setImage(feltTexture2);
     scoreFelt.setX(875);
@@ -756,20 +792,7 @@ public class OthelloGraphics extends Application{
     scoreBorder.setStrokeWidth(5);
     scoreBorder.getElements().add(sbstart);
     scoreBorder.getElements().addAll(sb1,sb2,sb3,sb4);
-    Rectangle exitarea = new Rectangle(900,700,250,100);
-    exitarea.setFill(Color.SNOW);
-    Path exitBorder = new Path();
-    MoveTo ebstart = new MoveTo(900,700);
-    LineTo eb1 = new LineTo(1150,700);
-    LineTo eb2 = new LineTo(1150,800);
-    LineTo eb3 = new LineTo(900,800);
-    LineTo eb4 = new LineTo(900,700);
-    exitBorder.setStrokeWidth(5);
-    exitBorder.getElements().add(ebstart);
-    exitBorder.getElements().addAll(eb1,eb2,eb3,eb4);
-    Text exitText = new Text(920,760,"Click here to exit.");
-    exitText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
-
+    
     graphicBoard.getChildren().addAll(scoreFelt,scoreBorder);
   }
 
@@ -786,7 +809,7 @@ public class OthelloGraphics extends Application{
     exitBorder.setStrokeWidth(5);
     exitBorder.getElements().add(ebstart);
     exitBorder.getElements().addAll(eb1,eb2,eb3,eb4);
-    Text exitText = new Text(950,775,"Exit");
+    Text exitText = new Text(930,775,"Exit");
     exitText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
 
     Rectangle resetArea = new Rectangle(1040,725,110,75);
@@ -800,7 +823,7 @@ public class OthelloGraphics extends Application{
     resetBorder.setStrokeWidth(5);
     resetBorder.getElements().add(rbstart);
     resetBorder.getElements().addAll(rb1,rb2,rb3,rb4);
-    Text resetText = new Text(1050,775,"Reset");
+    Text resetText = new Text(1060,775,"Reset");
     resetText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
 
     Rectangle saveArea = new Rectangle(900,625,110,75);
@@ -814,7 +837,7 @@ public class OthelloGraphics extends Application{
     saveBorder.setStrokeWidth(5);
     saveBorder.getElements().add(sbstart);
     saveBorder.getElements().addAll(sb1,sb2,sb3,sb4);
-    Text saveText = new Text(930,650,"Save\nGame");
+    Text saveText = new Text(930,660,"Save\nGame");
     saveText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,15));
 
     Rectangle loadArea = new Rectangle(1040,625,110,75);
@@ -828,7 +851,7 @@ public class OthelloGraphics extends Application{
     loadBorder.setStrokeWidth(5);
     loadBorder.getElements().add(lbstart);
     loadBorder.getElements().addAll(lb1,lb2,lb3,lb4);
-    Text loadText = new Text(1070,650,"Load\nGame");
+    Text loadText = new Text(1070,660,"Load\nGame");
     loadText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,15));
 
     graphicBoard.getChildren().addAll(exitArea, exitBorder, exitText, resetArea, resetBorder, resetText, saveArea, saveBorder, saveText, loadArea, loadBorder, loadText);
@@ -838,11 +861,11 @@ public class OthelloGraphics extends Application{
     and adds the images to the graphicBoard group
   */
   public void initPlayerInfo(){
-    Text player1Text = new Text(925,100,player_1.getName() + " (" + player_1.getColour() + ")");
+    Text player1Text = new Text(910,90,player_1.getName() + " (" + player_1.getColour() + ")");
     player1Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
     Text player1Score = new Text(925,125,String.valueOf(board.turnScore("1")));
     player1Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
-    Text player2Text = new Text(925,200,player_2.getName() + " (" + player_2.getColour() + ")");
+    Text player2Text = new Text(910,190,player_2.getName() + " (" + player_2.getColour() + ")");
     player2Text.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
     Text player2Score = new Text(925,225,String.valueOf(board.turnScore("2")));
     player2Score.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,25));
@@ -879,7 +902,7 @@ public class OthelloGraphics extends Application{
     inputBorder.getElements().addAll(ib1,ib2,ib3,ib4);
 
     Label xLabel = new Label("X:");
-    xLabel.setLayoutX(940);
+    xLabel.setLayoutX(925);
     xLabel.setLayoutY(320);
     NumberBinding xLabelCoord =
     xLabel.layoutXProperty().add(xLabel.widthProperty().add(10));
@@ -889,7 +912,7 @@ public class OthelloGraphics extends Application{
 
 
     Label yLabel = new Label("Y:");
-    yLabel.setLayoutX(940);
+    yLabel.setLayoutX(925);
     yLabel.setLayoutY(350);
     NumberBinding yLabelCoord =
     yLabel.layoutXProperty().add(yLabel.widthProperty().add(10));
@@ -904,42 +927,15 @@ public class OthelloGraphics extends Application{
     graphicBoard.getChildren().addAll(inputArea,inputBorder,xLabel,xCoord,yLabel,yCoord,place);
   }
 
-  // display when player 1 wins
-  public void drawWinnerOne(){
-      Text winner = new Text(200,500,"Player 1 Wins!");
-      winner.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,150));
-      winner.setFill(Color.MEDIUMSPRINGGREEN);
-
-      graphicBoard.getChildren().add(winner);
-  }
-
-  // display when player 2 wins
-  public void drawWinnerTwo(){
-    Text winner = new Text(200,500,"Player 2 Wins!");
-    winner.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,150));
-    winner.setFill(Color.MEDIUMSPRINGGREEN);
-
-    graphicBoard.getChildren().add(winner);
-  }
-
-  // display when it is a draw
-  public void drawWinnerBoth(){
-    Text winner = new Text(200,500,"It's a draw");
-    winner.setFont(Font.font("impact",FontWeight.BOLD,FontPosture.REGULAR,150));
-    winner.setFill(Color.MEDIUMSPRINGGREEN);
-
-    graphicBoard.getChildren().add(winner);
-  }
-
   // Draws and updates the message board to switch player turns and add the reset button area
   public void turnBoard(String player){
-    Rectangle cov = new Rectangle(925,400,200,50);
+    Rectangle cov = new Rectangle(925,415,200,35);
     cov.setFill(Color.SNOW);
-    Text playerText = new Text(960,450, player_1.getName() + "'s Turn!");
+    Text playerText = new Text(920,450, player_1.getName() + "'s Turn!");
     if (player == "1") {
-      playerText = new Text(960,450, player_1.getName() + "'s Turn!");
+      playerText = new Text(920,450, player_1.getName() + "'s Turn!");
     } else {
-      playerText = new Text(960,450, player_2.getName() + "'s Turn!");
+      playerText = new Text(920,450, player_2.getName() + "'s Turn!");
     }
     playerText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
 
@@ -1007,14 +1003,10 @@ public class OthelloGraphics extends Application{
           if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
             drawVictoryScreen(); // will generate the end of the screen
           }
-  
         }
     });
     new Thread(sleeper).start();
-    System.out.println(Arrays.deepToString(board.getArray()));
     }
-
-    
 
 // Initiates the program
   public static void main(String args[]){
