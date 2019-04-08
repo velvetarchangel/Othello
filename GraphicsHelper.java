@@ -163,23 +163,22 @@ public class GraphicsHelper{
           int[] flipped = Check.move(x, y, p1, board);
           if (flipped[0] != 0) {
             board.updateBoard(x, y, "1", flipped);
+            if (Check.AnyMovesLeft(p2, board)) {
+              int[] x_y = AI.chooseMove(p2, board);
+              flipped = Check.move(x_y[0], x_y[1], p2, board);
+              board.updateBoard(x_y[0], x_y[1], "2", flipped);
+            }
+  
+            while (!Check.AnyMovesLeft(p1, board) && Check.AnyMovesLeft(p2, board)) {
+              int[] x_y = AI.chooseMove(p2, board);
+              flipped = Check.move(x_y[0], x_y[1], p2, board);
+              board.updateBoard(x_y[0], x_y[1], "2", flipped);
+            }
           }
-
-          if (Check.AnyMovesLeft(p2, board)) {
-            int[] x_y = AI.chooseMove(p2, board);
-            flipped = Check.move(x_y[0], x_y[1], p2, board);
-            board.updateBoard(x_y[0], x_y[1], "2", flipped);
-          }
-
-          while (!Check.AnyMovesLeft(p1, board)) {
-            int[] x_y = AI.chooseMove(p2, board);
-            flipped = Check.move(x_y[0], x_y[1], p2, board);
-            board.updateBoard(x_y[0], x_y[1], "2", flipped);
-          }
+          
         }
         
       }
-
 
 
 
