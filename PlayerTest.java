@@ -1,6 +1,5 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**@Author Himika Dastidar, Al Mahmud Dipto
 *Designed to test the player class thoroughly and all the methods in it
@@ -20,7 +19,7 @@ public class PlayerTest {
         assertEquals("Default player colour should be Black", "Black", p.getColour());
         assertEquals("Default player score should be 0", 0, p.getScore());
         assertEquals("Default player name should be an empty string", "", p.getName());
-        assertEquals("Default player should be 1", "1", p.getPlayer());
+        assertEquals("Default player should be 1", "1", p.getNumber());
     }
 
     /**Tests the constructor with @param String player, @param String colour*/
@@ -31,7 +30,7 @@ public class PlayerTest {
         assertEquals("Player colour should be White", "White", p.getColour());
         assertEquals("Default player score should be 0", 0, p.getScore());
         assertEquals("Default player name should be an empty string", "", p.getName());
-        assertEquals("Player should be 1", "1", p.getPlayer());
+        assertEquals("Player should be 1", "1", p.getNumber());
     }
 
     /**Tests the constructor with @param String player, @param String colour*/
@@ -41,10 +40,10 @@ public class PlayerTest {
         assertEquals("Player colour should be White", "White", p.getColour());
         assertEquals("Default player score should be 0", 0, p.getScore());
         assertEquals("Default player name should be an empty string", "Bob", p.getName());
-        assertEquals("Player should be 2", "2", p.getPlayer());
+        assertEquals("Player should be 2", "2", p.getNumber());
     }
 
-    /**Tests the constructor with @param String player, @param String colour and @param score*/
+    /**Tests the constructor with @param String player, @param String colour and @param score */
     @Test
     public void testConstructor_player_colour_score()
     {
@@ -52,17 +51,17 @@ public class PlayerTest {
         assertEquals("Player colour should be White", "White", p.getColour());
         assertEquals("Player score should be 20", 20, p.getScore());
         assertEquals("Default player name should be an empty string", "", p.getName());
-        assertEquals("Expected player to be 2", "2", p.getPlayer());
+        assertEquals("Expected player to be 2", "2", p.getNumber());
     }
 
-    /**Tests the constructor with @param String player, @param String colour, @param Name and @param score*/
+    /**Tests the constructor with @param String player, @param String colour, @param Name and @param score */
     @Test
     public void testConstructor_player_colour_name_score(){
         Player p = new Player("2", "Black", "Mario", 30);
         assertEquals("Player colour should be Black", "Black", p.getColour());
         assertEquals("Player score should be 30", 30, p.getScore());
         assertEquals("Player name should be Mario", "Mario", p.getName());
-        assertEquals("Player should be 2", "2", p.getPlayer());
+        assertEquals("Player should be 2", "2", p.getNumber());
     }
 
     
@@ -75,22 +74,22 @@ public class PlayerTest {
         assertEquals("Player colour should be White", "White", copy.getColour());
         assertEquals("Player score should be 0", 0, copy.getScore());
         assertEquals("Player name should be Othello", "Othello", copy.getName());
-        assertEquals("Player should be 1", "1", copy.getPlayer());
+        assertEquals("Player should be 1", "1", copy.getNumber());
     }
 
     /**tests Getter and setter for the class */
     @Test
     public void testGetter_and_Setter()
     {
-        Player p = new Player("1", "White", "Othello, 0);
+        Player p = new Player("1", "White", "Othello", 0);
         p.setScore(20);
-        p.setColour("Black);
+        p.setColour("Black");
         p.setName("Dracula");
-        p.setPlayer("2");
+        p.setNumber("2");
         assertEquals("Player colour should be Black", "Black", p.getColour());
         assertEquals("Player score should be 20", 20, p.getScore());
         assertEquals("Player name should be Dracula", "Dracula", p.getName());
-        assertEquals("Player should be 2", "2", p.getPlayer());
+        assertEquals("Player should be 2", "2", p.getNumber());
     }
 
          
@@ -131,9 +130,8 @@ public class PlayerTest {
            Player p = new Player();
            Board b = new Board();
            
-           int[] invalid_move {3,4};
-           boolean v_move = p.flipsPieces(valid_move, b, p);
-           boolean i_move = p.flipsPieces(invalid_move, b, p);
+           int[] invalid_move = {3,4};
+           boolean i_move = p.flipsPieces(invalid_move, b);
            assertEquals("Pieces cannot be flipped", "false", invalid_move);
        }
         
@@ -143,8 +141,9 @@ public class PlayerTest {
            Player p = new Player();
            Board b = new Board();
            int[] valid_move = {3,5};
-           boolean v_move = p.flipsPiece(valid_move, b,p);
+           boolean v_move = p.flipsPieces(valid_move, b);
            assertEquals("Pieces can be flipped", "true", v_move);
                         
        }
+}
                     
