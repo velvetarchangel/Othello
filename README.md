@@ -7,16 +7,15 @@ players in a duel of critical thinking and see if you can prevail!
 The currently running is a ![version](https://img.shields.io/badge/version-GUI-green.svg?style=flat-square) of the game. To start the game, the
 following steps are advised:-
 1. Make sure you have a working version of Java and JavaFX running on your computer.
-2. With that confirmed, open up the terminal from the folder where you saved the game file named **Othello.java**. For instructions on how to open up a terminal, please refer to [Opening a Terminal](#opening-a-terminal), and for help with JavaFX, please refer to [JavaFX Help](#javafx-help) in the [Support](#support) section.
-3. Compile the game file code in the terminal by using this following command ```javac Othello.java```
-4. Next, you will have to get the graphics for the game compiled by using the command ```javac OthelloGraphics.java```
-5. Now, run the program using this command ```java OthelloGraphics```
-6. The game menu will pop up on the window which will give you the options to either start or exit the game. Click on the *"Start Game"* option and you can go on right ahead and start playing the game.
-7. Next, the game will prompt you to select a game mode where you can choose between *"Player Vs Player"* mode to challenge another human and *"Player Vs AI"* mode to challenge the game AI.
-8. You can type in your player names in the *"Player 1"* and *"Player 2"* fields and set the names by clicking on *"Set Names"*
-9. With the game started, you can move the cursor on the game board and click on a valid slot to place a token.
-10. The game provides you with options to save a game, load from a previous savestate or reset the entire game to start a new one.
-11. The game ends when the board becomes full. You can also click on the *"Exit Game"* option anytime to exit out of the game.
+2. With that confirmed, open up the terminal from the folder where you saved the game file named **OthelloGraphics.java**. For instructions on how to open up a terminal, please refer to [Opening a Terminal](#opening-a-terminal), and for help with JavaFX, please refer to [JavaFX Help](#javafx-help) in the [Support](#support) section.
+3. Compile the game file code in the terminal by using this following command ```javac ./gui/OthelloGraphics.java``
+4. Now, run the program using this command ```java gui.OthelloGraphics```
+5. The game menu will pop up on the window which will give you the options to either start or exit the game. Click on the *"Start Game"* option and you can go on right ahead and start playing the game.
+6. Next, the game will prompt you to select a game mode where you can choose between *"Player Vs Player"* mode to challenge another human and *"Player Vs AI"* mode to challenge the game AI.
+9. You can type in your player names in the *"Player 1"* and *"Player 2"* fields and set the names by clicking on *"Set Names"*
+10. With the game started, you can move the cursor on the game board and click on a valid slot to place a token.
+11. The game provides you with options to save a game, load from a previous saved state or reset the entire game to start a new one.
+12. The game ends when the board becomes full or both players do not have any moves left. You can also click on the *"Exit Game"* option anytime to exit out of the game.
 
 ## Description
 The game is played on an 8 x 8 board. There are two players, Player 1 and Player 2. Each player's token on the board is represented by a black and white token. The game decides which player goes first at random, and that player can click on one of the appropiate slots on the board to place their token. The player going first is Player 1 and the player will get to use the *"BLACK"* token. Tokens can only be placed adjacent to or diagonally from the opposing person’s token. For example: *"BLACK"* tokens can only be placed next to or diagonally from a *"WHITE"* token and vice versa. If there are *"BLACK"* tokens that are surrounded by *"WHITE"* tokens on both sides horizontally, vertically or diagonally, the *"BLACK"* tokens then become *"WHITE"* and vice versa. The game ends when the board is filled with tokens or there are no more valid moves left. Then score is calculated by counting the number of tokens for each player.
