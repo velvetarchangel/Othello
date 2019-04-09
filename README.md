@@ -33,7 +33,7 @@ The game currently running is ![version](https://img.shields.io/badge/version-GU
 - If an *invalid move* is made then, it tells the player that the move made was invalid and prompts for a different move.
 
 ### ![version](https://img.shields.io/badge/version-text--based-lightgrey.svg?style=flat-square)
-To play the ![version](https://img.shields.io/badge/version-text--based-lightgrey.svg?style=flat-square) of the game, after you compile the game file, use the command ```java Othello``` in the terminal to get it running.
+To play the ![version](https://img.shields.io/badge/version-text--based-lightgrey.svg?style=flat-square) of the game, after you compile the game file, use the command ```javac Othello``` in the terminal to get it running.
 - The game will greet you with a welcome message and provide you with gameplay options.
 - You can enter **'p'** to play the player versus player mode.
   
