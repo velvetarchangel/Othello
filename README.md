@@ -23,8 +23,8 @@ The game is played on an 8 x 8 board. There are two players, Player 1 and Player
 For an elaborate set of game rules, please visit [Othello Wikipedia page ](https://en.wikipedia.org/wiki/Reversi).
 
 ## Usage
-### ![version](https://img.shields.io/badge/version-GUI--2.0-green.svg?style=flat-square)
-The game currently running is ![version](https://img.shields.io/badge/version-GUI--2.0-green.svg?style=flat-square).
+### ![version](https://img.shields.io/badge/version-GUI--3.0-green.svg?style=flat-square)
+The game currently running is ![version](https://img.shields.io/badge/version-GUI--3.0-green.svg?style=flat-square).
 - The board is displayed in a *Graphical User Interface* with two *"BLACK"* tokens and other two *"WHITE"* tokens in the center of the board. A *score* and other game options are also displayed on the game interface.
 - It indicates the player in turn and prompts the player to make a move on the board.
 - When a player makes a valid move, a token used by the player is placed in the board slot selected.
@@ -66,8 +66,8 @@ The *Graphical User Interface* for this game includes:-
 
 ##### JavaFX Help
 Your computer will not display the game window if *JavaFX* is missing from it. JavaFX should be available with Java 8 and up. It is possible that you are working with a non-Oracle version of Java, in which case it may be missing. If that is the case then, you might want to take the following steps:-
-1. Download the **jfxrt.jar** file from online or this repository, and place it in the game file folder.
-2. Before compiling and running the game file, run the follwing command,
+1. Download the **jfxrt.jar** file from online or this repository, and place it in the gui game file folder.
+2. Before compiling and running the game file, open up the command line and run the follwing command,
 - **For Linux/Mac:** ```javac -cp .:jrxrt.jar *.java```
 - **For Windows:**  ```javac -cp .;jrxrt.jar *.java```
 
@@ -81,6 +81,13 @@ Logic class Junit tests are provided to test the logical functioning of the game
   - CheckTest- which tests the Check class
   - BoardTest- which test the Board class in java
 3. Click run on the program to run each of the classes. Within the console of the program it should indicate how many tests have been run and whether they all pass.
+4. You can also run individual tests from the command line by using the following commands:
+  - **For Linux/Mac:** ```javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java``` then,
+  
+  ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>```
+  - **For Windows:** ```javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java``` then,
+  
+  ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>```
 
 
 ## Authors
