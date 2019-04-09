@@ -8,7 +8,7 @@ The currently running is a ![version](https://img.shields.io/badge/version-GUI-g
 following steps are advised:-
 1. Make sure you have a working version of Java and JavaFX running on your computer.
 2. With that confirmed, open up the terminal from the folder where you saved the game file named **OthelloGraphics.java**. For instructions on how to open up a terminal, please refer to [Opening a Terminal](#opening-a-terminal), and for help with JavaFX, please refer to [JavaFX Help](#javafx-help) in the [Support](#support) section.
-3. Compile the game file code in the terminal by using this following command ```javac ./gui/OthelloGraphics.java``
+3. Compile the game file code in the terminal by using this following command ```javac ./gui/OthelloGraphics.java```
 4. Now, run the program using this command ```java gui.OthelloGraphics```
 5. The game menu will pop up on the window which will give you the options to either start or exit the game. Click on the *"Start Game"* option and you can go on right ahead and start playing the game.
 6. Next, the game will prompt you to select a game mode where you can choose between *"Player Vs Player"* mode to challenge another human and *"Player Vs AI"* mode to challenge the game AI.
