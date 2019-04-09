@@ -76,10 +76,10 @@ With that you should be good to compile and run the game file.
 ##### Logic Class Tests
 Logic class Junit tests are provided to test the logical functioning of the game file classes. You can run the test class files to check the working condition of the game class files. Instrunctions on how to run Junit tests are given below:-
 1. Download the game and open it in either Eclipse or IntelliJ
-2. There are three test classes located in the logic package. The test classes are as follows
-  (a) PlayerTest- which tests the Player class
-  (b) CheckTest- which tests the Check class
-  (c) BoardTest- which test the Board class in java
+2. There are three test classes located in the logic package. The test classes are as follows:
+  - PlayerTest- which tests the Player class
+  - CheckTest- which tests the Check class
+  - BoardTest- which test the Board class in java
 3. Click run on the program to run each of the classes. Within the console of the program it should indicate how many tests have been run and whether they all pass.
 
 
