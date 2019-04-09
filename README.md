@@ -84,7 +84,7 @@ Logic class Junit tests are provided to test the logical functioning of the game
 4. You can also run individual tests from the command line by using the following commands:
   - **For Linux/Mac:** ```javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java``` then,
   
-  ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>```
+  ```java -cp .:junit-4.12.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>```
   - **For Windows:** ```javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java``` then,
   
   ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>```
@@ -102,4 +102,4 @@ Logic class Junit tests are provided to test the logical functioning of the game
 **Miguel Merin**
 
 ## Project Status
-The **Othello** project is currently running on a fully working *Graphical User Interface(GUI)*. The game also has an included AI to play against.
+The **Othello** project is running on a fully working *Graphical User Interface(GUI)*. The game has an included AI to play against.
