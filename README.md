@@ -4,7 +4,7 @@ Each player in the game is in a contest to claim the most territory on the board
 players in a duel of critical thinking and see if you can prevail!
 
 ## Getting Started
-The currently running is a ![version](https://img.shields.io/badge/version-GUI-3.0-green.svg?style=flat-square) of the game. To start the game, the
+The currently running is a ![version](https://img.shields.io/badge/version-GUI--3.0-green.svg?style=flat-square) of the game. To start the game, the
 following steps are advised:-
 1. Make sure you have a working version of Java and JavaFX running on your computer.
 2. With that confirmed, open up the terminal from the folder where you saved the game file named **OthelloGraphics.java**. For instructions on how to open up a terminal, please refer to [Opening a Terminal](#opening-a-terminal), and for help with JavaFX, please refer to [JavaFX Help](#javafx-help) in the [Support](#support) section.
