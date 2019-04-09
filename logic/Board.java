@@ -88,7 +88,7 @@ public class Board implements Serializable {
     return this.board;
   }
 
-  /**sets the board so that player can start a saved game from a file
+  /**Sets the board so that player can start a saved game from a file
   @return board from the binary file SavedGames.data*/
   public static String[][] loadBoard() throws IOException {
     String[][] temp_board = new String[10][10];
@@ -98,20 +98,19 @@ public class Board implements Serializable {
       input.close();
     }
     catch (ClassNotFoundException e) {
-
     }
     catch (IOException ioe) {
-
     }
     return temp_board;
   }
   
-
+  /**Sets the board using @param aBoard which is a
+  * String[][] array*/
   public void setBoard(String[][] aBoard){
     this.board = aBoard;
   }
   
-  /**Saves the state of the game @param none, @return none*/
+  /**Saves the state of the game in a .data file*/
   public void saveBoard() throws IOException{
       ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("SavedGames.data"));
       output.writeObject(board);
@@ -223,7 +222,6 @@ public class Board implements Serializable {
 
   /**
    * Checks whether the board is full
-   * 
    * @return full True if the board is filled, false if the board is not filled
    */
   public boolean isFull() {
