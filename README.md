@@ -75,15 +75,13 @@ With that you should be good to compile and run the game file.
 
 ##### Logic Class Tests
 Logic class Junit tests are provided to test the logical functioning of the game file classes. You can run the test class files to check the working condition of the game class files. Instrunctions on how to run Junit tests are given below:-
-1. Make sure that the game class files are present together with the test class files.
-2. You also need to make sure that the files **hamcrest-core-1.3.jar** and **junit-4.12.jar** are present in the same directory as the game class files and the test class files.
-3. To run the tests, you will need to use the following commands,
-- **For Linux/Mac:** ```javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java```
+1. Download the game and open it in either Eclipse or IntelliJ
+2. There are three test classes located in the logic package. The test classes are as follows
+  (a) PlayerTest- which tests the Player class
+  (b) CheckTest- which tests the Check class
+  (c) BoardTest- which test the Board class in java
+3. Click run on the program to run each of the classes. Within the console of the program it should indicate how many tests have been run and whether they all pass.
 
-followed by ```java -cp .:junit-4.12.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore <name of test class>```
-- **For Windows:** ```javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java```
-
-followed by ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <name of test class>```
 
 ## Authors
 **Vivian Huynh** - Team Leader
