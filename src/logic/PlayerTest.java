@@ -105,13 +105,13 @@ public class PlayerTest {
      */
     @Test
     public void test_constructorCopy() {
-        Player con = new Player("1", "Black", "Joestar", 69);
+        Player con = new Player("1", "Black", "Joestar", 60);
         Player copy = new Player(con);
 
         assertEquals("Expected player number to be 1", "1", copy.getNumber());
         assertEquals("Expected player token colour to be Black", "Black", copy.getColour());
         assertEquals("Expected player name to be Joestar", "Joestar", copy.getName());
-        assertEquals("Expected player score to be 69", 69, copy.getScore());
+        assertEquals("Expected player score to be 60", 60, copy.getScore());
     }
 
     /**tests Getter and setter for the class */
