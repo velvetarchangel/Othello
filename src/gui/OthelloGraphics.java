@@ -386,6 +386,7 @@ public class OthelloGraphics extends Application{
   }
 
   //Allows user to save the current game state to a binary file with extension .Othello, name their save and choose where it is stored
+  // Idea inspired by http://tutorials.jenkov.com/javafx/filechooser.html
   public void save() {
     FileChooser fileChooser = new FileChooser();
     FileChooser.ExtensionFilter othelloOnly = new FileChooser.ExtensionFilter("Othello Files (*.Othello)", "*.Othello");
@@ -403,6 +404,7 @@ public class OthelloGraphics extends Application{
   }
 
   //Makes the board, player turn and player scores of the current game equal to those of a previously saved game that the user can choose
+  // Idea inspired by http://tutorials.jenkov.com/javafx/filechooser.html
   public void load() {
     FileChooser fileChooser = new FileChooser();
     FileChooser.ExtensionFilter othelloOnly = new FileChooser.ExtensionFilter("Othello Files (*.Othello)", "*.Othello");
