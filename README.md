@@ -81,13 +81,6 @@ Logic class Junit tests are provided to test the logical functioning of the game
   - CheckTest- which tests the Check class
   - BoardTest- which test the Board class in java
 3. Click run on the program to run each of the classes. Within the console of the program it should indicate how many tests have been run and whether they all pass.
-4. You can also run individual tests from the command line by using the following commands:
-  - **For Linux/Mac:** ```javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java``` then,
-  
-  ```java -cp .:junit-4.12.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>```
-  - **For Windows:** ```javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java``` then,
-  
-  ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>```
 
 
 ## Authors
