@@ -1,5 +1,5 @@
 # Othello
-Welcome to Othello! *Othello*, also known as *Reversii*, is a fun and strategic turn-based board game played by two players. 
+Welcome to Othello! *Othello* is a fun and strategic turn-based board game played by two players. 
 Each player in the game is in a contest to claim the most territory on the board they possibly can using their pieces. Challenge
 players in a duel of critical thinking and see if you can prevail!
 
@@ -73,14 +73,15 @@ Your computer will not display the game window if *JavaFX* is missing from it. J
 
 With that you should be good to compile and run the game file.
 
-##### Logic Class Tests
-Logic class Junit tests are provided to test the logical functioning of the game file classes. You can run the test class files to check the working condition of the game class files. Instrunctions on how to run Junit tests are given below:-
-1. Download the game and open it in either Eclipse or IntelliJ
-2. There are three test classes located in the logic package. The test classes are as follows:
-  - PlayerTest- which tests the Player class
-  - CheckTest- which tests the Check class
-  - BoardTest- which test the Board class in java
-3. Click run on the program to run each of the classes. Within the console of the program it should indicate how many tests have been run and whether they all pass.
+##### JUnit Tests
+We have included JUnit test files for multiple classes which are found in our logic package. These tests are provided to test the logical functioning of the game file classes. You can run the test class files to check the working condition of the game class files. Instrunctions on how to run Junit tests are given below:-
+There are three test classes located in the logic package. The test classes are as follows:
+  - PlayerTest- tests the Player class
+  - CheckTest- tests the Check class
+  - BoardTest- the Board class
+1. Open the project folder in a terminal
+2. Compile using this following command ```javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar logic/*.java```
+3. If running the PlayerTest, use this following command ```java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore logic.PlayerTest``` . Change the end of the command line ("PlayerTest") to suit the test file you want to run.
 
 
 ## Authors
@@ -95,4 +96,4 @@ Logic class Junit tests are provided to test the logical functioning of the game
 **Miguel Merin**
 
 ## Project Status
-The **Othello** project is running on a fully working *Graphical User Interface(GUI)*. The game has an included AI to play against.
+The **Othello** project is running on a fully working *Graphical User Interface (GUI)*. The game has an included AI to play against.
