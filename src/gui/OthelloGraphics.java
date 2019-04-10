@@ -24,6 +24,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import java.io.File;
 
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -224,30 +226,13 @@ public class OthelloGraphics extends Application{
         resetBoard();
       }
       if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 625) && (mouseY < 700)){
-        //board.saveBoard();
-        try{
-          board.saveBoard();
-          System.exit(0);
-        }catch(IOException e){
-          System.out.println(e.getMessage());
-        }
-
-        //System.out.println("save game here..");
+        //saves current board as a binary file
+        save();
       }
 
       if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 625) && (mouseY < 700)){
-        try{
-          String[][] temp_board = Board.loadBoard();
-          board.setBoard(temp_board);
-          //System.out.println(Arrays.deepToString(board.getArray()));
-        }
-        catch(IOException e){
-          System.out.println("load game here..");
-        }
-        finally{
-          graphicBoard.getChildren().clear();
-          startup();
-        }
+        //load a saved game
+        load();
       }
 
       if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
@@ -261,6 +246,7 @@ public class OthelloGraphics extends Application{
         else if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
           drawVictoryScreen(); // will generate the end of the screen
         }
+        //draw the updated board after the player makes a move
         drawScore();
         drawBoard();
       }
@@ -285,29 +271,12 @@ public class OthelloGraphics extends Application{
         resetBoard();
       }
       if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 625) && (mouseY < 700)){
-        //board.saveBoard();
-        try{
-          board.saveBoard();
-          System.exit(0);
-        }catch(IOException e){
-          System.out.println(e.getMessage());
-        }
-
-        //System.out.println("save game here..");
+        //saves current board as a binary file
+        save();
       }
       if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 625) && (mouseY < 700)){
-        try{
-          String[][] temp_board = Board.loadBoard();
-          board.setBoard(temp_board);
-        }
-        catch(IOException e){
-          System.out.println("load game here..");
-        }
-        finally{
-          graphicBoard.getChildren().clear();
-          startup();
-
-        }
+        //loads a saved game
+        load();
       }
       if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
         x = (int)(Math.floor((mouseX - 25.0) / 100.0) + 1);
@@ -318,13 +287,14 @@ public class OthelloGraphics extends Application{
          * end, and the winners are announce. Otherwise the game continues.
          */
         if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
-          drawVictoryScreen(); // will generate the end of the screen
+          drawVictoryScreen();
         }
 
-        // if board is not filled continue the game
+        //process move
         else {
           helper.takeInput(x, y, board, player, false);
         }
+        //draw the updated board after a player makes a move
         drawBoard();
         turnBoard(player);
         drawScore();
@@ -413,6 +383,54 @@ public class OthelloGraphics extends Application{
     initVsScreenButtons();
     initPlayerNames();
     return graphicBoard;
+  }
+
+  //Allows user to save the current game state to a binary file with extension .Othello, name their save and choose where it is stored
+  public void save() {
+    FileChooser fileChooser = new FileChooser();
+    FileChooser.ExtensionFilter othelloOnly = new FileChooser.ExtensionFilter("Othello Files (*.Othello)", "*.Othello");
+    fileChooser.getExtensionFilters().add(othelloOnly); //only save Othello files
+    File saveFile = fileChooser.showSaveDialog(stage); //opens file browser for the user to save game
+
+    if (saveFile != null) {
+      try{
+        board.saveBoard(saveFile, player);
+      }catch(IOException e){
+        System.out.println(e.getMessage());
+      }
+    }
+
+  }
+
+  //Makes the board, player turn and player scores of the current game equal to those of a previously saved game that the user can choose
+  public void load() {
+    FileChooser fileChooser = new FileChooser();
+    FileChooser.ExtensionFilter othelloOnly = new FileChooser.ExtensionFilter("Othello Files (*.Othello)", "*.Othello");
+    fileChooser.getExtensionFilters().add(othelloOnly); //only load Othello files
+    File loadFile = fileChooser.showOpenDialog(stage); //opens file browser for user to choose a save to load
+
+    if (loadFile != null) {
+      try{
+        String[][] data = Board.loadBoard(loadFile); //array containing the board and the player turn
+        String[][] temp_board = new String[10][10]; 
+
+        //sets the board and turn info equal to that of the saved game
+        for (int i = 0; i < 10; i++) {
+          temp_board[i] = data[i];
+        }
+        board.setBoard(temp_board);
+        player = data[10][0];
+      }
+      catch(IOException e){
+        System.out.println(e.getMessage());
+      }
+      finally{
+        //clears the current game info fromt the GUI and draw the saved game
+        graphicBoard.getChildren().clear();
+        startup();
+      }
+    }
+    
   }
 
   //sets the turn
@@ -936,10 +954,10 @@ public class OthelloGraphics extends Application{
   public void turnBoard(String player){
     Rectangle cov = new Rectangle(925,415,200,35);
     cov.setFill(Color.SNOW);
-    Text playerText = new Text(920,450, player_1.getName() + "'s Turn!");
-    if (player == "1") {
+    Text playerText = new Text(920, 450, "");
+    if (player.equals("1")) {
       playerText = new Text(920,450, player_1.getName() + "'s Turn!");
-    } else {
+    } else if (player.equals("2")) {
       playerText = new Text(920,450, player_2.getName() + "'s Turn!");
     }
     playerText.setFont(Font.font("impact",FontWeight.NORMAL,FontPosture.REGULAR,25));
@@ -992,25 +1010,6 @@ public class OthelloGraphics extends Application{
     stage.sizeToScene();
     stage.show();
 
-    Task<Void> sleeper = new Task<Void>() {
-      @Override
-      protected Void call() throws Exception {
-        try {
-          Thread.sleep(50);
-        } catch (InterruptedException e) {
-        }
-        return null;
-      }
-    };
-    sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-      @Override
-      public void handle(WorkerStateEvent event) {
-        if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
-          drawVictoryScreen(); // will generate the end of the screen
-        }
-      }
-    });
-    new Thread(sleeper).start();
   }
 
   // Initiates the program
