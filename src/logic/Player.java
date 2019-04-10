@@ -220,7 +220,7 @@ public class Player {
      */
 
     public void setScore(int score) {
-        if (score >= 0)
+        if (score >= 0 && score <= 64)
             this.score = score;
     }
 
