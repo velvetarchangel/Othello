@@ -15,9 +15,6 @@ public class Board implements Serializable {
 
     // Instance variables
     private String[][] board;
-    private int n; // counts how many pieces are flipped in a direction
-    private int[] flipped = new int[9];
-    private String otherPlayer = "0";
 
     /**
      * This default constructor sets the size of the 2D array and the initial pieces
@@ -89,12 +86,19 @@ public class Board implements Serializable {
         return this.board;
     }
 
-    /**sets the board so that player can start a saved game from a file
-     @return board from the binary file SavedGames.data*/
-    public static String[][] loadBoard() throws IOException {
-        String[][] temp_board = new String[10][10];
+    /**
+     * Reads a previously saved Othello file
+     * 
+     * @param f the game file to load
+     * @return temp_board a 2d string array that contains the columns of the saved board for the first 10 elements and
+     * an 11th element that indicates the player turn at the time of saving.
+     * @throws IOException
+     */
+    public static String[][] loadBoard(File f) throws IOException {
+        
+        String[][] temp_board = new String[11][10];
         try {
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream("SavedGames.data"));
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream(f));
             temp_board = (String[][])input.readObject();
             input.close();
         }
@@ -112,10 +116,19 @@ public class Board implements Serializable {
         this.board = aBoard;
     }
 
-    /**Saves the state of the game @param none, @return none*/
-    public void saveBoard() throws IOException{
-        ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("SavedGames.data"));
-        output.writeObject(board);
+    /**
+     * Saves the state of the game 
+     * @param turn whos turn it is in the game
+     * */
+    public void saveBoard(File f, String turn) throws IOException{
+        ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(f));
+        String[][] boardCopy = new String[11][10];
+
+        for (int i = 0; i < 10; i++) {
+            boardCopy[i] = board[i];
+        }
+        boardCopy[10][0] = turn;
+        output.writeObject(boardCopy);
         output.close();
     }
 
