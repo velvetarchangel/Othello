@@ -15,7 +15,9 @@ public class BoardTest {
 
     /**
      * Testing the constructors.
-     /**
+     */
+    
+    /**
      * Test the default constructor to see if the board array lengths are equal.
      */
 
@@ -24,12 +26,15 @@ public class BoardTest {
 
         // Sets size of 2D array as 10 x 10 elements
         String[][] board = new String[10][10];
+        // Get the length
         int boardLength = board.length;
 
         // invoke the default board constructor
         Board b1 = new Board();
+        // Get the length
         int b1Length = b1.getArray().length;
-
+        
+        // Compare the lengths
         assertEquals("Expected board length to be 10", boardLength, b1Length);
     }
 
@@ -42,8 +47,10 @@ public class BoardTest {
 
         // Sets size of 2D array as 10 x 10 elements
         String[][] board = new String[10][10];
+        // Create the board using constructor
         Board b1 = new Board(board);
-
+        
+        // Compare the arrays
         assertArrayEquals("Expected board dimension to be 10x10", board, b1.getArray());
     }
 
@@ -81,12 +88,14 @@ public class BoardTest {
         board[4][5] = "2";
         board[5][4] = "2";
         board[5][5] = "1";
-
+        
+        // Create board using constructor
         Board b1 = new Board(board);
 
         // invoke the default board constructor
         Board b2 = new Board();
-
+        
+        // Compare the arrays
         assertArrayEquals("Expected the initial game board is set accordingly.", b1.getArray(), b2.getArray());
     }
 
@@ -104,14 +113,14 @@ public class BoardTest {
 
     @Test
     public void test_updateBoardH_1() {
-
+        
         Board board = new Board();
         int x = 6;
         int y = 4;
         String player = "1";
         int[] flippedArray = {1, 0, 0, 0, 0, 0, 0, 1, 0};
         board.updateBoard(x, y, player, flippedArray);
-
+        
         assertEquals("Expected player to be 1.", "1", "1");
     }
 
@@ -224,8 +233,11 @@ public class BoardTest {
     public void test_turnScore_player1() {
 
         Board b1 = new Board();
+        
+        // Get score for the player
         int p1score = b1.turnScore("1");
 
+        // Comapre the score
         assertEquals("Expected player 1 score to be 2", 2, p1score);
     }
 
@@ -246,8 +258,10 @@ public class BoardTest {
         }
 
         Board b1 = new Board(board1);
+        // Get score for the player
         int p1score = b1.turnScore("1");
 
+        // Comapre the score
         assertEquals("Expected player 1 score to be 64", 64, p1score);
     }
 
@@ -268,11 +282,14 @@ public class BoardTest {
         }
 
         Board b1 = new Board(board1);
+        // Get score for the player
         int p1score = b1.turnScore("1");
 
+        // Comapre the score
         assertEquals("Expected player 1 score to be 0", 0, p1score);
     }
 
+    
     /** Tests for player 2.
      */
 
@@ -280,12 +297,14 @@ public class BoardTest {
     public void test_turnScore_player2() {
 
         Board b1 = new Board();
+        // Get score for the player
         int p2score = b1.turnScore("2");
 
+        // Comapre the score
         assertEquals("Expected player 2 score to be 2", 2, p2score);
     }
 
-    /** Test to check when player 1 score is maximum.
+    /** Test to check when player 2 score is maximum.
      */
 
     @Test
@@ -302,12 +321,14 @@ public class BoardTest {
         }
 
         Board b1 = new Board(board1);
+        // Get score for the player
         int p1score = b1.turnScore("2");
 
+        // Comapre the score
         assertEquals("Expected player 2 score to be 64", 64, p1score);
     }
 
-    /** Test to check when player 1 score is zero.
+    /** Test to check when player 2 score is zero.
      */
 
     @Test
@@ -324,8 +345,10 @@ public class BoardTest {
         }
 
         Board b1 = new Board(board1);
+        // Get score for the player
         int p1score = b1.turnScore("2");
 
+        // Comapre the score
         assertEquals("Expected player 2 score to be 0", 0, p1score);
     }
 
