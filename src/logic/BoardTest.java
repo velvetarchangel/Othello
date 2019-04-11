@@ -10,18 +10,13 @@ import org.junit.Test;
  *
  * @author Al Mahmud Dipto
  */
-
 public class BoardTest {
 
-    /**
-     * Testing the constructors.
-     */
-    
-    
+    // Testing the constructors
+
     /**
      * Test the default constructor to see if the board array lengths are equal.
      */
-    
     @Test
     public void test_constructorBoardLength() {
 
@@ -34,7 +29,7 @@ public class BoardTest {
         Board b1 = new Board();
         // Get the length
         int b1Length = b1.getArray().length;
-        
+
         // Compare the lengths
         assertEquals("Expected board length to be 10", boardLength, b1Length);
     }
@@ -42,7 +37,6 @@ public class BoardTest {
     /**
      * Test the constructor to see if the board array dimensions are equal.
      */
-
     @Test
     public void test_constructorBoardDimensions() {
 
@@ -50,7 +44,7 @@ public class BoardTest {
         String[][] board = new String[10][10];
         // Create the board using constructor
         Board b1 = new Board(board);
-        
+
         // Compare the arrays
         assertArrayEquals("Expected board dimension to be 10x10", board, b1.getArray());
     }
@@ -58,7 +52,6 @@ public class BoardTest {
     /**
      * Test the default constructor to see if the initial game board is set accordingly.
      */
-
     @Test
     public void test_constructorBoardInitial() {
 
@@ -89,32 +82,29 @@ public class BoardTest {
         board[4][5] = "2";
         board[5][4] = "2";
         board[5][5] = "1";
-        
+
         // Create board using constructor
         Board b1 = new Board(board);
 
         // invoke the default board constructor
         Board b2 = new Board();
-        
+
         // Compare the arrays
         assertArrayEquals("Expected the initial game board is set accordingly.", b1.getArray(), b2.getArray());
     }
 
 
-    /**
-     * Testing the updateBoard() method by setting up an initial board, player, player inputs
-     * and the flipped array to be returned by the move() method of Check class
-     * to see if the flipped pieces are being updated on the board accordingly.
-     */
+    // Testing the updateBoard() method by setting up an initial board, player, player inputs
+    // and the flipped array to be returned by the move() method of Check class
+    // to see if the flipped pieces are being updated on the board accordingly.
 
     /**
      * Test the updateBoard() method to check if the pieces being flipped horizontally
      * on the board are being updated properly from right-up.
      */
-
     @Test
     public void test_updateBoardH_1() {
-        
+
         Board board = new Board();
         // Player inputs for horizontal right-up position
         int x = 6;
@@ -122,7 +112,7 @@ public class BoardTest {
         String player = "1";
         int[] flippedArray = {1, 0, 0, 0, 0, 0, 0, 1, 0};
         board.updateBoard(x, y, player, flippedArray);
-        
+
         assertEquals("Expected player to be 1.", "1", "1");
     }
 
@@ -130,7 +120,6 @@ public class BoardTest {
      * Test the updateBoard() method to check if the pieces being flipped horizontally
      * on the board are being updated properly from right-down.
      */
-    
     @Test
     public void test_updateBoardH_2() {
 
@@ -149,7 +138,6 @@ public class BoardTest {
      * Test the updateBoard() method to check if the pieces being flipped horizontally
      * on the board are being updated properly from left-down.
      */
-    
     @Test
     public void test_updateBoardH_3() {
 
@@ -168,7 +156,6 @@ public class BoardTest {
      * Test the updateBoard() method to check if the pieces being flipped horizontally
      * on the board are being updated properly from left-up.
      */
-    
     @Test
     public void test_updateBoardH_4() {
 
@@ -183,12 +170,11 @@ public class BoardTest {
         assertEquals("Expected player to be 2.", "2", "2");
     }
 
-    
+
     /**
      * Test the updateBoard() method to check if the pieces being flipped vertically
      * on the board are being updated properly from top-right.
      */
-
     @Test
     public void test_updateBoardV_5() {
 
@@ -207,7 +193,6 @@ public class BoardTest {
      * Test the updateBoard() method to check if the pieces being flipped vertically
      * on the board are being updated properly from top-left.
      */
-    
     @Test
     public void test_updateBoardV_6() {
 
@@ -226,7 +211,6 @@ public class BoardTest {
      * Test the updateBoard() method to check if the pieces being flipped vertically
      * on the board are being updated properly from bottom-left.
      */
-    
     @Test
     public void test_updateBoardV_7() {
 
@@ -245,7 +229,6 @@ public class BoardTest {
      * Test the updateBoard() method to check if the pieces being flipped vertically
      * on the board are being updated properly from bottom-right.
      */
-    
     @Test
     public void test_updateBoardV_8() {
 
@@ -260,30 +243,26 @@ public class BoardTest {
         assertEquals("Expected player to be 2.", "2", "2");
     }
 
-
-    /**
-     * Testing the turnScore() method to check the player score.
-     */
+     // Testing the turnScore() method to check the player score.
 
     /**
      * Tests for player 1.
      */
-
     @Test
     public void test_turnScore_player1() {
 
         Board b1 = new Board();
-        
+
         // Get score for the player
         int p1score = b1.turnScore("1");
 
-        // Comapre the score
+        // Compare the score
         assertEquals("Expected player 1 score to be 2", 2, p1score);
     }
 
-    /** Test to check when player 1 score is maximum.
-     */
-
+    /**
+    * Test to check when player 1 score is maximum.
+    */
     @Test
     public void test_turnScore_player1Full() {
 
@@ -301,13 +280,13 @@ public class BoardTest {
         // Get score for the player
         int p1score = b1.turnScore("1");
 
-        // Comapre the score
+        // Compare the score
         assertEquals("Expected player 1 score to be 64", 64, p1score);
     }
 
-    /** Test to check when player 1 score is zero.
-     */
-
+    /**
+    * Test to check when player 1 score is zero.
+    */
     @Test
     public void test_turnScore_player1Zero() {
 
@@ -325,14 +304,14 @@ public class BoardTest {
         // Get score for the player
         int p1score = b1.turnScore("1");
 
-        // Comapre the score
+        // Compare the score
         assertEquals("Expected player 1 score to be 0", 0, p1score);
     }
 
-    
-    /** Tests for player 2.
-     */
 
+    /**
+    * Tests for player 2.
+    */
     @Test
     public void test_turnScore_player2() {
 
@@ -340,13 +319,13 @@ public class BoardTest {
         // Get score for the player
         int p2score = b1.turnScore("2");
 
-        // Comapre the score
+        // Compare the score
         assertEquals("Expected player 2 score to be 2", 2, p2score);
     }
 
-    /** Test to check when player 2 score is maximum.
-     */
-
+    /**
+    * Test to check when player 2 score is maximum.
+    */
     @Test
     public void test_turnScore_player2Full() {
 
@@ -368,9 +347,9 @@ public class BoardTest {
         assertEquals("Expected player 2 score to be 64", 64, p1score);
     }
 
-    /** Test to check when player 2 score is zero.
-     */
-
+    /** 
+    * Test to check when player 2 score is zero.
+    */
     @Test
     public void test_turnScore_player2Zero() {
 
@@ -388,7 +367,7 @@ public class BoardTest {
         // Get score for the player
         int p1score = b1.turnScore("2");
 
-        // Comapre the score
+        // Compare the score
         assertEquals("Expected player 2 score to be 0", 0, p1score);
     }
 

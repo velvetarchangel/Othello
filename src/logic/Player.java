@@ -37,11 +37,10 @@ public class Player {
         setColour(colour);
     }
 
-
     /**
      * @param number The player's number 1 or 2
      * @param score  THe player's score
-     * @param name The player's name
+     * @param name   The player's name
      */
     public Player(String number, String colour, String name) {
         this(number, colour);
@@ -61,7 +60,7 @@ public class Player {
     /**
      * @param number The player's number
      * @param colour The player's colour
-     * @param name The player's name
+     * @param name   The player's name
      * @param score  THe player's score
      */
     public Player(String number, String colour, String name, int score) {
@@ -69,10 +68,12 @@ public class Player {
         this.name = name;
     }
 
-    /**The copy constructor
-     * @param player to type player and copies
-     * the information from the other player into
-     * the new player object*/
+    /**
+     * The copy constructor
+     * 
+     * @param player to type player and copies the information from the other player
+     *               into the new player object
+     */
     public Player(Player player) {
         setNumber(player.getNumber());
         setColour(player.getColour());
@@ -81,10 +82,13 @@ public class Player {
 
     }
 
-    /**Method to determine if the user input is of type integer,
-     * throws an exception if it is not an integer and returns false
-     *@param input takes in user input from the getInput method
-     *@return whether it is integer or not*/
+    /**
+     * Method to determine if the user input is of type integer, throws an exception
+     * if it is not an integer and returns false
+     * 
+     * @param input takes in user input from the getInput method
+     * @return whether it is integer or not
+     */
     public boolean isInt(String input) {
         try {
             Integer.parseInt(input);
@@ -94,24 +98,27 @@ public class Player {
         }
     }
 
-
-    /**Method to determine if the user input within the board
-     *@param input: takes in user input from the getInput method
-     *@return whether the input is between 1 and 8*/
-
+    /**
+     * Method to determine if the user input within the board
+     * 
+     * @param input: takes in user input from the getInput method
+     * @return whether the input is between 1 and 8
+     */
     public boolean withinRange(String input) {
         int number = Integer.parseInt(input);
         return (number >= 1 && number <= 8);
     }
 
-    /**Method to determine if the user input is valid, ie, if it will flip
-     * any pieces belonging to the opponent
-     * @param move: takes in an array with x, y coordinates
-     * @param board: takes in the current state of the board
-     * together the method checks whether the move provided will be able to flip
-     * any pieces of the opponent, if atleast 1 piece can be flipped
-     *@return true, else @return false*/
-
+    /**
+     * Method to determine if the user input is valid, ie, if it will flip any
+     * pieces belonging to the opponent
+     * 
+     * @param move:  takes in an array with x, y coordinates
+     * @param board: takes in the current state of the board together the method
+     *               checks whether the move provided will be able to flip any
+     *               pieces of the opponent, if atleast 1 piece can be flipped
+     * @return true, else @return false
+     */
     public boolean flipsPieces(int[] move, Board board) {
         int x = move[0];
         int y = move[1];
@@ -123,6 +130,7 @@ public class Player {
      * Gets the x and y coordinate from the user. If the input is a q, quit the
      * game. If the input is invalid (not an integer, out of range, doens't flip any
      * pieces), reprompt.
+     * 
      * @param currentPlayer The player who's turn it is
      * @return x_y A 2D integer array of the x and y coordinates
      */
@@ -179,6 +187,7 @@ public class Player {
         return score;
     }
 
+    /** @return player's assigned number */
     public String getNumber() {
         return this.number;
     }
@@ -191,8 +200,8 @@ public class Player {
     // Setters
 
     /**
-     * Sets the number of the player
-     * only if it is either 1 or 2
+     * Sets the number of the player only if it is either 1 or 2
+     * 
      * @param number
      */
     public void setNumber(String number) {
@@ -202,6 +211,7 @@ public class Player {
 
     /**
      * Sets the player's colour
+     * 
      * @param colour
      */
     public void setColour(String colour) {
@@ -209,7 +219,12 @@ public class Player {
             this.colour = colour;
     }
 
-    public void setName(String name){
+    /**
+     * Sets the player's name
+     * 
+     * @param name
+     */
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -218,9 +233,8 @@ public class Player {
      *
      * @param score
      */
-
     public void setScore(int score) {
-        if (score >= 0 && score <= 64)
+        if (score >= 0)
             this.score = score;
     }
 

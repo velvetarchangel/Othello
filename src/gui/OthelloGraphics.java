@@ -34,26 +34,21 @@ import java.io.IOException;
 import java.lang.Math;
 
 
-import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import logic.AI;
 import logic.Board;
 import logic.Check;
 import logic.Player;
 
 /**
- * <h>Othello</h>
- * Creates a graphical user interface and implements
- * the Board, Check, and Player classes to allow the user
- * to play Othello.
- * <p>
+ * Creates a graphical user interface and implements the Board, Check, and Player 
+ * classes to allow the user to play Othello.
  *
  * @author Miguel Merin, Jayoo Hwang
  * @version 2.1
  * @since 2019-03-14
  */
-
 public class OthelloGraphics extends Application{
+
   private Stage stage;
   private Board board = new Board();
   private Group graphicBoard = new Group();
@@ -89,7 +84,6 @@ public class OthelloGraphics extends Application{
        * Checks whether the board is full of pieces. If the board is full, the game
        * end, and the winners are announce. Otherwise the game continues.
        */
-
       if (board.isFull() == true || !(Check.AnyMovesLeft(player_1, board) || Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
         drawVictoryScreen(); // will generate the end of the screen
       }
@@ -208,33 +202,40 @@ public class OthelloGraphics extends Application{
     @Override
     public void handle(ActionEvent buttonEvent){
       versus = "menu";
-      //changeScenes();
       resetBoard();
     }
   };
 
   private EventHandler<MouseEvent> vsAIHandler = new EventHandler<MouseEvent>(){
+    /**
+     * Handles mouse clicks, checks if space clicked is a valid move or a button and
+     * updates the game based on action
+     * @param mouseEvent
+     */
     @Override
     public void handle(MouseEvent mouseEvent){
       mouseX = mouseEvent.getX();
       mouseY = mouseEvent.getY();
       player_2 = new AI("2", "WHITE");
+      // Exit "button"
       if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 725) && (mouseY < 800)){
         System.exit(0);
       }
+      // Reset "button"
       if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 800)){
         resetBoard();
       }
+      // Saves current board as a binary file
       if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 625) && (mouseY < 700)){
-        //saves current board as a binary file
         save();
       }
 
+      // Loads a saved game
       if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 625) && (mouseY < 700)){
-        //load a saved game
         load();
       }
 
+      // Checks if move is valid, updates board if valid
       if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
         x = (int)(Math.floor((mouseX - 25.0) / 100.0) + 1);
         y = (int)(Math.floor((mouseY - 25.0) / 100.0) + 1);
@@ -264,20 +265,24 @@ public class OthelloGraphics extends Application{
       mouseX = mouseEvent.getX();
       mouseY = mouseEvent.getY();
 
+      // Exit "button"
       if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 725) && (mouseY < 800)){
         System.exit(0);
       }
+      // Reset "button"
       if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 725) && (mouseY < 800)){
         resetBoard();
       }
+      // Saves current board as a binary file
       if ((mouseX > 900) && (mouseX < 1010) && (mouseY > 625) && (mouseY < 700)){
-        //saves current board as a binary file
         save();
       }
+      // Loads a saved game
       if ((mouseX > 1040) && (mouseX < 1150) && (mouseY > 625) && (mouseY < 700)){
-        //loads a saved game
         load();
       }
+
+      // Updates board if move is valid
       if ((mouseX > 25) && (mouseX < 825) && (mouseY > 25) && (mouseY < 825)){
         x = (int)(Math.floor((mouseX - 25.0) / 100.0) + 1);
         y = (int)(Math.floor((mouseY - 25.0) / 100.0) + 1);
@@ -289,7 +294,6 @@ public class OthelloGraphics extends Application{
         if (board.isFull() == true || (!Check.AnyMovesLeft(player_1, board) && !Check.AnyMovesLeft(player_2, board))) { // Once graphicBoard is filled, end game and print out result
           drawVictoryScreen();
         }
-
         //process move
         else {
           helper.takeInput(x, y, board, player, false);
@@ -349,7 +353,7 @@ public class OthelloGraphics extends Application{
 
   /**
    * Groups together all the methods that draws the board game and its graphics
-   * @return: graphicBoard the method returns a group that is then added to a stage which will show on the screen
+   * @return graphicBoard the method returns a Parent group that is then added to a stage which will show on the screen
    */
   private Parent startup(){
     initBackGround();
@@ -366,7 +370,7 @@ public class OthelloGraphics extends Application{
 
   /**
    * Groups together all the methods that draws the menu screen
-   * @return: graphicBoard the method returns a group that is then added to a stage which will show on the screen
+   * @return graphicBoard the method returns a group that is then added to a stage which will show on the screen
    */
   private Parent mainMenu(){
     initMenuBack();
@@ -376,7 +380,7 @@ public class OthelloGraphics extends Application{
 
   /**
    * Groups together all the methods that draws the screen to select the VS.
-   * @return: graphicBoard the method returns a group that is then added to a stage which will show on the screen
+   * @return graphicBoard the method returns a group that is then added to a stage which will show on the screen
    */
   private Parent vsScreen(){
     initVsScreen();

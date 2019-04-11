@@ -1,10 +1,9 @@
 package logic;
 
-
 /**
- * This class processes the validity of moves made by the player
- * 1. Checks whether a move is legal and valid
- * 2. Checks if the player has any moves left
+ * This class processes the validity of moves made by the player 1. Checks
+ * whether a move is legal and valid 2. Checks if the player has any moves left
+ * 
  * @author Jayoo Hwang
  * @version 1.0
  */
@@ -15,7 +14,6 @@ public class Check {
     private static String otherPlayer;
     private static String[][] board;
     private static int n;
-
 
     /**
      * Checks each direction to see whether pieces can be flipped to the current
@@ -33,7 +31,6 @@ public class Check {
      *         coordinate, the next elements keep track of the number of pieces
      *         flipped following the north direction (clockwise).
      **/
-
     public static int[] move(int x, int y, Player player, Board gameboard) {
 
         board = gameboard.getArray();
@@ -188,13 +185,14 @@ public class Check {
     }
 
     /**
-     * Checks if the player who's turn it is has any moves left
-     * goes through the board and places the player's piece in the board to see if
-     * any of the opponent's pieces can be flipped at that position, stops the loop
-     * if there is atleast 1 move for the player
-     * @param player to check which piece to place and which pievce to flip
-     * @param gameBoard to place the piece in an empty slot "_" and see if there
-     * are any adjacent pieces of the opponent that can be flipped
+     * Checks if the player who's turn it is has any moves left goes through the
+     * board and places the player's piece in the board to see if any of the
+     * opponent's pieces can be flipped at that position, stops the loop if there is
+     * atleast 1 move for the player
+     * 
+     * @param player    to check which piece to place and which pievce to flip
+     * @param gameBoard to place the piece in an empty slot "_" and see if there are
+     *                  any adjacent pieces of the opponent that can be flipped
      * @return moves_left which is a boolean
      **/
     public static boolean AnyMovesLeft(Player player, Board gameBoard) {
@@ -202,7 +200,8 @@ public class Check {
         boolean moves_left = false;
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
-                //System.out.println("check " + Integer.toString(i) + " " + Integer.toString(j));
+                // System.out.println("check " + Integer.toString(i) + " " +
+                // Integer.toString(j));
                 if (moves_left == false) {
                     if (board[j][i].equals("_")) {
                         flipped = Check.move(i, j, player, gameBoard);
@@ -211,7 +210,7 @@ public class Check {
                         if (flipped[0] != 0) {
 
                             moves_left = true;
-                            //break;
+                            // break;
                         }
                     }
                 }
@@ -221,4 +220,3 @@ public class Check {
     }
 
 }
-
