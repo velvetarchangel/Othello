@@ -17,10 +17,11 @@ public class BoardTest {
      * Testing the constructors.
      */
     
+    
     /**
      * Test the default constructor to see if the board array lengths are equal.
      */
-
+    
     @Test
     public void test_constructorBoardLength() {
 
@@ -108,13 +109,14 @@ public class BoardTest {
 
     /**
      * Test the updateBoard() method to check if the pieces being flipped horizontally
-     * on the board are being updated properly.
+     * on the board are being updated properly from right-up.
      */
 
     @Test
     public void test_updateBoardH_1() {
         
         Board board = new Board();
+        // Player inputs for horizontal right-up position
         int x = 6;
         int y = 4;
         String player = "1";
@@ -124,10 +126,16 @@ public class BoardTest {
         assertEquals("Expected player to be 1.", "1", "1");
     }
 
+    /**
+     * Test the updateBoard() method to check if the pieces being flipped horizontally
+     * on the board are being updated properly from right-down.
+     */
+    
     @Test
     public void test_updateBoardH_2() {
 
         Board board = new Board();
+        // Player inputs for horizontal right-down position
         int x = 6;
         int y = 5;
         String player = "2";
@@ -137,10 +145,16 @@ public class BoardTest {
         assertEquals("Expected player to be 2.", "2", "2");
     }
 
+    /**
+     * Test the updateBoard() method to check if the pieces being flipped horizontally
+     * on the board are being updated properly from left-down.
+     */
+    
     @Test
     public void test_updateBoardH_3() {
 
         Board board = new Board();
+        // Player inputs for horizontal left-down position
         int x = 3;
         int y = 5;
         String player = "1";
@@ -150,10 +164,16 @@ public class BoardTest {
         assertEquals("Expected player to be 1.", "1", "1");
     }
 
+    /**
+     * Test the updateBoard() method to check if the pieces being flipped horizontally
+     * on the board are being updated properly from left-up.
+     */
+    
     @Test
     public void test_updateBoardH_4() {
 
         Board board = new Board();
+        // Player inputs for horizontal left-up position
         int x = 3;
         int y = 4;
         String player = "2";
@@ -163,15 +183,17 @@ public class BoardTest {
         assertEquals("Expected player to be 2.", "2", "2");
     }
 
+    
     /**
      * Test the updateBoard() method to check if the pieces being flipped vertically
-     * on the board are being updated properly.
+     * on the board are being updated properly from top-right.
      */
 
     @Test
     public void test_updateBoardV_5() {
 
         Board board = new Board();
+        // Player inputs for vertical top-right position
         int x = 5;
         int y = 3;
         String player = "1";
@@ -181,10 +203,16 @@ public class BoardTest {
         assertEquals("Expected player to be 1.", "1", "1");
     }
 
+    /**
+     * Test the updateBoard() method to check if the pieces being flipped vertically
+     * on the board are being updated properly from top-left.
+     */
+    
     @Test
     public void test_updateBoardV_6() {
 
         Board board = new Board();
+        // Player inputs for vertical top-left position
         int x = 4;
         int y = 3;
         String player = "2";
@@ -194,10 +222,16 @@ public class BoardTest {
         assertEquals("Expected player to be 2.", "2", "2");
     }
 
+    /**
+     * Test the updateBoard() method to check if the pieces being flipped vertically
+     * on the board are being updated properly from bottom-left.
+     */
+    
     @Test
     public void test_updateBoardV_7() {
 
         Board board = new Board();
+        // Player inputs for vertical bottom-left position
         int x = 4;
         int y = 6;
         String player = "1";
@@ -207,10 +241,16 @@ public class BoardTest {
         assertEquals("Expected player to be 1.", "1", "1");
     }
 
+    /**
+     * Test the updateBoard() method to check if the pieces being flipped vertically
+     * on the board are being updated properly from bottom-right.
+     */
+    
     @Test
     public void test_updateBoardV_8() {
 
         Board board = new Board();
+        // Player inputs for vertical bottom-right position
         int x = 5;
         int y = 6;
         String player = "2";
