@@ -26,51 +26,60 @@ public class CheckTest {
     @Test
     public void test_moveH_1() {
 
-        Board board = new Board();
-        Player player = new Player("1", "Black");
+        Board board = new Board();// initializes the board
+        Player player = new Player("1", "Black");// initializes the player object
+        //picking appropriate coordinate
         int x = 6;
         int y = 4;
-        int[] flipper = Check.move(x, y, player, board);
+        int[] flipper = Check.move(x, y, player, board);// checks to see if the move is valid and generates the flipped array
         int[] flippedArray = {1, 0, 0, 0, 0, 0, 0, 1, 0};
 
         assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
+    /*Places the piece at 6,5 and expect 1 piece black piece on the board to be flipped*/
     @Test
     public void test_moveH_2() {
 
-        Board board = new Board();
-        Player player = new Player("2", "white");
+        Board board = new Board();// initializes the board
+        Player player = new Player("2", "white");// initializes the player object
+        //picking appropriate coordinate
         int x = 6;
         int y = 5;
-        int[] flipper = Check.move(x, y, player, board);
+        int[] flipper = Check.move(x, y, player, board);// checks to see if the move is valid and generates the flipped array
         int[] flippedArray = {1, 0, 0, 0, 0, 0, 0, 1, 0};
 
         assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
+    
+    /*Places the piece at 6,5 and expect 1 piece white piece on the board to be flipped*/
     @Test
     public void test_moveH_3() {
 
-        Board board = new Board();
-        Player player = new Player("1", "Black");
+        Board board = new Board(); // initializes the board
+        Player player = new Player("1", "Black"); // initializes the player object
+        //picking appropriate coordinate
         int x = 3;
         int y = 5;
-        int[] flipper = Check.move(x, y, player, board);
-        int[] flippedArray = {1, 0, 0, 1, 0, 0, 0, 0, 0};
+        int[] flipper = Check.move(x, y, player, board); // checks to see if the move is valid and generates the flipped array
+        int[] flippedArray = {1, 0, 0, 1, 0, 0, 0, 0, 0}; // expected flipped array
 
         assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
 
+    
+    /*Places the piece at 6,5 and expect 1 piece black piece on the board to be flipped*/
     @Test
     public void test_moveH_4() {
 
-        Board board = new Board();
-        Player player = new Player("2", "White");
+        Board board = new Board();// initializes the board
+        Player player = new Player("2", "White");// initializes the player object
+        //picking appropriate coordinate
         int x = 3;
         int y = 4;
-        int[] flipper = Check.move(x, y, player, board);
-        int[] flippedArray = {1, 0, 0, 1, 0, 0, 0, 0, 0};
+        int[] flipper = Check.move(x, y, player, board); // checks to see if the move is valid and generates the flipped array
+        int[] flippedArray = {1, 0, 0, 1, 0, 0, 0, 0, 0};// expected flipped array
 
         assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
@@ -83,12 +92,13 @@ public class CheckTest {
     @Test
     public void test_moveV_5() {
 
-        Board board = new Board();
-        Player player = new Player("1", "Black");
+        Board board = new Board();// initializes the board
+        Player player = new Player("1", "Black");// initializes the player object
+        //picking appropriate coordinate
         int x = 5;
         int y = 3;
-        int[] flipper = Check.move(x, y, player, board);
-        int[] flippedArray = {1, 0, 0, 0, 0, 1, 0, 0, 0};
+        int[] flipper = Check.move(x, y, player, board);// checks to see if the move is valid and generates the flipped array
+        int[] flippedArray = {1, 0, 0, 0, 0, 1, 0, 0, 0};// expected flipped array
 
         assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
@@ -96,12 +106,13 @@ public class CheckTest {
     @Test
     public void test_moveV_6() {
 
-        Board board = new Board();
-        Player player = new Player("2", "White");
+        Board board = new Board();// initializes the board
+        Player player = new Player("2", "White");// initializes the player object
+        //picking appropriate coordinate
         int x = 4;
         int y = 3;
-        int[] flipper = Check.move(x, y, player, board);
-        int[] flippedArray = {1, 0, 0, 0, 0, 1, 0, 0, 0};
+        int[] flipper = Check.move(x, y, player, board);// checks to see if the move is valid and generates the flipped array
+        int[] flippedArray = {1, 0, 0, 0, 0, 1, 0, 0, 0};// expected flipped array
 
         assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
@@ -109,12 +120,13 @@ public class CheckTest {
     @Test
     public void test_moveV_7() {
 
-        Board board = new Board();
-        Player player = new Player("1", "Black");
+        Board board = new Board();// initializes the board
+        Player player = new Player("1", "Black");// initializes the player object
+        //picking appropriate coordinate
         int x = 4;
         int y = 6;
-        int[] flipper = Check.move(x, y, player, board);
-        int[] flippedArray = {1, 1, 0, 0, 0, 0, 0, 0, 0};
+        int[] flipper = Check.move(x, y, player, board);// checks to see if the move is valid and generates the flipped array
+        int[] flippedArray = {1, 1, 0, 0, 0, 0, 0, 0, 0};// expected flipped array
 
         assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
@@ -122,12 +134,13 @@ public class CheckTest {
     @Test
     public void test_moveV_8() {
 
-        Board board = new Board();
-        Player player = new Player("2", "White");
+        Board board = new Board();// initializes the board
+        Player player = new Player("2", "White");// initializes the player object
+        //picking appropriate coordinate
         int x = 5;
         int y = 6;
-        int[] flipper = Check.move(x, y, player, board);
-        int[] flippedArray = {1, 1, 0, 0, 0, 0, 0, 0, 0};
+        int[] flipper = Check.move(x, y, player, board);// checks to see if the move is valid and generates the flipped array
+        int[] flippedArray = {1, 1, 0, 0, 0, 0, 0, 0, 0};// expected flipped array
 
         assertArrayEquals("Expected 1 of the pieces to be flipped.", flippedArray, flipper);
     }
@@ -141,31 +154,34 @@ public class CheckTest {
     /**
      * Checking when there are valid moves left.
      */
-
+    /** Checks if black player has any moves left in the original state of the board
+    * should return true*/
     @Test
-    public void test_anyMovesLeft_1() {
+    public void test_anyMovesLeft_black() {
 
-        Board board = new Board();
-        Player player = new Player("1", "Black");
-        boolean detective = Check.AnyMovesLeft(player, board);
+        Board board = new Board();// initializes the board
+        Player player = new Player("1", "Black");// initializes the player object
+        boolean detective = Check.AnyMovesLeft(player, board); 
 
         assertEquals("Expected there are moves left for player 1.", true, detective);
     }
 
+    /** Checks if white player has any moves left in the original state of the board
+    * should return true*/
     @Test
-    public void test_anyMovesLeft_2() {
+    public void test_anyMovesLeft_white() {
 
-        Board board = new Board();
-        Player player = new Player("2", "White");
+        Board board = new Board();// initializes the board
+        Player player = new Player("2", "White");// initializes the player object
         boolean detective = Check.AnyMovesLeft(player, board);
 
         assertEquals("Expected there are moves left for player 2.", true, detective);
     }
 
-    /**
-     * Checking when there are no more possible valid moves are left.
-     */
 
+    /** Checks if black player has any moves left in the original state of the board, 
+    * fills the board up the board with 1's and checks if the payer has any moves left
+    * should return false*/
     @Test
     public void test_anyMovesLeft_forWhite() { // Checking if any valid moves are left for White.
 
@@ -186,6 +202,9 @@ public class CheckTest {
         assertEquals("Expected there are no moves left for player 2.", false, detective);
     }
 
+    /** Checks if black player has any moves left in the original state of the board, 
+    * fills the board up the board with 2's and checks if the payer has any moves left
+    * should return false*/
     @Test
     public void test_anyMovesLeft_forBlack() { // Checking if any valid moves are left for Black.
 
